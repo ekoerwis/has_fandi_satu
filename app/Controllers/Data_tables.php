@@ -11,6 +11,7 @@ use App\Models\DataTablesModel;
 
 class Data_tables extends \App\Controllers\BaseController
 {
+	protected $model;
 	public function __construct() {
 		
 		parent::__construct();

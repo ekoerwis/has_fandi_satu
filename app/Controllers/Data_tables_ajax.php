@@ -11,6 +11,7 @@ use App\Models\DataTablesAjaxModel;
 
 class Data_tables_ajax extends \App\Controllers\BaseController
 {
+	protected $model;
 	public function __construct() {
 		
 		parent::__construct();
