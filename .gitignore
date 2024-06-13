@@ -1,0 +1,7 @@
+/app/config/database.php
+
+*.sql
+
+/writable/
+
+/app/config/App.php
