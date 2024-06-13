@@ -11,6 +11,10 @@
 
 <script type="text/javascript" src="<?=$config->baseURL . 'public/vendors/jquery/jquery-3.4.1.js?r='.time()?>"></script>
 <script type="text/javascript" src="<?=$config->baseURL . 'public/vendors/bootstrap/js/bootstrap.min.js?r='.time()?>"></script>
+
+<script type="text/javascript" src="<?=$config->baseURL . 'public/vendors/jquery.pwstrength.bootstrap/pwstrength-bootstrap.min.js?r='.time()?>"></script>
+<script type="text/javascript" src="<?=$config->baseURL . 'public/themes/modern/js/password-meter.js?r='.time()?>"></script>
+
 <?php
 if (!empty($js)) {
 	foreach($js as $file) {

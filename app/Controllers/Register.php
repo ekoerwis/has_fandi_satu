@@ -12,6 +12,10 @@ class Register extends \App\Controllers\BaseController
 		parent::__construct();
 		$this->model = new RegisterModel;	
 		$this->data['site_title'] = 'Register';
+
+        
+		// $this->addJs($this->config->baseURL . 'public/vendors/jquery.pwstrength.bootstrap/pwstrength-bootstrap.min.js');
+		// $this->addJs($this->config->baseURL . 'public/themes/modern/js/password-meter.js');
 		
 		helper(['cookie', 'form']);
 		
@@ -22,10 +26,6 @@ class Register extends \App\Controllers\BaseController
         // $this->currentModule['nama_module'] = 'Register'; 
         $this->mustNotLoggedIn();
 
-		
-        echo "<script>console.log('reg');</script>";
-
-		
 		echo view('registerform', $this->data);
 	}
 	
