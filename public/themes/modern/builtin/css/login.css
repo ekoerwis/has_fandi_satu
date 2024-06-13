@@ -252,3 +252,19 @@ input[type=radio]:checked:before
 		margin-right: 0 !important;
 	}
 }
+
+
+
+/* eko 20240614 */
+
+
+.register-container {
+	max-width: 650px;
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+    left: 50%;
+	top: 50px;
+	bottom: 50px;
+    margin-left: -325px;
+}

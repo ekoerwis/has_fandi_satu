@@ -60,11 +60,11 @@ if (!empty($js)) {
 			  </div>
 			  <input type="password"  name="password" class="form-control login-input" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
 			</div>
-			<div class="form-group input-group">
+			<!-- <div class="form-group input-group">
 				<div class="checkbox">
 					<label style="font-weight:normal"><input name="remember" value="1" type="checkbox">&nbsp;&nbsp;Remember me</label>
 				</div>
-			</div>
+			</div> -->
 			<div class="form-group" style="margin-bottom:7px">
 				<button type="submit" class="form-control btn <?=$settingWeb->btn_login?>" name="submit">Submit</button>
 				<?php
@@ -72,6 +72,11 @@ if (!empty($js)) {
 				?>
 				<input type="hidden" name="form_token" value="<?=$form_token?>"/>
 			</div>
+
+			<div class="form-group" style="margin-bottom:7px">
+				<p>Belum punya akun? <a href="<?=$config->baseURL?>Register">Daftar akun</a></p>				
+			</div>
+
 		</div>
 		<div class="copyright">
 			<?php

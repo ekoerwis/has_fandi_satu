@@ -65,8 +65,10 @@ class BaseController extends Base
 		$this->methodName = $router->methodName();
 		
 		$this->isLoggedIn = $this->session->get('logged_in');
-
-		if ($module_name !== 'login') {
+		
+		// eko perubahan  20240614
+		// if ($module_name !== 'login') {
+		if ($module_name !== 'login' and $module_name !== 'register') {
 			$this->mustLoggedIn();
 		}
 		
