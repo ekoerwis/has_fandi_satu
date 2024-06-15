@@ -13,7 +13,7 @@ class RegisterModel extends \App\Models\BaseModel
 		$data_db['username'] = $this->request->getPost('username');
 		$data_db['email'] = $this->request->getPost('email');
 		$data_db['password'] = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
-		$data_db['id_role'] = $this->request->getPost('email');
+		$data_db['id_role'] = $this->request->getPost('id_role');
 
 		if(!empty($this->checkUsername($data_db['username']))){
 			$result['status']='error';
@@ -25,8 +25,13 @@ class RegisterModel extends \App\Models\BaseModel
 
 			$save = $this->db->table('user')->insert($data_db);
 
-			$result['status']='ok';
-			$result['message']='Pendaftaran berhasil dilakukan, mohon periksa email yang telah didaftarkan untuk melakukan verifikasi akun';
+			if($save){
+				$result['status']='ok';
+				$result['message']='Pendaftaran berhasil dilakukan, mohon periksa email yang telah didaftarkan untuk melakukan verifikasi akun';
+			} else {
+				$result['status']='error';
+				$result['message']='Gagal Mendaftar';
+			}
 		}
 
 		// $this->db->table('user')->insert($data_db);

@@ -15,9 +15,6 @@
 <script type="text/javascript" src="<?=$config->baseURL . 'public/vendors/jquery.pwstrength.bootstrap/pwstrength-bootstrap.min.js?r='.time()?>"></script>
 <script type="text/javascript" src="<?=$config->baseURL . 'public/themes/modern/js/password-meter.js?r='.time()?>"></script>
 
-<script type="text/javascript" src="<?=$config->baseURL . 'public/vendors/bootstrap-selectpicker/js/bootstrap-select.min.js?r='.time()?>"></script>
-<link rel="stylesheet" type="text/css" href="<?=$config->baseURL . 'public/vendors/bootstrap-selectpicker/css/bootstrap-select.min.css?r='.time()?>"/> 
-
 <?php
 if (!empty($js)) {
 	foreach($js as $file) {
@@ -27,7 +24,6 @@ if (!empty($js)) {
 
 
 ?>
-</html>
 <body>
 	<div class="background"></div>
 	<div class="backdrop"></div>
@@ -86,21 +82,14 @@ if (!empty($js)) {
                     </div>
                     <div class="mb-1">
                         <label class="mb-1">Daftar Sebagai</label>
-                        <select class="form-control selectpicker" name="part" data-live-search="true" required>
-                            <option value="Select Part">Select Part</option>
-                            <option value="Part 1" data-tokens="Part 1">Part 1</option>
-                            <option value="Part 2" data-tokens="Part 2">Part 2</option>
-                            <option value="Part 3" data-tokens="Part 3">Part 3</option>
-                            <option value="Part 4" data-tokens="Part 4">Part 4</option>
-                            <option value="Part 5" data-tokens="Part 5">Part 5</option>
-                            <option value="Pravesh Pariksha" data-tokens="Pravesh Pariksha">Pravesh Pariksha</option>
+                        <select class="form-control " name="id_role" required>
+                            <?php
+                                foreach($role_register as $role){
+                                    echo "<option value='".$role['id_role']."'>".$role['judul_role']."</option>";
+                                }
+                            ?>
                         </select>
 						<p class="small">Mempengaruhi Fitur Dalam Aplikasi</p>
-                        <script>
-                            $(function() {
-                                $('.selectpicker').selectpicker();
-                            });
-                        </script>
                     </div>
                     <div class="mb-1">
                         <label class="mb-1">Username</label>
@@ -121,6 +110,12 @@ if (!empty($js)) {
                         <button type="submit" name="submit" value="submit" class="btn btn-success" style="display:block;width:100%">Register</button>
                     </div>
                     <?php
+                } else {
+                    ?>
+                        <div class="form-group" style="">
+                            <p>Sudah Verifikasi? <a href="<?=$config->baseURL?>">LOGIN</a></p>				
+                        </div>
+                    <?php
                 }
                 ?>
                     
@@ -130,5 +125,7 @@ if (!empty($js)) {
 		</div>
 
 	</div><!-- register container -->
+
+
 </body>
 </html>

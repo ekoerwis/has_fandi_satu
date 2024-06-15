@@ -12,12 +12,6 @@ class Register extends \App\Controllers\BaseController
 		parent::__construct();
 		$this->model = new RegisterModel;	
 		$this->data['site_title'] = 'Register';
-
-        
-		// $this->addJs($this->config->baseURL . 'public/vendors/jquery.pwstrength.bootstrap/pwstrength-bootstrap.min.js');
-		// $this->addJs($this->config->baseURL . 'public/themes/modern/js/password-meter.js');
-		// $this->addJs($this->config->baseURL . 'public/vendors/bootstrap-selectpicker/js/bootstrap-select.min.js');
-		// $this->addStyle($this->config->baseURL . 'public/vendors/bootstrap-selectpicker/css/bootstrap-select.min.css');
 		
 		helper(['cookie', 'form']);
 		
@@ -48,6 +42,10 @@ class Register extends \App\Controllers\BaseController
 					'message' => $action['message'],
 					'dismiss' => false
 				];
+
+				if($action['status'] == 'ok'){
+					$data['register_status'] = 'register_sukses';
+				}
 			}
 		}
 		echo view('registerform', $data);
