@@ -15,6 +15,9 @@
 <script type="text/javascript" src="<?=$config->baseURL . 'public/vendors/jquery.pwstrength.bootstrap/pwstrength-bootstrap.min.js?r='.time()?>"></script>
 <script type="text/javascript" src="<?=$config->baseURL . 'public/themes/modern/js/password-meter.js?r='.time()?>"></script>
 
+<script type="text/javascript" src="<?=$config->baseURL . 'public/vendors/bootstrap-selectpicker/js/bootstrap-select.min.js?r='.time()?>"></script>
+<link rel="stylesheet" type="text/css" href="<?=$config->baseURL . 'public/vendors/bootstrap-selectpicker/css/bootstrap-select.min.css?r='.time()?>"/> 
+
 <?php
 if (!empty($js)) {
 	foreach($js as $file) {
@@ -34,7 +37,10 @@ if (!empty($js)) {
 				<img src="<?php echo $config->baseURL . '/public/images/' . $settingWeb->logo_login?>">
 			</div>
 			
-			<?php if (!empty($desc)) {
+			<?php 
+            
+            helper ('html');
+            if (!empty($desc)) {
 				echo '<p>' . $desc . '</p>';
 			}?>
 		</div>
@@ -44,15 +50,19 @@ if (!empty($js)) {
 
             <div class="card-body" >
                 <?php
+                // if (!empty($message)) {
+                //     show_message($message);
+                // }
+
                 if (!empty($message)) {
-                    show_message($message);
+                    show_message($message['message'], $message['status'], $message['dismiss']);
                 }
 
                 helper('form');
                 
                 if (@$register_status != 'register_sukses') {
                     ?>
-                    <form action="<?=current_url()?>" method="post" accept-charset="utf-8">
+                    <form id="frm" action="<?=current_url()?>" method="post" accept-charset="utf-8">
                     
                     <p style="text-align:center">Komitmen kami: kami akan menyimpan data Anda dengan aman dan <strong>tidak akan membagi data Anda</strong> ke siapapun</p>
                     <div class="mb-1">
@@ -72,7 +82,25 @@ if (!empty($js)) {
                     <div class="mb-1">
                         <label class="mb-1">Email</label>
                         <input type="email"  name="email" value="<?=set_value('email', '')?>" class="form-control register-input" placeholder="Email" aria-label="Email" required>
-                        <p class="small">Alamat email dimana kami dapat berkomunikasi dengan Anda seperti menjawab pertanyaan, menginformasikan update terbaru, dll ?</p>
+                        <p class="small">Alamat email dimana kami dapat berkomunikasi dengan Anda seperti menginformasikan update terbaru, dll ?</p>
+                    </div>
+                    <div class="mb-1">
+                        <label class="mb-1">Daftar Sebagai</label>
+                        <select class="form-control selectpicker" name="part" data-live-search="true" required>
+                            <option value="Select Part">Select Part</option>
+                            <option value="Part 1" data-tokens="Part 1">Part 1</option>
+                            <option value="Part 2" data-tokens="Part 2">Part 2</option>
+                            <option value="Part 3" data-tokens="Part 3">Part 3</option>
+                            <option value="Part 4" data-tokens="Part 4">Part 4</option>
+                            <option value="Part 5" data-tokens="Part 5">Part 5</option>
+                            <option value="Pravesh Pariksha" data-tokens="Pravesh Pariksha">Pravesh Pariksha</option>
+                        </select>
+						<p class="small">Mempengaruhi Fitur Dalam Aplikasi</p>
+                        <script>
+                            $(function() {
+                                $('.selectpicker').selectpicker();
+                            });
+                        </script>
                     </div>
                     <div class="mb-1">
                         <label class="mb-1">Username</label>
@@ -83,7 +111,7 @@ if (!empty($js)) {
                         <label class="mb-1">Password</label>
                         <input type="password"  name="password" class="form-control register-input" placeholder="Password" aria-label="Password" required>
                         <div class="pwstrength_viewport_progress"></div>
-                        <p class="small">Bantu kami untuk melindungi data Anda dengan membuat password yang kuat, indikator: medium-strong, min 8 karakter, paling sedikit mengandung huruf kecil, huruf besar, dan angka.</p>
+                        <p class="small">Indikator: medium-strong, min 8 karakter, paling sedikit mengandung huruf kecil, huruf besar, dan angka.</p>
                     </div>
                     <div class="mb-1">
                         <label class="mb-1">Confirm Password</label>
