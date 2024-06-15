@@ -19,6 +19,7 @@ class Module_role extends \App\Controllers\BaseController
 		parent::__construct();
 		$this->addJs ($this->config->baseURL . 'public/themes/modern/builtin/js/module-role.js');
 		$this->addStyle($this->config->baseURL . 'public/vendors/wdi/wdi-loader.css');
+		$this->addJs ( $this->config->baseURL . 'public/themes/modern/js/data-tables.js');
 		
 		$this->model = new ModuleRoleModel;	
 		$this->data['site_title'] = 'Halaman Module Role';

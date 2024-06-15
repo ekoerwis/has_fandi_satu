@@ -29,7 +29,7 @@
 			}
 			?>
 			<div class="table-responsive">
-			<table class="table table-striped table-bordered table-hover">
+			<table class="table table-striped table-bordered table-hover data-tables">
 			<thead>
 			<tr>
 				<th>ID</th>

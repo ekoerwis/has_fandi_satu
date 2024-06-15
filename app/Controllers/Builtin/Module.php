@@ -24,6 +24,7 @@ class Module extends \App\Controllers\BaseController
 		
 		$this->addStyle ( $this->config->baseURL . 'public/vendors/bulma-switch/bulma-switch.min.css?r=' . time());
 		$this->addJs ( $this->config->baseURL . 'public/themes/modern/builtin/js/module.js');
+		$this->addJs ( $this->config->baseURL . 'public/themes/modern/js/data-tables.js');
 		
 		helper(['cookie', 'form']);
 	}
