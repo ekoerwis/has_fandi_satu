@@ -77,6 +77,17 @@ if (!empty($js)) {
 				<p>Belum punya akun? <a href="<?=$config->baseURL?>Register">Daftar akun</a></p>				
 			</div>
 
+			<div class="form-group" style="margin-bottom:7px">
+				<p>Lupa Password? <a href="<?=$config->baseURL?>Register/resetPassword">Reset Password</a></p>				
+			</div>
+
+			<?php
+			
+			if (!empty($message2)) {?>
+				<div class="alert alert-warning">
+					<p>Tidak Menerima Email ? <a href="<?=$config->baseURL?>register/reVerifikasi">Kirim Ulang </a></p>		
+				</div>
+			<?php } ?>
 		</div>
 		<div class="copyright">
 			<?php

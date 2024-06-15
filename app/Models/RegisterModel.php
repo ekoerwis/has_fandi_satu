@@ -66,6 +66,18 @@ class RegisterModel extends \App\Models\BaseModel
 		return $result;
 	}
 	
+	public function gantiPassword($id_user,$newPassword){
+		$result='false';
+		
+		$password = password_hash($newPassword, PASSWORD_DEFAULT);
+
+		$sql = "update user set password = '$password' where id_user = '$id_user'";
+		$result = $this->db->query($sql);
+
+		return $result;
+	}
+
+	
 	/* See base model
 	public function checkUser($username) 
 	{

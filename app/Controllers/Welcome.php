@@ -1,7 +1,8 @@
 <?php 		
-namespace App\Controllers\Admin;
+namespace App\Controllers;
+use \Config\App;
 
-class Welcome extends \App\Controllers\BaseAdmin
+class Welcome extends \App\Controllers\BaseController
 {
 	protected $model = '';
 	private $nonce;

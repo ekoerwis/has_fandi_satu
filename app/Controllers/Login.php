@@ -74,6 +74,7 @@ class Login extends \App\Controllers\BaseController
 		{
 			$this->data['status'] = 'error';
 			$this->data['message'] = 'User Telah Terdaftar, Mohon Verifikasi Email Untuk Melakukan Login';
+			$this->data['message2'] = 'VerificationNotValid';
 			return;
 		}
 		
