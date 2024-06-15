@@ -9,12 +9,19 @@
 <link rel="stylesheet" type="text/css" href="<?=$config->baseURL . 'public/themes/modern/builtin/css/login.css?r='.time()?>"/>
 <link rel="stylesheet" type="text/css" href="<?=$config->baseURL . 'public/themes/modern/builtin/css/login-header.css?r='.time()?>"/>
 
+<link rel="stylesheet" type="text/css" href="<?=$config->baseURL . 'public/vendors/jquery.select25/css/select2.min.css?r='.time()?>"/>
+<!-- $this->addStyle ( $this->config->baseURL . 'public/vendors/jquery.select2/css/select2.min.css' ); -->
+
 <script type="text/javascript" src="<?=$config->baseURL . 'public/vendors/jquery/jquery-3.4.1.js?r='.time()?>"></script>
 <script type="text/javascript" src="<?=$config->baseURL . 'public/vendors/bootstrap/js/bootstrap.min.js?r='.time()?>"></script>
 
 <script type="text/javascript" src="<?=$config->baseURL . 'public/vendors/jquery.pwstrength.bootstrap/pwstrength-bootstrap.min.js?r='.time()?>"></script>
 <script type="text/javascript" src="<?=$config->baseURL . 'public/themes/modern/js/password-meter.js?r='.time()?>"></script>
 
+<script type="text/javascript" src="<?=$config->baseURL . 'public/vendors/jquery.select25/js/select2.full.min.js?r='.time()?>"></script>
+<!-- $this->addJs ( $this->config->baseURL . 'public/vendors/jquery.select2/js/select2.full.min.js' ); -->
+
+		
 <?php
 if (!empty($js)) {
 	foreach($js as $file) {
@@ -82,7 +89,7 @@ if (!empty($js)) {
                     </div>
                     <div class="mb-1">
                         <label class="mb-1">Daftar Sebagai</label>
-                        <select class="form-control " name="id_role" required>
+                        <select class=" form-control select2"  name="id_role"  required>
                             <?php
                                 foreach($role_register as $role){
                                     echo "<option value='".$role['id_role']."'>".$role['judul_role']."</option>";
@@ -126,6 +133,14 @@ if (!empty($js)) {
 
 	</div><!-- register container -->
 
-
+<script>
+   
+jQuery(document).ready(function () {
+	
+	$('.select2').select2({
+		// 'theme' : 'bootstrap-5'
+	})
+});
+</script>
 </body>
 </html>
