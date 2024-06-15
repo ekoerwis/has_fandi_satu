@@ -109,7 +109,7 @@ $user = $_SESSION['user'];
 									<p><small>Email: <?=$user['email']?></small></p>
 									</div>
 								</li>
-								<li><a href="<?=$config->baseURL?>builtin/user/edit-password?id=<?=$user['id_user']?>">Change Password</a></li>
+								<li><a href="<?=$config->baseURL?>builtin/changepassword?id=<?=$user['id_user']?>">Change Password</a></li>
 								<li><a href="<?=$config->baseURL?>login/logout">Logout</a></li>
 							</ul>
 						<?php } else { ?>
