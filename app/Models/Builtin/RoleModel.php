@@ -39,12 +39,15 @@ class RoleModel extends \App\Models\BaseModel
 	
 	public function saveData() 
 	{
-		$fields = ['judul_role', 'keterangan'];
+		$fields = ['nama_role','judul_role', 'keterangan'];
 
 		foreach ($fields as $field) {
 			$data_db[$field] = $this->request->getPost($field);
 		}
 		$fields['id_module'] = $this->request->getPost('id_module') ?: 0;
+
+		// tambahan eko
+		$data_db['id_module'] = 30;
 		
 		// Save database
 		if ($this->request->getPost('id')) {
