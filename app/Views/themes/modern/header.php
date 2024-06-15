@@ -87,7 +87,8 @@ $user = $_SESSION['user'];
 		<div class="pull-right nav-header nav-header-right">
 			
 			<ul>
-				<li><a class="icon-link" href="<?=$config->baseURL?>builtin/setting"><i class="fas fa-cog"></i></a></li>
+				<!-- dimatikan eko -->
+				<!-- <li><a class="icon-link" href="<?php // echo $config->baseURL ?>builtin/setting"><i class="fas fa-cog"></i></a></li> -->
 				
 				<li>
 					<?php $img_url = !empty($user['avatar']) ? $config->baseURL . '/public/images/user/' . $user['avatar'] : $config->baseURL . '/public/images/user/default.png';
