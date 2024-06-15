@@ -51,16 +51,30 @@ class Login extends \App\Controllers\BaseController
 		}
 		
 		$error = false;
+		$verified=false;
 		$result = $this->model->checkUser($this->request->getPost('username'));
+		$result_verified = $this->model->checkUserVerified($this->request->getPost('username'));
 		
 		if ($result) {
 			if (!password_verify($this->request->getPost('password'), $result['password'])) {
 			
 				$error = true;
 			}
+
+			if (empty($result_verified)) {
+			
+				$verified = true;
+			}
 			
 		} else {
 			$error = true;
+		}
+
+		if ($verified)
+		{
+			$this->data['status'] = 'error';
+			$this->data['message'] = 'User Telah Terdaftar, Mohon Verifikasi Email Untuk Melakukan Login';
+			return;
 		}
 		
 		if ($error)

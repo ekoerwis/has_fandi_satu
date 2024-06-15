@@ -32,6 +32,17 @@ class LoginModel extends \App\Models\BaseModel
 	}
 	
 	
+	
+	public function checkUserVerified($username) 
+	{
+		$sql = 'SELECT * FROM user 
+				WHERE verified is not null and username = ?';
+		
+		$query = $this->db->query($sql, [$username]);
+		$result = $query->getRowArray();
+		
+		return $result;		
+	}
 	/* See base model
 	public function checkUser($username) 
 	{
