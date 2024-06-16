@@ -76,6 +76,32 @@ class RegisterModel extends \App\Models\BaseModel
 
 		return $result;
 	}
+	
+	public function activation($id_user){
+
+		$result =[];
+		
+		$result['status']='error';
+		$result['message']='User Tidak Ditemukan';
+
+		// $cekUser = "";
+		$sqlUser = "SELECT * FROM user where id_user = '$id_user' and verified is null ";
+		$resultUser = $this->db->query($sqlUser)->getRowArray();
+
+		if($resultUser and !empty($resultUser)){
+
+			$sqlAction = "update user set verified = now() where id_user = '$id_user'";
+			$resultAction = $this->db->query($sqlAction);
+
+			if($resultAction){
+				$result['status']='ok';
+				$result['message']='User Telah Berhasil DiVerifikasi, Mohon Login Ulang Untuk Memasuki Aplikasi';
+			}
+
+		}
+
+		return $result;
+	}
 
 	
 	/* See base model

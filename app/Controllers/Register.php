@@ -54,12 +54,13 @@ class Register extends \App\Controllers\BaseController
 		echo view('registerform', $data);
 	}
 
-	public function sendEmailForVerification($namaTarget='', $emailTarget=''){
+	public function sendEmailForVerification($namaTarget='', $emailTarget='' , $content=''){
 
 		$datax = [];
 		$datax['nama'] = $namaTarget;
 		$datax['email'] = $emailTarget;
-
+		$datax['message'] = $content;
+		$datax['baseHereURL'] = $this->config->baseURL."register/actproc";
 
 		$email = \Config\Services::email();
 
@@ -97,6 +98,7 @@ class Register extends \App\Controllers\BaseController
 
 		$data['register_status'] = 'register_gagal';
 		$data['role_register'] = $this->model->getRoleRegister();
+		$newword = '';
 
 		if(isset($_POST['submit'])){
 
@@ -106,8 +108,12 @@ class Register extends \App\Controllers\BaseController
 				$data['message'] =  ['status' => 'error', 'message' => 'Email Belum Terdaftar, Mohon Pastikan Email Telah Benar !','dismiss'=>false];
 			} else {
 				if($dataUser['verified'] == ''){
-					$this->sendEmailForVerification($dataUser['nama'], $dataUser['email']);
-					$data['message'] =  ['status' => 'ok', 'message' => 'Email Verifikasi Telah Dikirim, Mohon Cek Email Kembali','dismiss'=>false];
+					$newword = $this->encryptProccess($dataUser['id_user'],1);
+					// $realword = $this->encryptProccess($newword,2);
+					// $data['message'] =  ['status' => 'ok', 'message' => 'Email Verifikasi Telah Dikirim, Mohon Cek Email Kembali'.'---'.$newword . '---'.$realword ,'dismiss'=>false];
+					
+					$this->sendEmailForVerification($dataUser['nama'], $dataUser['email'],$newword);
+					$data['message'] =  ['status' => 'ok', 'message' => 'Email Verifikasi Telah Dikirim, Mohon Cek Email Kembali !' ,'dismiss'=>false];
 				} else {
 					$data['message'] =  ['status' => 'warning', 'message' => 'Email telah terverifikasi, Mohon Login Pada Halaman Awal','dismiss'=>false];
 				}
@@ -116,6 +122,26 @@ class Register extends \App\Controllers\BaseController
 			
 		}
 		echo view('reverificationform', $data);
+	}
+
+	public function encryptProccess($newWord='',$type=1){
+		// $type 1 = Encryp;
+		// $type 2 = decrypt;
+		$config         = config(Encryption::class);
+		$config->key    = '1234567890111213';
+		$config->driver = 'OpenSSL';
+		$config->cipher = 'AES-128-CBC';
+		$config->digest = 'SHA512';
+		$encrypter = service('encrypter',$config);
+		
+		$result = '';
+		if($type == 1){
+			$result = bin2hex($encrypter->encrypt($newWord));
+		} else {
+			$result = $encrypter->decrypt(hex2bin($newWord));
+		}
+
+		return $result;
 	}
 
 	public function resetPassword()
@@ -192,21 +218,33 @@ class Register extends \App\Controllers\BaseController
 			// echo $response;
 			return $response;
 	}
-
-	public function encryptPassword($newWord='',$type=1, $namaTarget){
-		// $type 1 = Encryp;
-		// $type 2 = decrypt;
-		
-		$encrypter = service('encrypter');
-
-		$result = '';
-		if($type == 1){
-			$result = $encrypter->encrypt($newWord);
-		} else {
-			$result = $encrypter->decrypt($newWord);
-		}
-
-		return $result;
-	}
 	
+	public function actproc(){
+
+		
+		$this->mustNotLoggedIn();
+
+		$data = $this->data;
+
+		if(empty($_GET['id']) or !isset($_GET['id'])){
+		
+			$data['message']['status'] = 'error';
+			$data['message']['message'] = 'Activasi Akun Telah Gagal !';
+			$data['message']['dismiss'] = false;
+			$data['message']['message2'] = 'VerificationNotValid';
+
+		} else {
+			
+			$realword = $this->encryptProccess($_GET['id'],2);
+
+			$action = $this->model->activation($realword);
+
+			$data['message']['status'] = $action['status'];
+			$data['message']['message'] = $action['message'];
+			$data['message']['dismiss'] = false;
+		}
+		
+		echo view('reverificationform', $data);
+
+	}
 }

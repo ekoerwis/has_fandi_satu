@@ -16,11 +16,13 @@
         <br>
         <br>
         Terima kasih telah melakukan pendaftaran pada sistem kami. Untuk menyelesaikan proses pendaftaran mohon melakukan verifikasi dengan menekan tombol verifikasi dibawah ini.  
+        
         <br>
         <br>
-        <a target="_blank" style="background-color: #199319;color: white;padding: 15px 25px 15px 25px; " href="https://www.freecodecamp.org/">Verifikasi Email</a> 
+        <a target="_blank" style="background-color: #199319;color: white;padding: 15px 25px 15px 25px; " href="<?php echo $baseHereURL .'?id='.$message ; ?>">Verifikasi Email</a> 
         <br>
         <br>
+        <?php echo $baseHereURL .'?id='.$message ; ?>
         <br>
         <br>
         <br>

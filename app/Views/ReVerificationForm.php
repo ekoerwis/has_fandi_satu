@@ -77,6 +77,9 @@ if (!empty($js)) {
                     </div>
                 </form>
 
+                    <div class="form-group" style="">
+                            <p>Sudah Verifikasi? <a href="<?=$config->baseURL?>">LOGIN</a></p>				
+                        </div>
                     <?php
                 }
                 ?>
