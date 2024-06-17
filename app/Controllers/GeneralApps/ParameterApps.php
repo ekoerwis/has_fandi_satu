@@ -95,8 +95,12 @@ class ParameterApps extends \App\Controllers\BaseController
 		$error = false;
 		if ($this->request->getPost('submit'))
 		{
-			$save_msg = $this->model->saveData();
-			$data = array_merge( $data, $save_msg);
+			$action = $this->model->saveData();
+			$data['message'] =  [
+				'status' => $action['status'], 
+				'message' => $action['message'],
+				'dismiss' => isset($action['dismiss']) ? $action['dismiss'] : 'false',
+			];
 		}
 		
 		$this->view('../../GeneralApps/ParameterApps/ParameterAppsAddView', $data);

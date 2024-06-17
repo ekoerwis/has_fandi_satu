@@ -24,8 +24,8 @@
 		// 	$exp = explode('-', $tgl_lahir);
 		// 	$tgl_lahir = $exp[2] . '-' . $exp[1] . '-' . $exp[0];
 		// }
-		if (!empty($msg)) {
-			show_message($msg['content'], $msg['status']);
+		if (!empty($message)) {
+			show_message($message['message'], $message['status'], $message['dismiss']);
 		}
 		?>
 		<form method="post" action="" class="form-horizontal" enctype="multipart/form-data">
@@ -63,8 +63,8 @@
                     <tbody>
                         <tr>
                             <td style="text-align: center;" >1</td>
-                            <td><input class="form-control" type="text" name="value_parameter[]" size="10" value="" placeholder="" required="required"/></td>
-                            <td><input class="form-control" type="text" name="label_parameter[]" size="50" value="" placeholder="" required="required"/></td>
+                            <td><input class="form-control" type="text" name="value_parameter[]" size="10"  placeholder="" required="required"/></td>
+                            <td><input class="form-control" type="text" name="label_parameter[]" size="50"  placeholder="" required="required"/></td>
                             <td><button type="button" name="add" id="add" class="btn btn-success" style="width:30px;"><i class="fas fa-plus"></i></button></td>
                         </tr>
                     </tbody>
@@ -91,8 +91,8 @@
 
         scriptAddRow += '<tr id="row'+i+'">'; 
         scriptAddRow += '<td style="text-align: center;">'+i+'</td>'; 
-        scriptAddRow += '<td><input class="form-control" type="text" name="value_parameter[]" size="10" value="" placeholder="" required="required"/></td>'; 
-        scriptAddRow += '<td><input class="form-control" type="text" name="label_parameter[]" size="50" value="" placeholder="" required="required"/></td>'; 
+        scriptAddRow += '<td><input class="form-control" type="text" name="value_parameter[]" size="10"  placeholder="" required="required"/></td>'; 
+        scriptAddRow += '<td><input class="form-control" type="text" name="label_parameter[]" size="50"  placeholder="" required="required"/></td>'; 
         scriptAddRow += '<td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove" style="width:30px;"><i class="fas fa-times"></i></button></td>'; 
         scriptAddRow += '</tr>'; 
         $('#dynamicTable').append(scriptAddRow);
