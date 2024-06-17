@@ -131,6 +131,28 @@ class ParameterAppsModel extends \App\Models\BaseModel
         return $result;
     }
 
+	public function getEditData($search = null) 
+	{
+
+        // $result = [];
+        $sql = $this->getMainSql();
+
+        
+        if ($search) {
+            $sql .= " WHERE id_group = $search ";
+        }
+        
+        $dataSql = $this->db->query($sql)->getRowArray();
+        
+        $dataDetail['dataDetail'] = $this->getDetail($dataSql['id_group']);
+
+        $data = array_merge($dataSql, $dataDetail);
+
+        $result=$data;
+
+        return $result;
+
+	}
 
 }
 ?>

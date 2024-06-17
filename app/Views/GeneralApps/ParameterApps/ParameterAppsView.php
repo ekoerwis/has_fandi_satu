@@ -10,13 +10,13 @@
 				echo '<a href="'.current_url().'/add" class="btn btn-success btn-xs"><i class="fa fa-plus pr-1"></i> Tambah Data</a>';
 			} 
 			if(strtolower($auth_ubah) == 'all'){
-				echo '<a href="'.current_url().'/add" class="btn btn-warning btn-xs ml-1"><i class="fa fa-edit pr-1"></i> Ubah Data</a>';
+				echo '<button id="editButton" class="btn btn-warning btn-xs ml-1"><i class="fa fa-edit pr-1"></i> Ubah Data</button>';
 			} 
 			if(strtolower($auth_hapus) == 'all'){
 				echo '<a href="'.current_url().'/delete" class="btn btn-danger btn-xs ml-1"><i class="fa fa-times pr-1"></i> Hapus Data</a>';
 			}
 		?>
-		<button id="popupButton">Show Selected Row Data</button>
+
 			<hr/>
 			<div class="table-responsive">
 				<!-- table-striped table-bordered table-hover  -->
@@ -80,13 +80,15 @@
 		});
 
 		 // Menangani klik tombol untuk menampilkan data baris yang dipilih
-		 $('#popupButton').on('click', function () {
+		 $('#editButton').on('click', function () {
 			var selectedData = contentTable.row('.selected').data();
 			if (selectedData) {
-				alert(
-					'Nama: ' + selectedData.kode_group + '\n' +
-					'Posisi: ' + selectedData.nama_group + '\n'
-				);
+				// alert(
+				// 	'Nama: ' + selectedData.kode_group + '\n' +
+				// 	'Posisi: ' + selectedData.nama_group + '\n'
+				// );
+				url = "<?php echo current_url().'/edit?id='; ?>" + selectedData.id_group;
+                window.open(url, "_self");
 			} else {
 				alert('Tidak ada baris yang dipilih!');
 			}

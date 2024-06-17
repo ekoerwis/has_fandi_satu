@@ -25,7 +25,7 @@ class ParameterApps extends \App\Controllers\BaseController
 		
 		$this->addJs ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.js');
 		$this->addStyle ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.css');
-		
+
 		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables_20240617_2/datatables.min.js');
 		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables_20240617_2/datatables.min.css');
 
@@ -104,6 +104,37 @@ class ParameterApps extends \App\Controllers\BaseController
 		}
 		
 		$this->view('../../GeneralApps/ParameterApps/ParameterAppsAddView', $data);
+
+	}
+	
+	public function edit() 
+	{
+		$this->cekHakAkses('update_data');
+		
+		$breadcrumb['Add'] = '';
+		$data = $this->data;
+		$data['title'] = 'Edit ' . $this->currentModule['judul_module'];
+		$data['msg'] = [];
+		
+		$error = false;
+
+		if(!empty($_GET['id'])){
+			$data['dataEdit'] =  $this->model->getEditData($_GET['id']);
+		}
+			// echo json_encode($data['dataEdit']);
+			// exit;
+
+		if ($this->request->getPost('submit'))
+		{
+			$action = $this->model->saveData();
+			$data['message'] =  [
+				'status' => $action['status'], 
+				'message' => $action['message'],
+				'dismiss' => isset($action['dismiss']) ? $action['dismiss'] : 'false',
+			];
+		}
+		
+		$this->view('../../GeneralApps/ParameterApps/ParameterAppsEditView', $data);
 
 	}
 	
