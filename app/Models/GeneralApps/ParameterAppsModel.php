@@ -22,30 +22,27 @@ class ParameterAppsModel extends \App\Models\BaseModel
 	public function getGroupParameter($limit, $start, $order, $dir, $search = null) 
 	{
 
+        $result = [];
         $sql = $this->getMainSql();
+
+        $countMainSQL = count($this->db->query($sql)->getResultArray());
         
         if ($search) {
             $sql .= " WHERE nama LIKE '%$search%' OR npm LIKE '%$search%'";
         }
 
+        $countFilterSQL = count($this->db->query($sql)->getResultArray());
+
         $sql .= " ORDER BY $order $dir LIMIT $start, $limit";
 
-        return $this->db->query($sql)->getResultArray();
+        $dataSql = $this->db->query($sql)->getResultArray();
 
-	}
+        $result['recordsTotal']=$countMainSQL;
+        $result['recordsFiltered']=$countFilterSQL;
+        $result['data']=$dataSql;
 
-    public function getCountGroupParameter() 
-	{
-        $sql = $this->getMainSql();
-        return $this->db->query($sql)->getResultArray();
+        return $result;
 
-	}public function getCountGroupParameterFilter($search = null) 
-	{
-        $sql = $this->getMainSql();
-        if ($search) {
-            $sql .= " WHERE nama LIKE '%$search%' OR npm LIKE '%$search%'";
-        }
-        return $this->db->query($sql)->getResultArray();
 	}
 
 }

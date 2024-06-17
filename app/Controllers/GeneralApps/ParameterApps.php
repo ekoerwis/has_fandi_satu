@@ -44,6 +44,7 @@ class ParameterApps extends \App\Controllers\BaseController
 	public function fetchAll(){
 		$this->cekHakAkses('read_data');
 
+		$result = [];
         $columns = ['nama', 'npm'];
         $limit = isset($_POST['length']) ? intval($_POST['length']) : 0;
         $start =isset($_POST['start']) ? intval($_POST['start']) : 0;
@@ -52,28 +53,17 @@ class ParameterApps extends \App\Controllers\BaseController
         $search =  isset($_POST['search']['value']) ? strval($_POST['search']['value']) : '';
         
         $result = $this->model->getGroupParameter($limit, $start, $order, $dir, $search);
-        $totalData = count($this->model->getCountGroupParameter());
-        $totalFiltered = count($this->model->getCountGroupParameterFilter($search));
 
-
-        $data = [];
-        if (!empty($results)) {
-            foreach ($results as $result) {
-                $nestedData['nama'] = $result['nama'];
-                $nestedData['npm'] = $result['npm'];
-
-                $data[] = $nestedData;
-            }
-        }
-
-        $json_data = [
+		$data = [];
+		
+        $data = [
             "draw" => intval($_POST['draw']),
-            "recordsTotal" => $totalData,
-            "recordsFiltered" =>$totalFiltered,
-            "data" => $result
+            "recordsTotal" => $result['recordsTotal'],
+            "recordsFiltered" =>$result['recordsFiltered'],
+            "data" => $result['data']
         ];
 
-        echo json_encode($json_data);
+        echo json_encode($data);
 
 	}
 	
