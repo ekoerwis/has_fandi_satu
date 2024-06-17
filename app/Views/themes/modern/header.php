@@ -151,6 +151,7 @@ $user = $_SESSION['user'];
 			</nav>
 		</div>
 		<div class="content">
-		<?=!empty($breadcrumb) ? breadcrumb($breadcrumb) : ''?>
+			<!-- eko hilangkan breadcrumb 20240618 -->
+		<!-- <?=!empty($breadcrumb) ? breadcrumb($breadcrumb) : ''?> -->
 		<div class="content-wrapper">
 		

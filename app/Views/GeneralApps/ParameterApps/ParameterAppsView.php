@@ -1,7 +1,7 @@
 <div class="card">
-	<!-- <div class="card-header">
+	<div class="card-header">
 		<h5 class="card-title"><?=$current_module['judul_module']?></h5>
-	</div> -->
+	</div>
 	
 	<div class="card-body">
         <?php
@@ -18,22 +18,22 @@
 		?>
 		<button id="popupButton">Show Selected Row Data</button>
 			<hr/>
-			<div class="">
-			<!-- table-striped table-bordered table-hover  -->
-			<!-- jika ingin memunculkan garis hilankan class table-border karena menggunakan class nya bootstrap -->
-			<table id="table1" class="table table-striped table-hover table-bordered " >
-			<thead>
-			<tr >
-				<!-- <th>No</th> -->
-				<th style="text-align: center;" width = "50px"></th>
-				<th style="text-align: center;">Kode Group</th>
-				<th style="text-align: center;">Nama Group</th>
-				<!-- <th>Aksi</th> -->
-			</tr>
-			</thead>
-			<tbody>
-			</tbody>
-			</table>
+			<div class="table-responsive">
+				<!-- table-striped table-bordered table-hover  -->
+				<!-- jika ingin memunculkan garis hilankan class table-border karena menggunakan class nya bootstrap -->
+				<table id="table1" class="table table-striped table-hover table-bordered" >
+					<thead>
+						<tr >
+							<!-- <th>No</th> -->
+							<th style="text-align: center;" width = "50px"></th>
+							<th style="text-align: center;">Kode Group</th>
+							<th style="text-align: center;">Nama Group</th>
+							<!-- <th>Aksi</th> -->
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
 			</div>
 	</div>
 </div>

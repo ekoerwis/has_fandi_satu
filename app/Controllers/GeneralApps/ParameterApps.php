@@ -23,7 +23,6 @@ class ParameterApps extends \App\Controllers\BaseController
 		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables/datatables.min.js');
 		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables/datatables.min.css');
 		
-		
 		$this->addJs ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.js');
 		$this->addStyle ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.css');
 		
@@ -34,6 +33,7 @@ class ParameterApps extends \App\Controllers\BaseController
 		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables/datatables-2.0.8/css/dataTables.dataTables.css');
 
 		// $this->addJs ( $this->config->baseURL . 'public/themes/modern/js/data-tables.js');
+
 		$this->addStyle ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/css/bootstrap-datepicker3.css');
 	}
 	
