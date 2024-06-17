@@ -19,9 +19,21 @@ class ParameterApps extends \App\Controllers\BaseController
 		$this->addJs ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js' );
 		$this->addJs ( $this->config->baseURL . 'public/themes/modern/js/date-picker.js');
 		$this->addJs ( $this->config->baseURL . 'public/themes/modern/js/image-upload.js');
-		$this->addJs ( $this->config->baseURL . 'public/vendors/datatables/datatables.min.js');
-		$this->addStyle ( $this->config->baseURL . 'public/vendors/datatables/datatables.min.css');
-		$this->addJs ( $this->config->baseURL . 'public/themes/modern/js/data-tables.js');
+		
+		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables/datatables.min.js');
+		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables/datatables.min.css');
+		
+		
+		$this->addJs ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.js');
+		$this->addStyle ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.css');
+		
+		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables_20240617_2/datatables.min.js');
+		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables_20240617_2/datatables.min.css');
+
+		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables/datatables-2.0.8/js/dataTables.js');
+		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables/datatables-2.0.8/css/dataTables.dataTables.css');
+
+		// $this->addJs ( $this->config->baseURL . 'public/themes/modern/js/data-tables.js');
 		$this->addStyle ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/css/bootstrap-datepicker3.css');
 	}
 	
@@ -45,13 +57,17 @@ class ParameterApps extends \App\Controllers\BaseController
 		$this->cekHakAkses('read_data');
 
 		$result = [];
-        $columns = ['nama', 'npm'];
+        $columns = ['id_group','kode_group', 'nama_group'];
         $limit = isset($_POST['length']) ? intval($_POST['length']) : 0;
         $start =isset($_POST['start']) ? intval($_POST['start']) : 0;
-        $order = $columns[$_POST['order'][0]['column']];
+        // $order = $columns[$_POST['order'][0]['column']];
+        $orders = isset($_POST['order'][0]['column']) ? strval($_POST['order'][0]['column']) : '0';
+        $order = $columns[$orders];
         $dir =  isset($_POST['order'][0]['dir']) ? strval($_POST['order'][0]['dir']) : ' asc ';
         $search =  isset($_POST['search']['value']) ? strval($_POST['search']['value']) : '';
         
+		
+
         $result = $this->model->getGroupParameter($limit, $start, $order, $dir, $search);
 
 		$data = [];
@@ -64,6 +80,26 @@ class ParameterApps extends \App\Controllers\BaseController
         ];
 
         echo json_encode($data);
+
+	}
+	
+	public function add() 
+	{
+		$this->cekHakAkses('create_data');
+		
+		$breadcrumb['Add'] = '';
+		$data = $this->data;
+		$data['title'] = 'Tambah ' . $this->currentModule['judul_module'];
+		$data['msg'] = [];
+		
+		$error = false;
+		if ($this->request->getPost('submit'))
+		{
+			$save_msg = $this->model->saveData();
+			$data = array_merge( $data, $save_msg);
+		}
+		
+		$this->view('../../GeneralApps/ParameterApps/ParameterAppsAddView', $data);
 
 	}
 	

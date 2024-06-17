@@ -14,7 +14,7 @@ class ParameterAppsModel extends \App\Models\BaseModel
 
 
 	public function getMainSql(){
-        $mainSQL = "SELECT * FROM mahasiswa";
+        $mainSQL = "SELECT * FROM parameter_group";
 
         return $mainSQL;
     }
@@ -28,7 +28,7 @@ class ParameterAppsModel extends \App\Models\BaseModel
         $countMainSQL = count($this->db->query($sql)->getResultArray());
         
         if ($search) {
-            $sql .= " WHERE nama LIKE '%$search%' OR npm LIKE '%$search%'";
+            $sql .= " WHERE kode_group LIKE '%$search%' OR nama_group LIKE '%$search%'";
         }
 
         $countFilterSQL = count($this->db->query($sql)->getResultArray());
