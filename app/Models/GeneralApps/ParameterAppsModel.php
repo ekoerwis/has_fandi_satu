@@ -41,14 +41,37 @@ class ParameterAppsModel extends \App\Models\BaseModel
 
         $sql .= " ORDER BY $order $dir LIMIT $start, $limit";
 
+        $dataFull = array();
+        
         $dataSql = $this->db->query($sql)->getResultArray();
+
+        foreach($dataSql as $data){
+            // $dataPlot['dataDetail'] = array();
+			$dataDetail['dataDetail'] = $this->getDetail($data['id_group']);
+
+			$data = array_merge($data, $dataDetail);
+
+			array_push($dataFull, $data);
+
+        }
 
         $result['recordsTotal']=$countMainSQL;
         $result['recordsFiltered']=$countFilterSQL;
-        $result['data']=$dataSql;
+        $result['data']=$dataFull;
 
         return $result;
 
+	}
+
+    public function getDetail($id = '')
+	{
+		$sql = "select * from parameter_detail where id_group = $id";
+
+		$result = array();
+
+		$result = $this->db->query($sql)->getResultArray();
+
+		return $result;
 	}
 
     public function saveData() 

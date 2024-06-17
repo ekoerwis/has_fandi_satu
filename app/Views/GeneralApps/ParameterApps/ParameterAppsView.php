@@ -1,7 +1,7 @@
 <div class="card">
-	<div class="card-header">
+	<!-- <div class="card-header">
 		<h5 class="card-title"><?=$current_module['judul_module']?></h5>
-	</div>
+	</div> -->
 	
 	<div class="card-body">
         <?php
@@ -110,15 +110,23 @@
             });
 
 		function format(d) {
-			return (
-				'Full name: ' +
-				d.kode_group +
-				' ' +
-				d.nama_group +
-				'<br>' +
-				'<br>' +
-				'The child row can contain any data you wish, including links, images, inner tables etc.'
-			);
+
+			var detail = d.dataDetail;
+
+
+			var htmlDetail = "<table class='table table-light'><thead class='thead-dark'><tr><th style='text-align:center;'>Kode</th><th  style='text-align:center;'>Nama</th></tr></thead><tbody>"
+
+			if(detail.length < 1){
+				htmlDetail += "<tr style='text-align:center;'><td colspan=2> Tidak Memiliki Detail</td></tr>"
+			} else {
+				for (var i = 0; i < detail.length; i++) {
+					htmlDetail += '<tr><td>' + detail[i].value_parameter + '</td><td>' + detail[i].label_parameter + '</td></tr>';
+				}
+			}
+
+			htmlDetail += "</tbody></table>"
+
+			return (htmlDetail);
 		}
 		// batas menangani detail row
 
