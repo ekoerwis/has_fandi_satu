@@ -47,7 +47,7 @@ class ParameterAppsModel extends \App\Models\BaseModel
 
         foreach($dataSql as $data){
             // $dataPlot['dataDetail'] = array();
-			$dataDetail['dataDetail'] = $this->getDetail($data['id_group']);
+			$dataDetail['dataDetail'] = $this->getDetail($data['id_group'],'id_group');
 
 			$data = array_merge($data, $dataDetail);
 
@@ -63,9 +63,9 @@ class ParameterAppsModel extends \App\Models\BaseModel
 
 	}
 
-    public function getDetail($id = '')
+    public function getDetail($id = '', $column='id_parameter')
 	{
-		$sql = "select * from parameter_detail where id_group = $id";
+		$sql = "select * from parameter_detail where $column = '$id'";
 
 		$result = array();
 
@@ -76,7 +76,6 @@ class ParameterAppsModel extends \App\Models\BaseModel
 
     public function saveData() 
 	{
-
         $result = [];
 
 		$data_db['kode_group'] = $this->request->getPost('kode_group');
@@ -144,13 +143,82 @@ class ParameterAppsModel extends \App\Models\BaseModel
         
         $dataSql = $this->db->query($sql)->getRowArray();
         
-        $dataDetail['dataDetail'] = $this->getDetail($dataSql['id_group']);
+        $dataDetail['dataDetail'] = $this->getDetail($dataSql['id_group'],'id_group');
 
         $data = array_merge($dataSql, $dataDetail);
 
         $result=$data;
 
         return $result;
+
+	}
+
+    
+
+    public function editData() 
+	{
+        $result = [];
+
+		$id_group = $this->request->getPost('id_group');
+		$kode_group = $this->request->getPost('kode_group');
+		$data_db['nama_group'] = $this->request->getPost('nama_group');
+        
+        $listDetailForm=array();
+		$implodeListDetailForm = "";
+
+		if(empty($this->getRowMainSql($id_group,'id_group'))){
+			$result['status']='error';
+			$result['message']='Kode Tidak Ditemukan, Mohon Periksa Kembali !';
+			$result['dismiss']=true;
+		} else {
+
+			$update = $this->db->table('parameter_group')->update($data_db, ['id_group' => $id_group]);
+
+			if($update){
+
+                // $idHeader = $this->getRowMainSql($data_db['kode_group'],'kode_group');
+
+                // if(!empty($idHeader['id_group'])){
+                    
+                    // $data_db_detail['id_group'] = $idHeader['id_group'];
+
+                    $jmlDetail = count($_POST['value_parameter']);
+
+                    for($i=0 ; $i < $jmlDetail ; $i++){
+                        $id_parameter = isset($_POST['id_parameter'][$i])? strval($_POST['id_parameter'][$i]):'';
+                        $data_db_detail['value_parameter'] = $_POST['value_parameter'][$i];
+                        $data_db_detail['label_parameter'] = $_POST['label_parameter'][$i];
+                        $data_db_detail['id_group'] = $id_group;
+
+                        // $cekDetail = $this->getDetail($id_parameter,'id_parameter');
+
+                        if(empty($id_parameter)){
+                            $this->db->table('parameter_detail')->insert($data_db_detail);
+                        } else {
+                             $this->db->table('parameter_detail')->update($data_db_detail, ['id_parameter' => $id_parameter]);
+                        }
+                        array_push($listDetailForm,"'".$data_db_detail['value_parameter']."'");
+
+                    }
+                    
+                    if(count($listDetailForm) > 0){
+                        $implodeListDetailForm = implode(" , ",$listDetailForm);
+                        $sqlDelete = "DELETE FROM parameter_detail WHERE id_group = '$id_group'  AND value_parameter NOT IN ($implodeListDetailForm)";
+                        $delete = $this->db->query($sqlDelete);
+                    }
+
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil Diubah';
+                    $result['dismiss']=false;
+                // }
+			} else {
+				$result['status']='error';
+				$result['message']='Proses gagal mohon ulangi kembali !';
+			    $result['dismiss']=true;
+        }
+		}
+
+		return $result;
 
 	}
 

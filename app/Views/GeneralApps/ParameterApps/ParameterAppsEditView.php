@@ -28,6 +28,7 @@
 				<div class="form-group row">
 					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-2 col-form-label">Kode Group</label>
 					<div class="col-sm-5">
+						<input class="form-control" type="text" name="id_group" value="<?=set_value('id_group', @$dataEdit['id_group'])?>" placeholder="ID Group Parameter" required="required" readonly hidden/>
 						<input class="form-control" type="text" name="kode_group" value="<?=set_value('kode_group', @$dataEdit['kode_group'])?>" placeholder="Kode Group Parameter" required="required" readonly/>
 					</div>
 				</div>
@@ -68,7 +69,7 @@
                         ?>
                         <tr>
                             <td style="text-align: center;" >1</td>
-                            <td hidden><input class="form-control" type="text" name="id_parameter[]"  value="<?= $val0 ?>" placeholder="" required="required"/></td>
+                            <td hidden><input class="form-control" type="text" name="id_parameter[]"  value="<?= $val0 ?>" placeholder="" /></td>
                             <td><input class="form-control" type="text" name="value_parameter[]" size="10" value="<?= $val1 ?>" placeholder="" required="required"/></td>
                             <td><input class="form-control" type="text" name="label_parameter[]" size="50" value="<?= $val2 ?>"  placeholder="" required="required"/></td>
                             <td><button type="button" name="add" id="add" class="btn btn-success" style="width:30px;"><i class="fas fa-plus"></i></button></td>
@@ -79,7 +80,7 @@
                                 for($i=1 ; $i < count($dataEdit['dataDetail']) ;$i++ ){
                                     echo'<tr id="row'.$i.'">'; 
                                     echo'<td style="text-align: center;">'.($i+1).'</td>'; 
-                                    echo'<td hidden><input class="form-control" type="text" name="id_parameter[]" size="10" value="'. $dataEdit['dataDetail'][$i]['id_parameter'].'"  placeholder="" required="required"/></td>'; 
+                                    echo'<td hidden><input class="form-control" type="text" name="id_parameter[]" size="10" value="'. $dataEdit['dataDetail'][$i]['id_parameter'].'"  placeholder=""/></td>'; 
                                     echo'<td><input class="form-control" type="text" name="value_parameter[]" size="10" value="'. $dataEdit['dataDetail'][$i]['value_parameter'].'"  placeholder="" required="required"/></td>'; 
                                     echo'<td><input class="form-control" type="text" name="label_parameter[]" size="50" value="'. $dataEdit['dataDetail'][$i]['label_parameter'].'"  placeholder="" required="required"/></td>'; 
                                     echo'<td><button type="button" name="remove" id="'.$i.'" class="btn btn-danger btn_remove" style="width:30px;"><i class="fas fa-times"></i></button></td>'; 

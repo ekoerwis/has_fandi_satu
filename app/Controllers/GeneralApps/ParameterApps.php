@@ -126,7 +126,9 @@ class ParameterApps extends \App\Controllers\BaseController
 
 		if ($this->request->getPost('submit'))
 		{
-			$action = $this->model->saveData();
+			$action = $this->model->editData();
+			$data['dataEdit'] =  $this->model->getEditData($_GET['id']);
+
 			$data['message'] =  [
 				'status' => $action['status'], 
 				'message' => $action['message'],
