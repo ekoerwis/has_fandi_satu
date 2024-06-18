@@ -151,13 +151,17 @@
 			var detail = d.dataDetail;
 
 
-			var htmlDetail = "<table class='table table-light'><thead class='thead-dark'><tr><th style='text-align:center;'>Kode</th><th  style='text-align:center;'>Nama</th></tr></thead><tbody>"
+			var htmlDetail = "<table class='table table-light'><thead class='thead-dark'><tr><th style='text-align:center;'>Kode</th><th  style='text-align:center;'>Nama</th><th  style='text-align:center;'>Urutan</th></tr></thead><tbody>"
 
 			if(detail.length < 1){
-				htmlDetail += "<tr style='text-align:center;'><td colspan=2> Tidak Memiliki Detail</td></tr>"
+				htmlDetail += "<tr style='text-align:center;'><td colspan=3> Tidak Memiliki Detail</td></tr>"
 			} else {
 				for (var i = 0; i < detail.length; i++) {
-					htmlDetail += '<tr><td>' + detail[i].value_parameter + '</td><td>' + detail[i].label_parameter + '</td></tr>';
+					var data_seq = '';
+					if(detail[i].sequence != null){
+						data_seq=detail[i].sequence ; 
+					}
+					htmlDetail += '<tr><td>' + detail[i].value_parameter + '</td><td>' + detail[i].label_parameter + '</td><td>' + data_seq + '</td></tr>';
 				}
 			}
 

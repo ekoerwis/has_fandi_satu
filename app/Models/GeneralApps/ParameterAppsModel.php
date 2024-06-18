@@ -65,7 +65,7 @@ class ParameterAppsModel extends \App\Models\BaseModel
 
     public function getDetail($id = '', $column='id_parameter')
 	{
-		$sql = "select * from parameter_detail where $column = '$id'";
+		$sql = "select * from parameter_detail where $column = '$id' order by sequence , value_parameter asc";
 
 		$result = array();
 
@@ -103,6 +103,7 @@ class ParameterAppsModel extends \App\Models\BaseModel
                     for($i=0 ; $i < $jmlDetail ; $i++){
                         $data_db_detail['value_parameter'] = $_POST['value_parameter'][$i];
                         $data_db_detail['label_parameter'] = $_POST['label_parameter'][$i];
+                        $data_db_detail['sequence'] = $_POST['sequence'][$i];
                         $this->db->table('parameter_detail')->insert($data_db_detail);
                     }
 
@@ -182,6 +183,7 @@ class ParameterAppsModel extends \App\Models\BaseModel
                     $id_parameter = isset($_POST['id_parameter'][$i])? strval($_POST['id_parameter'][$i]):'';
                     $data_db_detail['value_parameter'] = $_POST['value_parameter'][$i];
                     $data_db_detail['label_parameter'] = $_POST['label_parameter'][$i];
+                    $data_db_detail['sequence'] = isset($_POST['sequence'][$i]) ? strval($_POST['sequence'][$i]):'';
                     $data_db_detail['id_group'] = $id_group;
 
                     if(empty($id_parameter)){

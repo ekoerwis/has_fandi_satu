@@ -52,6 +52,7 @@
                             <th style="text-align: center;" width = "50px"> No </th>
                             <th style="text-align: center;">Kode</th>
                             <th style="text-align: center;">Deskripsi</th>
+                            <th style="text-align: center;">Sequence</th>
                             <th style="text-align: center;"></th>
                             <!-- <th>Aksi</th> -->
                         </tr>
@@ -65,24 +66,28 @@
                                 $val0= $dataEdit['dataDetail'][0]['id_parameter'];
                                 $val1= $dataEdit['dataDetail'][0]['value_parameter'];
                                 $val2= $dataEdit['dataDetail'][0]['label_parameter'];
+                                $val3= isset($dataEdit['dataDetail'][0]['sequence']) ? strval($dataEdit['dataDetail'][0]['sequence']):'';
                             }
                         ?>
                         <tr>
                             <td style="text-align: center;" >1</td>
                             <td hidden><input class="form-control" type="text" name="id_parameter[]"  value="<?= $val0 ?>" placeholder="" /></td>
-                            <td><input class="form-control" type="text" name="value_parameter[]" size="10" value="<?= $val1 ?>" placeholder="" required="required"/></td>
-                            <td><input class="form-control" type="text" name="label_parameter[]" size="50" value="<?= $val2 ?>"  placeholder="" required="required"/></td>
+                            <td><input class="form-control" type="text" name="value_parameter[]" size="10" value="<?= $val1 ?>" placeholder="Kode" required="required"/></td>
+                            <td><input class="form-control" type="text" name="label_parameter[]" size="50" value="<?= $val2 ?>"  placeholder="Label" required="required"/></td>
+                            <td><input class="form-control" type="number" name="sequence[]"  value="<?= $val3 ?>"  placeholder="Urutan" /></td>
                             <td><button type="button" name="add" id="add" class="btn btn-success" style="width:30px;"><i class="fas fa-plus"></i></button></td>
                         </tr>
 
                         <?php
                             if(count($dataEdit['dataDetail']) > 1){
                                 for($i=1 ; $i < count($dataEdit['dataDetail']) ;$i++ ){
+                                    $seq_detail = isset($dataEdit['dataDetail'][$i]['sequence'])? strval( $dataEdit['dataDetail'][$i]['sequence']) :''; 
                                     echo'<tr id="row'.$i.'">'; 
                                     echo'<td style="text-align: center;">'.($i+1).'</td>'; 
                                     echo'<td hidden><input class="form-control" type="text" name="id_parameter[]" size="10" value="'. $dataEdit['dataDetail'][$i]['id_parameter'].'"  placeholder=""/></td>'; 
-                                    echo'<td><input class="form-control" type="text" name="value_parameter[]" size="10" value="'. $dataEdit['dataDetail'][$i]['value_parameter'].'"  placeholder="" required="required"/></td>'; 
-                                    echo'<td><input class="form-control" type="text" name="label_parameter[]" size="50" value="'. $dataEdit['dataDetail'][$i]['label_parameter'].'"  placeholder="" required="required"/></td>'; 
+                                    echo'<td><input class="form-control" type="text" name="value_parameter[]" size="10" value="'. $dataEdit['dataDetail'][$i]['value_parameter'].'"  placeholder="Kode" required="required"/></td>'; 
+                                    echo'<td><input class="form-control" type="text" name="label_parameter[]" size="50" value="'. $dataEdit['dataDetail'][$i]['label_parameter'].'"  placeholder="Label" required="required"/></td>'; 
+                                    echo'<td><input class="form-control" type="number" name="sequence[]" value="'. $seq_detail.'"  placeholder="Urutan" /></td>'; 
                                     echo'<td><button type="button" name="remove" id="'.$i.'" class="btn btn-danger btn_remove" style="width:30px;"><i class="fas fa-times"></i></button></td>'; 
                                     echo'</tr>'; 
                                 }
@@ -112,8 +117,9 @@
 
         scriptAddRow += '<tr id="row'+i+'">'; 
         scriptAddRow += '<td style="text-align: center;">'+i+'</td>'; 
-        scriptAddRow += '<td><input class="form-control" type="text" name="value_parameter[]" size="10"  placeholder="" required="required"/></td>'; 
-        scriptAddRow += '<td><input class="form-control" type="text" name="label_parameter[]" size="50"  placeholder="" required="required"/></td>'; 
+        scriptAddRow += '<td><input class="form-control" type="text" name="value_parameter[]" size="10"  placeholder=Kode"" required="required"/></td>'; 
+        scriptAddRow += '<td><input class="form-control" type="text" name="label_parameter[]" size="50"  placeholder="Label" required="required"/></td>'; 
+        scriptAddRow += '<td><input class="form-control" type="number" name="sequence[]"  placeholder="Urutan" /></td>'; 
         scriptAddRow += '<td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove" style="width:30px;"><i class="fas fa-times"></i></button></td>'; 
         scriptAddRow += '</tr>'; 
         $('#dynamicTable').append(scriptAddRow);
