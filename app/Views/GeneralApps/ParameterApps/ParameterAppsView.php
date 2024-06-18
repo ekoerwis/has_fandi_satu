@@ -2,6 +2,12 @@
 	<div class="card-header">
 		<h5 class="card-title"><?=$current_module['judul_module']?></h5>
 	</div>
+
+	<?php
+			if (!empty($message)) {
+				show_message($message['message'], $message['status'], $message['dismiss']);
+			}
+		?>
 	
 	<div class="card-body">
         <?php
@@ -13,7 +19,8 @@
 				echo '<button id="editButton" class="btn btn-warning btn-xs ml-1"><i class="fa fa-edit pr-1"></i> Ubah Data</button>';
 			} 
 			if(strtolower($auth_hapus) == 'all'){
-				echo '<a href="'.current_url().'/delete" class="btn btn-danger btn-xs ml-1"><i class="fa fa-times pr-1"></i> Hapus Data</a>';
+				helper('deleteModal');
+				echo '<button id="deleteButton" class="btn btn-danger btn-xs ml-1"><i class="fa fa-times pr-1"></i> Hapus Data</button>';
 			}
 		?>
 
@@ -38,6 +45,10 @@
 	</div>
 </div>
 
+	<?php
+	helper('deleteModal');
+	echo deleteModal();
+	?>
 
 <script type="text/javascript">
 
@@ -79,20 +90,44 @@
 			}
 		});
 
-		 // Menangani klik tombol untuk menampilkan data baris yang dipilih
+		 // Menangani klik tombol Edit
 		 $('#editButton').on('click', function () {
 			var selectedData = contentTable.row('.selected').data();
 			if (selectedData) {
-				// alert(
-				// 	'Nama: ' + selectedData.kode_group + '\n' +
-				// 	'Posisi: ' + selectedData.nama_group + '\n'
-				// );
 				url = "<?php echo current_url().'/edit?id='; ?>" + selectedData.id_group;
                 window.open(url, "_self");
 			} else {
 				alert('Tidak ada baris yang dipilih!');
 			}
 		});
+
+		 // Menangani klik tombol Hapus
+		 $('#deleteButton').on('click', function () {
+			var selectedData = contentTable.row('.selected').data();
+			if (selectedData) {
+				$('#modalBody').html(
+					'Apakah Anda Yakin Akan Menghapus? <br>' +
+					'Kode : ' + selectedData.kode_group + '<br>' +
+					'Nama: ' + selectedData.nama_group + '<br>' 
+           		 );
+				$('#deleteModal').modal('show');
+			} else {
+				alert('Tidak ada baris yang dipilih!');
+			}
+		});
+
+		
+		$('#confirmDelete').on('click', function () {
+			var selectedData = contentTable.row('.selected').data();
+			if (selectedData) {
+				url = "<?php echo current_url().'?action=delete&id='; ?>" + selectedData.id_group;
+                window.open(url, "_self");
+			} else {
+				alert('Tidak ada baris yang dipilih!');
+			}
+		});
+
+		 //Batas  Menangani klik tombol Hapus
 
 		// menangani detail row
 		$('#table1 tbody').on('click', 'td.dt-control', function () {

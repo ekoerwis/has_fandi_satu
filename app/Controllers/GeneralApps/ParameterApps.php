@@ -50,6 +50,18 @@ class ParameterApps extends \App\Controllers\BaseController
 		$data['auth_hapus']=$this->actionUser['delete_data'];
 		// batas tambahan by eko : berfungsi untuk nilai otorisasi berdasarkan role
 
+
+		if(isset($_GET['id']) and isset($_GET['action'])){
+			if($_GET['action'] == 'delete'){
+				$action = $this->delete($_GET['id']);
+				$data['message'] =  [
+					'status' => $action['status'], 
+					'message' => $action['message'],
+					'dismiss' => isset($action['dismiss']) ? $action['dismiss'] : 'false',
+				];
+			}
+		}
+
 		$this->view('../../GeneralApps/ParameterApps/ParameterAppsView', $data);
 	}
 
@@ -137,6 +149,31 @@ class ParameterApps extends \App\Controllers\BaseController
 		}
 		
 		$this->view('../../GeneralApps/ParameterApps/ParameterAppsEditView', $data);
+
+	}
+	
+	public function delete($id='') 
+	{
+		$this->cekHakAkses('delete_data');
+		
+		$result =  [
+			'status' => 'warning', 
+			'message' => 'ID Tidak Terbaca',
+			'dismiss' =>  'true',
+		];
+		
+		$error = false;
+
+		if(!empty($id)){
+			$action = $this->model->deleteData($id);
+			$result =  [
+				'status' => $action['status'], 
+				'message' => $action['message'],
+				'dismiss' => isset($action['dismiss']) ? $action['dismiss'] : 'false',
+			];
+		}
+
+		return $result;
 
 	}
 	

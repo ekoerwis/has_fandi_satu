@@ -176,46 +176,75 @@ class ParameterAppsModel extends \App\Models\BaseModel
 
 			if($update){
 
-                // $idHeader = $this->getRowMainSql($data_db['kode_group'],'kode_group');
+                $jmlDetail = count($_POST['value_parameter']);
 
-                // if(!empty($idHeader['id_group'])){
-                    
-                    // $data_db_detail['id_group'] = $idHeader['id_group'];
+                for($i=0 ; $i < $jmlDetail ; $i++){
+                    $id_parameter = isset($_POST['id_parameter'][$i])? strval($_POST['id_parameter'][$i]):'';
+                    $data_db_detail['value_parameter'] = $_POST['value_parameter'][$i];
+                    $data_db_detail['label_parameter'] = $_POST['label_parameter'][$i];
+                    $data_db_detail['id_group'] = $id_group;
 
-                    $jmlDetail = count($_POST['value_parameter']);
-
-                    for($i=0 ; $i < $jmlDetail ; $i++){
-                        $id_parameter = isset($_POST['id_parameter'][$i])? strval($_POST['id_parameter'][$i]):'';
-                        $data_db_detail['value_parameter'] = $_POST['value_parameter'][$i];
-                        $data_db_detail['label_parameter'] = $_POST['label_parameter'][$i];
-                        $data_db_detail['id_group'] = $id_group;
-
-                        // $cekDetail = $this->getDetail($id_parameter,'id_parameter');
-
-                        if(empty($id_parameter)){
-                            $this->db->table('parameter_detail')->insert($data_db_detail);
-                        } else {
-                             $this->db->table('parameter_detail')->update($data_db_detail, ['id_parameter' => $id_parameter]);
-                        }
-                        array_push($listDetailForm,"'".$data_db_detail['value_parameter']."'");
-
+                    if(empty($id_parameter)){
+                        $this->db->table('parameter_detail')->insert($data_db_detail);
+                    } else {
+                            $this->db->table('parameter_detail')->update($data_db_detail, ['id_parameter' => $id_parameter]);
                     }
-                    
-                    if(count($listDetailForm) > 0){
-                        $implodeListDetailForm = implode(" , ",$listDetailForm);
-                        $sqlDelete = "DELETE FROM parameter_detail WHERE id_group = '$id_group'  AND value_parameter NOT IN ($implodeListDetailForm)";
-                        $delete = $this->db->query($sqlDelete);
-                    }
+                    array_push($listDetailForm,"'".$data_db_detail['value_parameter']."'");
+                }
+                
+                if(count($listDetailForm) > 0){
+                    $implodeListDetailForm = implode(" , ",$listDetailForm);
+                    $sqlDelete = "DELETE FROM parameter_detail WHERE id_group = '$id_group'  AND value_parameter NOT IN ($implodeListDetailForm)";
+                    $delete = $this->db->query($sqlDelete);
+                }
 
-                    $result['status']='ok';
-                    $result['message']='Data Berhasil Diubah';
-                    $result['dismiss']=false;
+                $result['status']='ok';
+                $result['message']='Data Berhasil Diubah';
+                $result['dismiss']=false;
                 // }
 			} else {
 				$result['status']='error';
 				$result['message']='Proses gagal mohon ulangi kembali !';
 			    $result['dismiss']=true;
         }
+		}
+
+		return $result;
+
+	}
+
+    public function deleteData($id) 
+	{
+        $result = [];
+
+		if(empty($id)){
+			$result['status']='error';
+			$result['message']='Kode Tidak Ditemukan, Mohon Periksa Kembali !';
+			$result['dismiss']=true;
+		} else {
+
+			$sqlDeleteDetail = "delete from parameter_detail where id_group = $id";
+            $deleteDetail = $this->db->query($sqlDeleteDetail);
+
+			if($deleteDetail){
+
+                $sqlDeleteGroup = "delete from parameter_group where id_group = $id";
+                $deleteGroup = $this->db->query($sqlDeleteGroup);
+
+                if($deleteGroup){
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil DiHapus';
+                    $result['dismiss']=true;
+                } else {
+                    $result['status']='error';
+                    $result['message']='Proses Hapus Group Gagal !';
+                    $result['dismiss']=true;
+                }
+			} else {
+				$result['status']='error';
+				$result['message']='Proses Hapus Detail Gagal !';
+			    $result['dismiss']=true;
+            }
 		}
 
 		return $result;
