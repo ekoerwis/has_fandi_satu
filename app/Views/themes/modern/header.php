@@ -102,7 +102,7 @@ $user = $_SESSION['user'];
 							<ul class="account-menu">
 								<li class="account-img-profile">
 									<div class="avatar-profile">
-										<img src="<?=$img_url?>" alt="user_img">
+										<img src="<?=$img_url?>" alt="user_img" style="max-width: 120px; max-height: 120px">
 									</div>
 									<div class="card-content">
 									<p><?=strtoupper($user['nama'])?></p>
