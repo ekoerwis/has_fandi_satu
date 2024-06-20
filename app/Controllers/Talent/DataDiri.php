@@ -57,76 +57,16 @@ class DataDiri extends \App\Controllers\BaseController
 
 		if ($this->request->getPost('submit'))
 		{
-			$action = $this->model->saveData($data['data_akun']['id_user']);
+			$action = $this->model->saveData($this->user['id_user']);
 			$data['message'] =  [
 				'status' => $action['status'], 
 				'message' => $action['message'],
 				'dismiss' => isset($action['dismiss']) ? $action['dismiss'] : 'false',
 			];
-
-            if($action['status'] == 'ok'){
-                $uploadAction = $this->upload($data['data_akun']['id_user']);
-                
-                if($uploadAction['status'] !='ok'){
-                    $data['message'] =  [
-                        'status' => $uploadAction['status'], 
-                        'message' => $uploadAction['message'],
-                        'dismiss' => isset($uploadAction['dismiss']) ? $uploadAction['dismiss'] : 'false',
-                    ];
-                }
-            }
 		}
 
 		$this->view('../../Talent/DataDiri/DataDiriView', $data);
 	}
-
-    public function upload($id)
-    {
-        $result=[];
-
-        $validationRule = [
-            'avatar' => [
-                'label' => 'Image File',
-                'rules' => 'uploaded[avatar]'
-                    . '|is_image[avatar]'
-                    . '|mime_in[avatar,image/jpg,image/jpeg,image/png]'
-                    . '|max_size[avatar,300]' // Batasan ukuran file dalam KB
-                    . '|max_dims[avatar,300,300]', // Batasan ukuran gambar
-            ],
-        ];
-
-        if (!$this->validate($validationRule)) {
-            $result['status']='warning';
-            $result['message']=$this->validator->getErrors();
-            $result['dismiss']=true;
-
-            return $result;
-        }
-
-        $img = $this->request->getFile('avatar');
-
-        if ( $img and !$img->hasMoved()) {
-            $path = 'public/images/user/';
-            $newName = $id.'_'.$img->getRandomName();
-            $uploadProses = $img->move($path, $newName);
-
-            if($uploadProses){
-                
-                $result['status']='ok';
-                $result['message']='filepath : ' . $path . '+++ img name : '.$img->getName();
-                $result['dismiss']=true;
-                
-                $updateAvatarDB = $this->model->updateAvatar($id,$newName);
-                if(!$updateAvatarDB){
-                    $result['status']='warning';
-                    $result['message']='Gagal Update Data Avatar';
-                    $result['dismiss']=true;
-                }
-            }
-        }
-
-        return $result;
-    }
 
     public function getParameter(){
 		

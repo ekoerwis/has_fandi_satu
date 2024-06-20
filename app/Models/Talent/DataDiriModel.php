@@ -14,23 +14,14 @@ class DataDiriModel extends \App\Models\BaseModel
 
 
 	public function getMainSql(){
-        $mainSQL = "SELECT * FROM user";
+        $mainSQL = "SELECT * FROM datadiri";
 
         return $mainSQL;
     }
 
     public function getRowMainSql($id='',$column='id_user'){
 
-        $sql = "select * from user where $column = '$id'";
-
-        $result = $this->db->query($sql)->getRowArray();
-
-        return $result;
-    }
-
-    public function cekEmail($id='',$email){
-
-        $sql = "select * from user where id_user != '$id' and email = '$email'";
+        $sql = "select * from datadiri where $column = '$id'";
 
         $result = $this->db->query($sql)->getRowArray();
 
@@ -41,47 +32,57 @@ class DataDiriModel extends \App\Models\BaseModel
 	{
         $result = [];
 
-		$data_db['nama'] = $this->request->getPost('nama');
-		$data_db['email'] = $this->request->getPost('email');
+		$data_db['id_user'] = $id;
+		$data_db['nama_depan'] = isset($_POST['namadepan'])?strval($_POST['namadepan']):'';
+		$data_db['nama_tengah'] = isset($_POST['namatengah'])?strval($_POST['namatengah']):'';
+		$data_db['nama_belakang'] = isset($_POST['namabelakang'])?strval($_POST['namabelakang']):'';
+		$data_db['nama_katakana'] = isset($_POST['nama_katakana'])?strval($_POST['nama_katakana']):'';
+		$data_db['nama_panggilan'] = isset($_POST['nama_panggilan'])?strval($_POST['nama_panggilan']):'';
+		$data_db['tempat_lahir'] = isset($_POST['tempat_lahir'])?strval($_POST['tempat_lahir']):'';
+
+        $exp = explode('-', $_POST['tanggal_lahir']);
+		$tgl_lahir = $exp[2].'-'.$exp[1].'-'.$exp[0];
+		$data_db['tanggal_lahir'] = isset($_POST['tanggal_lahir'])? $tgl_lahir :'';
+		
+        $data_db['sex'] = isset($_POST['sex'])?strval($_POST['sex']):'';
+		$data_db['status'] = isset($_POST['status'])?strval($_POST['status']):'';
+		$data_db['kerja_shift'] = isset($_POST['kerja_shift'])?strval($_POST['kerja_shift']):'';
+		$data_db['kerja_overtime'] = isset($_POST['kerja_overtime'])?strval($_POST['kerja_overtime']):'';
+		$data_db['kerja_offday'] = isset($_POST['kerja_offday'])?strval($_POST['kerja_offday']):'';
+		$data_db['kacamata'] = isset($_POST['kacamata'])?strval($_POST['kacamata']):'';
+		$data_db['mata_kiri'] = isset($_POST['mata_kiri'])?strval($_POST['mata_kiri']):'';
+		$data_db['mata_kanan'] = isset($_POST['mata_kanan'])?strval($_POST['mata_kanan']):'';
+		$data_db['tinggi_badan'] = isset($_POST['tinggi_badan'])?floatval($_POST['tinggi_badan']):'';
+		$data_db['berat_badan'] = isset($_POST['berat_badan'])?floatval($_POST['berat_badan']):'';
+		$data_db['golongan_darah'] = isset($_POST['golongan_darah'])?strval($_POST['golongan_darah']):'';
+		$data_db['tangan_dominan'] = isset($_POST['tangan_dominan'])?strval($_POST['tangan_dominan']):'';
+		$data_db['agama'] = isset($_POST['agama'])?strval($_POST['agama']):'';
         
         $result['status']='error';
         $result['message']='Proses gagal mohon ulangi kembali !';
         $result['dismiss']=true;
         
 		if(empty($this->getRowMainSql($id,'id_user'))){
-			$result['status']='error';
-			$result['message']='Kode Tidak Ditemukan, Mohon Periksa Kembali !';
-			$result['dismiss']=true;
+            $save = $this->db->table('datadiri')->insert($data_db);
+            if($save){
+                $result['status']='ok';
+                $result['message']='Data Berhasil Ditambah';
+                $result['dismiss']=false;
+            } 
 		} else {
-
-            if(!empty($this->cekEmail($id,$data_db['email']))){
-                $result['status']='error';
-                $result['message']='Proses gagal, Email Telah Digunakan Oleh Akun Lain !';
-                $result['dismiss']=true;
-            } else {
-                $update = $this->db->table('user')->update($data_db, ['id_user' => $id]);
-                if($update){
-                    $result['status']='ok';
-                    $result['message']='Data Berhasil Diubah';
-                    $result['dismiss']=false;
-                } 
-            }
+            $update = $this->db->table('datadiri')->update($data_db, ['id_user' => $id]);
+            if($update){
+                $result['status']='ok';
+                $result['message']='Data Berhasil Diubah';
+                $result['dismiss']=false;
+            } 
 
 		}
 
 		return $result;
 
 	}
-
-    public function updateAvatar($id='',$avatar='') 
-	{
-		$data_db['avatar'] =$avatar;
-        $result = $this->db->table('user')->update($data_db, ['id_user' => $id]);;
-
-		return $result;
-
-	}
-
+    
     public function getParameter($id='',$column='id_parameter'){
 
         if(isset($_POST['id'])){
