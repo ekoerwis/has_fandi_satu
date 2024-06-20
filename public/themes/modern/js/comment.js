@@ -1,8 +1,4 @@
-/**
-* Written by: Agus Prawoto Hadi
-* Year		: 2020
-* Website	: jagowebdev.com
-*/
+
 
 jQuery(document).ready(function () 
 {

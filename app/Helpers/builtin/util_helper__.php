@@ -1,8 +1,5 @@
 <?php
-/**
-Functions
-https://webdev.id
-*/
+
 
 /* Create breadcrumb
 $data: title as key, and url as value */ 

@@ -1,8 +1,5 @@
 <?php
-/**
-Functions
-https://webdev.id
-*/
+
 
 // options(['name' => 'gender'], ['M' => 'Male', 'F' => 'Female'], ['input_field', 'default'])
     function deleteModal($judul='',$message ='', $idButton='deleteModalButton') 

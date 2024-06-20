@@ -1,11 +1,4 @@
 <?php 
-/**
-*	App Name	: Admin Template Dashboard Codeigniter 4	
-*	Developed by: Agus Prawoto Hadi
-*	Website		: https://jagowebdev.com
-*	Year		: 2020
-*/
-
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
@@ -56,8 +49,8 @@ class Base extends Controller
 		$this->data['request'] = $this->request;
 		$this->data['isloggedin'] = $this->isLoggedIn;
 		$this->data['session'] = $this->session;
-		$this->data['site_title'] = 'Premium member';
-		$this->data['site_desc'] = 'Premium Jagowebdev - Resouce premium untuk belajar web development';
+		$this->data['site_title'] = 'Hashira';
+		$this->data['site_desc'] = 'Hashira.';
 		
 		if ($this->user)
 			$this->data['user'] = $model->getUserById($this->session->get('user')['id_user']);

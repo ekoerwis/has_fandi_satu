@@ -1,10 +1,4 @@
-/**
-* App		: PHP Admin Template
-* Version	: 1.5
-* Written by: Agus Prawoto Hadi
-* Year		: 2020
-* Website	: jagowebdev.com
-*/
+
 
 jQuery(document).ready(function () {
 	$('.file').change(function(e) 

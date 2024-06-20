@@ -1,9 +1,3 @@
-/**
-* Written by: Agus Prawoto Hadi
-* Year		: 2020
-* Website	: jagowebdev.com
-*/
-
 $(document).ready(function() 
 {
 	$('#list-menu').wdiMenuEditor({

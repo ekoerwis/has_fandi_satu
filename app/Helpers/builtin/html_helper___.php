@@ -1,8 +1,5 @@
 <?php
-/**
-Functions
-https://webdev.id
-*/
+
 function alert($data, $dismiss = true){
 	$class_dismiss = $dismiss ? 'alert-dismissible' : '';
 	
