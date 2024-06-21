@@ -63,6 +63,7 @@ class DataDiri extends \App\Controllers\BaseController
 				'message' => $action['message'],
 				'dismiss' => isset($action['dismiss']) ? $action['dismiss'] : 'false',
 			];
+			$data['data_akun']=$this->model->getRowMainSql($this->user['id_user']);
 		}
 
 		$this->view('../../Talent/DataDiri/DataDiriView', $data);

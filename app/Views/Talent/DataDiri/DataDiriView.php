@@ -47,7 +47,7 @@
 				<div class="form-group ">
 					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Tanggal Lahir</label>
 					<div class="col-sm-6">
-						<input class="form-control date-picker" type="text" id="tanggal_lahir" name="tanggal_lahir" value="<?=set_value('tanggal_lahir', @$tanggal_lahir)?>" placeholder="Tanggal Lahir" required="required" data-date-end-date="0d"/>
+						<input class="form-control date-picker" type="text" id="tanggal_lahir" name="tanggal_lahir" value="<?=set_value('tanggal_lahir', @$tanggal_lahir)?>" placeholder="dd-mm-yyyy" required="required" data-date-end-date="0d"/>
 					</div>
 				</div>
 				<div class="form-group ">
