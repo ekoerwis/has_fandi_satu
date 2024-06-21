@@ -1,3 +1,16 @@
+<style>
+	/* Chrome, Safari, Edge, Opera */
+		.phonenumber::-webkit-outer-spin-button,
+		.phonenumber::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+		}
+
+	/* Firefox */
+	.phonenumber[type=number] {
+	-moz-appearance: textfield;
+	}
+</style>
 <div class="card">
 	<div class="card-header bg-danger text-light">
 		<h5 class="card-title"><?=$title?></h5>
@@ -33,6 +46,19 @@
 					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-2 col-form-label">Email</label>
 					<div class="col-sm-6">
 						<input class="form-control" type="email" name="email" value="<?=set_value('email', @$data_akun['email'])?>" placeholder="Email" required="required"/>
+					</div>
+				</div>
+
+				<div class="form-group ">
+					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-2 col-form-label">Phone</label>
+					<div class="col-sm-6">
+						<div class="input-group mb-2">
+							<div class="input-group-prepend">
+								<div class="input-group-text">+62</div>
+							</div>
+							<input class="form-control phonenumber" type="number" name="phone" value="<?=set_value('phone', @$data_akun['phone'])?>" placeholder="Phone" />
+							<!-- <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username"> -->
+						</div>
 					</div>
 				</div>
 

@@ -43,6 +43,7 @@ class ProfileModel extends \App\Models\BaseModel
 
 		$data_db['nama'] = $this->request->getPost('nama');
 		$data_db['email'] = $this->request->getPost('email');
+		$data_db['phone'] = $this->request->getPost('phone') ;
         
         $result['status']='error';
         $result['message']='Proses gagal mohon ulangi kembali !';

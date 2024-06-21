@@ -64,7 +64,9 @@ class Profile extends \App\Controllers\BaseController
 				'dismiss' => isset($action['dismiss']) ? $action['dismiss'] : 'false',
 			];
 
-            if($action['status'] == 'ok'){
+            $img = $this->request->getFile('avatar');
+
+            if($action['status'] == 'ok' & $img!=''){
                 $uploadAction = $this->upload($data['data_akun']['id_user']);
                 
                 if($uploadAction['status'] !='ok'){
