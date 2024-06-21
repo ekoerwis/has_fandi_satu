@@ -1,12 +1,4 @@
 <?php
-/**
-Functions
-Utilities Helper
-https://webdev.id
-*/
-
-/* Create breadcrumb
-$data: title as key, and url as value */ 
 
 function list_files($dir, $subdir = false, $data = []) {
 	

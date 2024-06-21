@@ -57,6 +57,9 @@ class DataDiriModel extends \App\Models\BaseModel
 		$data_db['golongan_darah'] = isset($_POST['golongan_darah'])?strval($_POST['golongan_darah']):'';
 		$data_db['tangan_dominan'] = isset($_POST['tangan_dominan'])?strval($_POST['tangan_dominan']):'';
 		$data_db['agama'] = isset($_POST['agama'])?strval($_POST['agama']):'';
+		$data_db['kelebihan'] = isset($_POST['kelebihan'])?strval($_POST['kelebihan']):'';
+		$data_db['kekurangan'] = isset($_POST['kekurangan'])?strval($_POST['kekurangan']):'';
+		$data_db['hobi'] = isset($_POST['hobi'])?strval($_POST['hobi']):'';
         
         $result['status']='error';
         $result['message']='Proses gagal mohon ulangi kembali !';
@@ -66,7 +69,7 @@ class DataDiriModel extends \App\Models\BaseModel
             $save = $this->db->table('datadiri')->insert($data_db);
             if($save){
                 $result['status']='ok';
-                $result['message']='Data Berhasil Ditambah';
+                $result['message']='Data Berhasil Ditambah'.$data_db['kekurangan'] ;
                 $result['dismiss']=false;
             } 
 		} else {
