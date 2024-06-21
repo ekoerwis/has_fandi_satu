@@ -69,7 +69,7 @@ class DataDiriModel extends \App\Models\BaseModel
             $save = $this->db->table('datadiri')->insert($data_db);
             if($save){
                 $result['status']='ok';
-                $result['message']='Data Berhasil Ditambah'.$data_db['kekurangan'] ;
+                $result['message']='Data Berhasil Ditambah';
                 $result['dismiss']=false;
             } 
 		} else {
