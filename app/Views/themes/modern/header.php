@@ -1,10 +1,5 @@
 <?php 
-/**
-*	App Name	: Admin Template Dashboard Codeigniter 4
-*	Developed by: Agus Prawoto Hadi
-*	Website		: www.jagowebdev.com
-*	Year		: 2020
-*/
+
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -66,7 +61,7 @@ $user = $_SESSION['user'];
 <body>
 	<header class="nav-header">
 		<div class="nav-header-logo pull-left">
-			<a class="header-logo" href="<?=$config->baseURL?>" title="Jagowebdev">
+			<a class="header-logo" href="<?=$config->baseURL?>" title="<?=$config->webtitle?>">
 				<img src="<?=$config->baseURL . '/public/images/' . $settingWeb->logo_app?>"/>
 			</a>
 		</div>
