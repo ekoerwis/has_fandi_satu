@@ -57,19 +57,20 @@ class RiwayatPendidikan extends \App\Controllers\BaseController
 
 		$error = false;
 
-        $data['data_akun']=$this->model->getMainSql($this->user['id_user']);
-
+		
 		if ($this->request->getPost('submit'))
 		{
 			$action = $this->model->saveData($this->user['id_user']);
-			$data['data_akun'] =  $this->model->getMainSql($this->user['id_user']);
-
+			
 			$data['message'] =  [
 				'status' => $action['status'], 
 				'message' => $action['message'],
 				'dismiss' => isset($action['dismiss']) ? $action['dismiss'] : 'false',
 			];
+			
+			// $data['data_akun'] =  $this->model->getMainSql($this->user['id_user']);
 		}
+		$data['data_akun']=$this->model->getMainSql($this->user['id_user']);
 		
 		$this->view('../../Talent/RiwayatPendidikan/RiwayatPendidikanView', $data);
 	}

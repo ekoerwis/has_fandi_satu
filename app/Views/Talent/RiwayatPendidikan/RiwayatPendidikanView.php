@@ -1,5 +1,5 @@
 <div class="card">
-	<div class="card-header">
+	<div class="card-header bg-info text-light">
 		<h5 class="card-title"><?=$title?></h5>
 	</div>
 	
@@ -20,7 +20,7 @@
                     <div class="form-group form-group-jenjang" id="form-group-1">
                         <div class="form-group row">
                             <div class="col-sm-2">
-                                <input type="text" class="form-control id-1"  name="id[]" value="<?=set_value('id[]', @$data_akun[0]['id'])?>" placeholder="id" readonly>
+                                <input type="text" class="form-control id-1"  name="id[]" value="<?= @$data_akun[0]['id'] ?>" placeholder="id" readonly hidden>
                                 <label class="col-form-label">Jenjang</label>
                                 <select class="form-control jenjang-1"   name="jenjang[]"  required="required">
                                     <option value="">Pilih Salah Satu</option>
@@ -28,11 +28,11 @@
                             </div>
                             <div class="col-sm-5">
                                 <label class="col-form-label">Nama Instansi</label>
-                                <input type="text" class="form-control nama_instansi-1" value="<?=set_value('nama_instansi[]', @$data_akun[0]['nama_instansi'])?>"  name="nama_instansi[]" placeholder="Nama Sekolah / Universitas / Institut"  required="required">
+                                <input type="text" class="form-control nama_instansi-1" value="<?= @$data_akun[0]['nama_instansi']?>"  name="nama_instansi[]" placeholder="Nama Sekolah / Universitas / Institut"  required="required">
                             </div>
                             <div class="col-sm-3">
                                 <label class="col-form-label">Jurusan</label>
-                                <input type="text" class="form-control jurusan-1"  value="<?=set_value('jurusan[]', @$data_akun[0]['jurusan'])?>" name="jurusan[]" placeholder="Jurusan">
+                                <input type="text" class="form-control jurusan-1"  value="<?= @$data_akun[0]['jurusan'] ?>" name="jurusan[]" placeholder="Jurusan">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -42,7 +42,7 @@
                                     <select class="form-control bulan_masuk-1"  name="bulan_masuk[]"  required="required">
                                         <option value="">Pilih Salah Satu</option>
                                     </select>
-                                    <input type="number" class="form-control tahun_masuk-1"  value="<?=set_value('tahun_masuk[]', @$data_akun[0]['tahun_masuk'])?>"  name="tahun_masuk[]" placeholder="Tahun Masuk" required="required">
+                                    <input type="number" class="form-control tahun_masuk-1"  value="<?= @$data_akun[0]['tahun_masuk'] ?>"  name="tahun_masuk[]" placeholder="Tahun Masuk" required="required">
                                 </div>
                             </div>
                             <div class="col-sm-5">
@@ -51,17 +51,17 @@
                                     <select class="form-control bulan_lulus-1"  name="bulan_lulus[]"  required="required">
                                         <option value="">Pilih Salah Satu</option>
                                     </select>
-                                    <input type="number" class="form-control tahun_lulus-1" name="tahun_lulus[]"  value="<?=set_value('tahun_lulus[]', @$data_akun[0]['tahun_lulus'])?>" placeholder="Tahun Lulus" required="required">
+                                    <input type="number" class="form-control tahun_lulus-1" name="tahun_lulus[]"  value="<?=  @$data_akun[0]['tahun_lulus'] ?>" placeholder="Tahun Lulus" required="required">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group  row">
+                        <!-- <div class="form-group  row">
                             <div class="col-sm-1">
                                 <label class="col-form-label"></label>
-                                <!-- <button type="button" name="add" id="add" class="btn btn-success  add-more">Tambah Data</button> -->
+                                <button type="button" name="add" id="add" class="btn btn-success  add-more">Tambah Data</button>
                             </div>
-                        </div>
-                        <hr>
+                        </div> -->
+                        <hr class="bg-info" >
                     </div>
                 </div>
                 <!--batas detail -->
@@ -83,41 +83,37 @@
     $(document).ready(function(){
         
         
-        var jmlDataAkun = parseInt('<?= count($data_akun);  ?>');
+        // var jmlDataAkun = parseInt("<?php //count($data_akun);  ?>");
         var formGroupCount = 1;
         
-        <?php $numDataAkun = 0; ?>
-        
-        console.log(jmlDataAkun);
-        // formGroupCount++;
+        var dataJSON = '<?php echo json_encode($data_akun); ?>';
+        var dataParse=JSON.parse(dataJSON);
 
-        if(jmlDataAkun > 0 ){
-            for(var i = 0 ; i < jmlDataAkun ; i++){
-                createOption('.jenjang-'+formGroupCount, '8', 'id_group' ,'<?= $data_akun[$numDataAkun]['jenjang'] ?>');
-                createOption('.bulan_masuk-'+formGroupCount, '30', 'id_group' ,'<?= $data_akun[$numDataAkun]['bulan_masuk'] ?>');
-                createOption('.bulan_lulus-'+formGroupCount, '30', 'id_group' ,'<?= $data_akun[$numDataAkun]['bulan_lulus'] ?>');
-                if(i > 0){
-                    addFormGroup();
+        // console.log(dataJSON);
+        // console.log('banyak data='+ dataParse.length);
 
-                    <?php $numDataAkun++; ?>
-                    createOption('.jenjang-'+formGroupCount, '8', 'id_group' ,'<?= $data_akun[$numDataAkun]['jenjang'] ?>');
-                    createOption('.bulan_masuk-'+formGroupCount, '30', 'id_group' ,'<?= $data_akun[$numDataAkun]['bulan_masuk'] ?>');
-                    createOption('.bulan_lulus-'+formGroupCount, '30', 'id_group' ,'<?= $data_akun[$numDataAkun]['bulan_lulus'] ?>');
-                    $('.id-'+formGroupCount).val('<?php echo $data_akun[$numDataAkun]["id"] ?>') ;
-                    $('.nama_instansi-'+formGroupCount).val('<?php echo $data_akun[$numDataAkun]["nama_instansi"] ?>') ;
-                    $('.jurusan-'+formGroupCount).val('<?php echo $data_akun[$numDataAkun]["jurusan"] ?>') ;
-                    $('.tahun_masuk-'+formGroupCount).val('<?php echo $data_akun[$numDataAkun]["tahun_masuk"] ?>') ;
-                    $('.tahun_lulus-'+formGroupCount).val('<?php echo $data_akun[$numDataAkun]["tahun_lulus"] ?>') ;
-
-                }
-            }
-            
-        } 
-        
-        else {
+        if(dataParse.length == 0){
             createOption('.jenjang-'+formGroupCount, '8', 'id_group' );
             createOption('.bulan_masuk-'+formGroupCount, '30', 'id_group' );
             createOption('.bulan_lulus-'+formGroupCount, '30', 'id_group' );
+        } else {
+            for (let i = 0; i < dataParse.length; i++) {
+                if(i == 0){
+                    createOption('.jenjang-'+formGroupCount, '8', 'id_group' ,dataParse[i]['jenjang']);
+                    createOption('.bulan_masuk-'+formGroupCount, '30', 'id_group' ,dataParse[i]['bulan_masuk']);
+                    createOption('.bulan_lulus-'+formGroupCount, '30', 'id_group' ,dataParse[i]['bulan_lulus']);
+                } else {
+                    addFormGroup();
+                    createOption('.jenjang-'+formGroupCount, '8', 'id_group' ,dataParse[i]['jenjang']);
+                    createOption('.bulan_masuk-'+formGroupCount, '30', 'id_group' ,dataParse[i]['bulan_masuk']);
+                    createOption('.bulan_lulus-'+formGroupCount, '30', 'id_group',dataParse[i]['bulan_lulus']);
+                    $('.id-'+formGroupCount).val(dataParse[i]['id']) ;
+                    $('.nama_instansi-'+formGroupCount).val(dataParse[i]['nama_instansi']) ;
+                    $('.jurusan-'+formGroupCount).val(dataParse[i]['jurusan']) ;
+                    $('.tahun_masuk-'+formGroupCount).val(dataParse[i]['tahun_masuk']) ;
+                    $('.tahun_lulus-'+formGroupCount).val(dataParse[i]['tahun_lulus']) ;
+                }
+            }
         }
 
         
@@ -129,7 +125,7 @@
             var newFormGroup = `<div class="form-group form-group-jenjang" id="form-group-${formGroupCount}">
                         <div class="form-group row">
                             <div class="col-sm-2">
-                                <input type="text" class="form-control id-${formGroupCount}"  name="id[]" placeholder="id" readonly>
+                                <input type="text" class="form-control id-${formGroupCount}"  name="id[]" placeholder="id" readonly hidden>
                                 <label class="col-form-label">Jenjang</label>
                                 <select class="form-control jenjang-${formGroupCount}"  name="jenjang[]"  required="required">
                                     <option value="">Pilih Salah Satu</option>
@@ -170,7 +166,7 @@
                                 <button class="btn btn-danger remove">Hapus</button>
                             </div>
                         </div>
-                        <hr>
+                        <hr  class="bg-info">
                     </div>`;
                     
             $('#dynamic-form').append(newFormGroup);
