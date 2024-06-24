@@ -70,7 +70,7 @@
                     <div class="col-sm-5">
                         <button type="button" name="add" id="add" class="btn btn-success add-more">Tambah Riwayat</button>
 
-						<button type="submit" name="submit" value="submit" class="btn btn-primary">Save</button>
+						<button type="submit" name="submit" value="submit" class="btn btn-primary"><i class="far fa-save pr-2"></i>Save</button>
 					</div>
 				</div>
 			</div>
@@ -163,7 +163,7 @@
                         <div class="form-group  row">
                             <div class="col-sm-1">
                                 <label class="col-form-label"></label>
-                                <button class="btn btn-danger remove">Hapus</button>
+                                <button class="btn btn-danger remove"><i class="far fa-minus-square pr-2"></i>Hapus</button>
                             </div>
                         </div>
                         <hr  class="bg-info">
