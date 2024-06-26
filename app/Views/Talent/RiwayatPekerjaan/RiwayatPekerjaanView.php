@@ -182,15 +182,13 @@
                                 </div>
                             </div>
                         </div>
-                        <hr class="bg-info" >
-                    </div>
                         <div class="form-group  row">
                             <div class="col-sm-1">
                                 <label class="col-form-label"></label>
                                 <button class="btn btn-danger remove"><i class="far fa-minus-square pr-2"></i>Hapus</button>
                             </div>
                         </div>
-                        <hr  class="bg-info">
+                        <hr class="bg-info" >
                     </div>`;
                     
             $('#dynamic-form').append(newFormGroup);
