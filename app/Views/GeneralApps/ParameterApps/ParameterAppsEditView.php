@@ -117,7 +117,7 @@
 
         scriptAddRow += '<tr id="row'+i+'">'; 
         scriptAddRow += '<td style="text-align: center;">'+i+'</td>'; 
-        scriptAddRow += '<td><input class="form-control" type="text" name="value_parameter[]" size="10"  placeholder=Kode"" required="required"/></td>'; 
+        scriptAddRow += '<td><input class="form-control" type="text" name="value_parameter[]" size="10"  placeholder="Kode" required="required"/></td>'; 
         scriptAddRow += '<td><input class="form-control" type="text" name="label_parameter[]" size="50"  placeholder="Label" required="required"/></td>'; 
         scriptAddRow += '<td><input class="form-control" type="number" name="sequence[]"  placeholder="Urutan" /></td>'; 
         scriptAddRow += '<td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove" style="width:30px;"><i class="fas fa-times"></i></button></td>'; 
