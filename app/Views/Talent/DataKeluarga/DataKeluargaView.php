@@ -9,10 +9,25 @@
         
 
 		<?php
-		// if (@$tgl_lahir) {
-		// 	$exp = explode('-', $tgl_lahir);
-		// 	$tgl_lahir = $exp[2] . '-' . $exp[1] . '-' . $exp[0];
-		// }
+		if ($data_ayah[0]['tanggal_lahir']) {
+			$exp = explode('-', $data_ayah[0]['tanggal_lahir']);
+			$tanggal_lahir_ayah = $exp[2] . '-' . $exp[1] . '-' . $exp[0];
+
+			$usia_ayah = strval(intval(date("Y")) - intval($exp[0])) . ' Tahun' ;
+		}
+		if ($data_ibu[0]['tanggal_lahir']) {
+			$exp = explode('-', $data_ibu[0]['tanggal_lahir']);
+			$tanggal_lahir_ibu = $exp[2] . '-' . $exp[1] . '-' . $exp[0];
+
+			$usia_ibu = strval(intval(date("Y")) - intval($exp[0])) . ' Tahun' ;
+		}
+		if ($data_pasangan[0]['tanggal_lahir']) {
+			$exp = explode('-', $data_pasangan[0]['tanggal_lahir']);
+			$tanggal_lahir_pasangan = $exp[2] . '-' . $exp[1] . '-' . $exp[0];
+
+			$usia_pasangan = strval(intval(date("Y")) - intval($exp[0])) . ' Tahun' ;
+		}
+
 		if (!empty($message)) {
 			show_message($message['message'], $message['status'], $message['dismiss']);
 		}
@@ -20,72 +35,102 @@
 		<form method="post" action="" class="form-horizontal" enctype="multipart/form-data">
         
 
-        <div class="card-header bg-secondary text-light border rounded " style="padding-top: 15px; padding-bottom: 15px;opacity: 0.7;">
-            <h5 class="">Ayah</h5>
-        </div>
-
 			<div class="tab-content" id="myTabContent">
-                <div id="dynamic-form">
 
-                    <div class="form-group form-group-pekerjaan" id="form-group-1">
-                        <div class="form-group row">
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control id-1"  name="id[]" value="<?= @$data_akun[0]['id'] ?>" placeholder="id" readonly hidden>
-                                <label class="col-form-label">Tipe Pekerjaan</label>
-                                <select class="form-control tipe_pekerjaan-1"   name="tipe_pekerjaan[]"  required="required">
-                                    <option value="">Pilih Salah Satu</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-4">
-                                <label class="col-form-label">Lokasi Pekerjaan</label>
-                                <select class="form-control lokasi_pekerjaan-1"   name="lokasi_pekerjaan[]"  required="required">
-                                    <option value="">Pilih Salah Satu</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-4">
-                                <label class="col-form-label">Nama Kota</label>
-                                <input type="text" class="form-control nama_kota-1"  value="<?= @$data_akun[0]['nama_kota'] ?>" name="nama_kota[]" placeholder="Nama Kota">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-5">
-                                <label class="col-form-label">Nama Perusahaan</label>
-                                <input type="text" class="form-control nama_perusahaan-1"  value="<?= @$data_akun[0]['nama_perusahaan'] ?>" name="nama_perusahaan[]" placeholder="Nama Perusahaan">
-                            </div>
-                            <div class="col-sm-5">
-                                <label class="col-form-label">Bidang Pekerjaan</label>
-                                <input type="text" class="form-control bidang_pekerjaan-1" value="<?= @$data_akun[0]['bidang_pekerjaan']?>"  name="bidang_pekerjaan[]" placeholder="Bidang Pekerjaan"  required="required">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-5">
-                                <label class="col-form-label">Bulan Tahun Masuk</label>
-                                <div class="input-group">
-                                    <select class="form-control bulan_masuk-1"  name="bulan_masuk[]"  required="required">
-                                        <option value="">Pilih Salah Satu</option>
-                                    </select>
-                                    <input type="number" class="form-control tahun_masuk-1"  value="<?= @$data_akun[0]['tahun_masuk'] ?>"  name="tahun_masuk[]" placeholder="Tahun Masuk" required="required">
-                                </div>
-                            </div>
-                            <div class="col-sm-5">
-                                <label class="col-form-label">Bulan Tahun Keluar</label>
-                                <div class="input-group">
-                                    <select class="form-control bulan_keluar-1"  name="bulan_keluar[]"  required="required">
-                                        <option value="">Pilih Salah Satu</option>
-                                    </select>
-                                    <input type="number" class="form-control tahun_keluar-1" name="tahun_keluar[]"  value="<?=  @$data_akun[0]['tahun_keluar'] ?>" placeholder="Tahun Keluar" required="required">
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="bg-info" >
-                    </div>
+            <!-- bagian ayah -->
+            <div class="card-header bg-secondary text-light border rounded mb-2 " style="padding-top: 15px; padding-bottom: 15px;">
+                    <h5 class="">Ayah</h5>
                 </div>
+				<div class="form-group">
+					<input class="form-control" type="text" name="id_ayah" value="<?= $data_ayah[0]['id'] ?>" placeholder="id Ayah" readonly/>
+					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Tanggal Lahir</label>
+					<div class="col-sm-6">
+                        <div class="input-group">
+						    <input class="form-control date-picker " type="text" id="" name="tanggal_lahir_ayah" value="<?= $tanggal_lahir_ayah?>" placeholder="dd-mm-yyyy" required="required" data-date-end-date="0d"/>
+						    <input class="form-control usia-class" type="text" name="usia[]"  value="<?= $usia_ayah ?>" placeholder="usia" readonly/>
+                        </div>
+                    </div>
+				</div>
+				<div class="form-group ">
+					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Profesi</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"  name="profesi_ayah" value="<?= $data_ayah[0]['profesi'] ?>" placeholder="Profesi" />
+					</div>
+				</div>
+                
+                <!-- bagian ibu -->
+                <div class="card-header bg-secondary text-light border rounded mb-2 " style="padding-top: 15px; padding-bottom: 15px;">
+                    <h5 class="">Ibu</h5>
+                </div>
+				<div class="form-group ">
+					<input class="form-control" type="text" name="id_ibu" value="<?= $data_ibu[0]['id'] ?>" placeholder="id Ibu" readonly/>
+					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Tanggal Lahir</label>
+					<div class="col-sm-6">
+                        <div class="input-group">
+						    <input class="form-control date-picker " type="text" id="" name="tanggal_lahir_ibu" value="<?=set_value('tanggal_lahir_ibu', @$tanggal_lahir_ibu)?>" placeholder="dd-mm-yyyy" required="required" data-date-end-date="0d"/>
+						    <input class="form-control usia-class" type="text" name="usia[]"  value="<?= $usia_ibu ?>" placeholder="usia" readonly/>
+                        </div>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Profesi</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text" name="profesi_ibu" value="<?= $data_ibu[0]['profesi'] ?>" placeholder="Profesi"/>
+					</div>
+				</div>
+
+                <!-- bagian pasangan -->
+                <div class="card-header bg-secondary text-light border rounded mb-2 " style="padding-top: 15px; padding-bottom: 15px;">
+                    <h5 class="">Pasangan (Suami/Istri)</h5>
+                </div>
+				<div class="form-group ">
+					<input class="form-control" type="text" name="id_pasangan" value="<?= $data_pasangan[0]['id'] ?>" placeholder="id Pasangan" readonly/>
+					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Tanggal Lahir</label>
+					<div class="col-sm-6">
+                        <div class="input-group">
+						    <input class="form-control date-picker " type="text" id="" name="tanggal_lahir_pasangan" value="<?=set_value('tanggal_lahir_pasangan', @$tanggal_lahir_pasangan)?>" placeholder="dd-mm-yyyy"  data-date-end-date="0d"/>
+						    <input class="form-control usia-class" type="text" name="usia[]" value="<?= $usia_pasangan ?>" placeholder="usia" readonly/>
+                        </div>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Profesi</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text"  name="profesi_pasangan" value="<?= $data_pasangan[0]['id'] ?>" placeholder="Profesi"/>
+					</div>
+				</div>
+
+                
+
+
+                <!-- bagian anak -->
+                <div class="card-header bg-secondary text-light border rounded mb-2" style="padding-top: 15px; padding-bottom: 15px;">
+                    <h5 class="">Anak</h5>
+                </div>
+                <div id="children-container">
+                    <!-- Dynamic children input will be added here -->
+                </div>
+                <div class="col-sm-3 col-md-2 col-lg-3 col-xl-6 mt-3">
+                    <button type="button" class="btn btn-success" id="add-child">Tambah Anak</button>
+                </div>
+
+                <!-- bagian saudara kandung -->
+                <div class="card-header bg-secondary text-light border rounded mt-3 mb-2" style="padding-top: 15px; padding-bottom: 15px;">
+                    <h5 class="">Saudara Kandung</h5>
+                </div>
+                <div id="sibling-container">
+                    <!-- Dynamic saudara kandung input will be added here -->
+                </div>
+                <div class="col-sm-3 col-md-2 col-lg-3 col-xl-6 mt-3">
+                    <button type="button" class="btn btn-success" id="add-sibling">Tambah Saudara</button>
+                </div>
+
+
+                
                 <!--batas detail -->
                 
                 <div class="form-group row mb-0 mt-3">
                     <div class="col-sm-5">
-                        <button type="button" name="add" id="add" class="btn btn-success add-more">Tambah Riwayat</button>
-
 						<button type="submit" name="submit" value="submit" class="btn btn-primary"><i class="far fa-save pr-2"></i>Save</button>
 					</div>
 				</div>
@@ -97,131 +142,223 @@
 
 <script>
     $(document).ready(function(){
-        
-        
-        // var jmlDataAkun = parseInt("<?php //count($data_akun);  ?>");
+
+         // Initialize datepicker
+         $('.date-picker').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true
+        }).on('changeDate', function(e) {
+            var dateInput = $(this).val();
+            var ageInput = $(this).closest('.input-group').find('.usia-class');
+            var hariini = new Date();
+            
+            // var age = calculateAge(new Date(dateInput.split('-').reverse().join('-')));
+            var age = parseInt(hariini.getUTCFullYear()) - parseInt(dateInput.split('-')[2]) +' Tahun' ;
+            ageInput.val(age + " Tahun");
+        });
+
+        // Calculate age function
+        function calculateAge(birthday) {
+            var ageDifMs = Date.now() - birthday.getTime();
+            var ageDate = new Date(ageDifMs);
+            return Math.abs(ageDate.getUTCFullYear() - 1970);
+        }
+
+        // anak
+         // Add initial child section
+         var childIndex = 0;
+        addChildSection(childIndex);
+
+        // Add new child section on button click
+        $('#add-child').click(function() {
+            childIndex++;
+            addChildSection(childIndex);
+        });
+
+        function addChildSection(index_anak) {
+            var childSection = `
+                <div class="form-group child-section" data-index="${index_anak}">
+                
+				<div class="form-group ">
+					<input class="form-control class_id_anak-${index_anak}" type="text" name="id_anak[]" value="" placeholder="id Anak" readonly/>
+                    <label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Tanggal Lahir</label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input class="form-control date-picker " type="text" name="tanggal_lahir_anak[]" placeholder="dd-mm-yyyy" required="required" data-date-end-date="0d"/>
+                            <input class="form-control usia-class" type="text" name="usia[]" placeholder="usia" readonly/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group ">
+                    <div class="form-group col-sm-6 ">
+                        <label class="col-form-label">Jenis Kelamin</label>
+                        <div class="">
+                            <select class="form-control jenis_kelamin_anak-${index_anak}" name="jenis_kelamin_anak[]" required="required">
+                                <option value="">Pilih Salah Satu</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <label class=" col-form-label">Pendidikan</label>
+                        <div class="">
+                            <select class="form-control pendidikan_anak-${index_anak}" name="pendidikan_anak[]" required="required">
+                                <option value="">Pilih Salah Satu</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                    
+                    <div class="col-sm-3 col-md-2 col-lg-3 col-xl-6 mt-3">
+                        <button type="button" class="btn btn-danger remove-child">Hapus Anak</button>
+                    </div>
+                <hr class="bg-info" >
+                </div>
+            `;
+            $('#children-container').append(childSection);
+
+            // Reinitialize datepicker
+            $('.date-picker').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true
+            }).on('changeDate', function(e) {
+                var dateInput = $(this).val();
+                var ageInput = $(this).closest('.input-group').find('.usia-class');
+                var hariini = new Date();
+                
+                // var age = calculateAge(new Date(dateInput.split('-').reverse().join('-')));
+                var age = parseInt(hariini.getUTCFullYear()) - parseInt(dateInput.split('-')[2]) +' Tahun' ;
+                ageInput.val(age + " Tahun");
+            });
+
+            // Load select options with AJAX
+            // loadAnakOptions(index);
+            createOption('.jenis_kelamin_anak-'+index_anak, '7', 'id_group');
+            createOption('.pendidikan_anak-'+index_anak, '8', 'id_group');
+
+        }
+
+        // Remove child section on button click
+        $(document).on('click', '.remove-child', function() {
+            $(this).closest('.child-section').remove();
+        });
+
+        // batas anak
+
+
+        // saudara kandung
+         // Add initial sibling section
+         var siblingIndex = 0;
+        addSiblingSection(siblingIndex);
+
+        // Add new sibling section on button click
+        $('#add-sibling').click(function() {
+            siblingIndex++;
+            addSiblingSection(siblingIndex);
+        });
+
+        function addSiblingSection(index_saudara) {
+            var siblingSection = `
+                <div class="form-group sibling-section" data-index="${index_saudara}">
+                
+				<div class="form-group ">
+                    <input class="form-control class_id_saudara-${index_saudara}" type="text" name="id_saudara[]" value="" placeholder="id saudara" readonly/>
+                    <label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Tanggal Lahir</label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input class="form-control date-picker " type="text" name="tanggal_lahir_saudara[]" placeholder="dd-mm-yyyy" required="required" data-date-end-date="0d"/>
+                            <input class="form-control usia-class" type="text" name="usia[]" placeholder="usia" readonly/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="form-group col-sm-6 ">
+                        <label class="col-form-label">Jenis Kelamin</label>
+                        <select class="form-control jenis_kelamin_saudara-${index_saudara}" name="jenis_kelamin_saudara[]" required="required">
+                            <option value="">Pilih Salah Satu</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-sm-6 ">
+                        <label class="col-form-label">Profesi</label>
+                        <input class="form-control profesi_saudara-${index_saudara}" type="text" name="profesi_saudara[]" style="width:100%;" placeholder="Profesi saudara" />
+                    </div>
+                </div>
+                    
+                    <div class="col-sm-3 col-md-2 col-lg-3 col-xl-6 mt-3">
+                        <button type="button" class="btn btn-danger remove-sibling">Hapus Saudara</button>
+                    </div>
+                <hr class="bg-info" >
+                </div>
+            `;
+            $('#sibling-container').append(siblingSection);
+
+            // Reinitialize datepicker
+            $('.date-picker').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true
+            }).on('changeDate', function(e) {
+                var dateInput = $(this).val();
+                var ageInput = $(this).closest('.input-group').find('.usia-class');
+                var hariini = new Date();
+                
+                // var age = calculateAge(new Date(dateInput.split('-').reverse().join('-')));
+                var age = parseInt(hariini.getUTCFullYear()) - parseInt(dateInput.split('-')[2]) +' Tahun' ;
+                ageInput.val(age + " Tahun");
+            });
+
+            // Load select options with AJAX
+            // loadAnakOptions(index);
+            createOption('.jenis_kelamin_saudara-'+index_saudara, '7', 'id_group');
+
+        }
+
+        // Remove child section on button click
+        $(document).on('click', '.remove-sibling', function() {
+            $(this).closest('.sibling-section').remove();
+        });
+
+        // batas saudara kandung
+
+
         var formGroupCount = 1;
         
-        var dataJSON = '<?php echo json_encode($data_akun); ?>';
+        var dataJSON = '<?php echo json_encode($data_anak); ?>';
         var dataParse=JSON.parse(dataJSON);
 
         // console.log(dataJSON);
         // console.log('banyak data='+ dataParse.length);
 
         if(dataParse.length == 0){
-            createOption('.tipe_pekerjaan-'+formGroupCount, '31', 'id_group' );
-            createOption('.lokasi_pekerjaan-'+formGroupCount, '32', 'id_group' );
-            createOption('.bulan_masuk-'+formGroupCount, '30', 'id_group' );
-            createOption('.bulan_keluar-'+formGroupCount, '30', 'id_group' );
+            // createOption('.pendidikan_ayah', '8', 'id_group' );
+            // createOption('.pendidikan_ibu', '8', 'id_group' );
+            // createOption('.pendidikan_pasangan', '8', 'id_group' );
         } else {
-            for (let i = 0; i < dataParse.length; i++) {
-                if(i == 0){
-                    createOption('.tipe_pekerjaan-'+formGroupCount, '31', 'id_group',dataParse[i]['tipe_pekerjaan'] );
-                    createOption('.lokasi_pekerjaan-'+formGroupCount, '32', 'id_group' ,dataParse[i]['lokasi_pekerjaan']);
-                    createOption('.bulan_masuk-'+formGroupCount, '30', 'id_group' ,dataParse[i]['bulan_masuk']);
-                    createOption('.bulan_keluar-'+formGroupCount, '30', 'id_group' ,dataParse[i]['bulan_keluar']);
-                } else {
-                    addFormGroup();
-                    createOption('.tipe_pekerjaan-'+formGroupCount, '31', 'id_group',dataParse[i]['tipe_pekerjaan'] );
-                    createOption('.lokasi_pekerjaan-'+formGroupCount, '32', 'id_group',dataParse[i]['lokasi_pekerjaan'] );
-                    createOption('.bulan_masuk-'+formGroupCount, '30', 'id_group' ,dataParse[i]['bulan_masuk']);
-                    createOption('.bulan_keluar-'+formGroupCount, '30', 'id_group',dataParse[i]['bulan_keluar']);
-                    $('.id-'+formGroupCount).val(dataParse[i]['id']) ;
-                    $('.nama_kota-'+formGroupCount).val(dataParse[i]['nama_kota']) ;
-                    $('.nama_perusahaan-'+formGroupCount).val(dataParse[i]['nama_perusahaan']) ;
-                    $('.bidang_pekerjaan-'+formGroupCount).val(dataParse[i]['bidang_pekerjaan']) ;
-                    $('.tahun_masuk-'+formGroupCount).val(dataParse[i]['tahun_masuk']) ;
-                    $('.tahun_keluar-'+formGroupCount).val(dataParse[i]['tahun_keluar']) ;
-                }
-            }
+            // for (let i = 0; i < dataParse.length; i++) {
+            //     if(i == 0){
+            //         createOption('.tipe_pekerjaan-'+formGroupCount, '31', 'id_group',dataParse[i]['tipe_pekerjaan'] );
+            //         createOption('.lokasi_pekerjaan-'+formGroupCount, '32', 'id_group' ,dataParse[i]['lokasi_pekerjaan']);
+            //         createOption('.bulan_masuk-'+formGroupCount, '30', 'id_group' ,dataParse[i]['bulan_masuk']);
+            //         createOption('.bulan_keluar-'+formGroupCount, '30', 'id_group' ,dataParse[i]['bulan_keluar']);
+            //     } else {
+            //         addFormGroup();
+            //         createOption('.tipe_pekerjaan-'+formGroupCount, '31', 'id_group',dataParse[i]['tipe_pekerjaan'] );
+            //         createOption('.lokasi_pekerjaan-'+formGroupCount, '32', 'id_group',dataParse[i]['lokasi_pekerjaan'] );
+            //         createOption('.bulan_masuk-'+formGroupCount, '30', 'id_group' ,dataParse[i]['bulan_masuk']);
+            //         createOption('.bulan_keluar-'+formGroupCount, '30', 'id_group',dataParse[i]['bulan_keluar']);
+            //         $('.id-'+formGroupCount).val(dataParse[i]['id']) ;
+            //         $('.nama_kota-'+formGroupCount).val(dataParse[i]['nama_kota']) ;
+            //         $('.nama_perusahaan-'+formGroupCount).val(dataParse[i]['nama_perusahaan']) ;
+            //         $('.bidang_pekerjaan-'+formGroupCount).val(dataParse[i]['bidang_pekerjaan']) ;
+            //         $('.tahun_masuk-'+formGroupCount).val(dataParse[i]['tahun_masuk']) ;
+            //         $('.tahun_keluar-'+formGroupCount).val(dataParse[i]['tahun_keluar']) ;
+            //     }
+            // }
         }
 
         
-
-
-        function addFormGroup() {
-            formGroupCount++;
-
-            var newFormGroup = `<div class="form-group form-group-pekerjaan" id="form-group-${formGroupCount}">
-                        <div class="form-group row">
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control id-${formGroupCount}"  name="id[]" value="<?= @$data_akun[0]['id'] ?>" placeholder="id" readonly hidden>
-                                <label class="col-form-label">Tipe Pekerjaan</label>
-                                <select class="form-control tipe_pekerjaan-${formGroupCount}"   name="tipe_pekerjaan[]"  required="required">
-                                    <option value="">Pilih Salah Satu</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-4">
-                                <label class="col-form-label">Lokasi Pekerjaan</label>
-                                <select class="form-control lokasi_pekerjaan-${formGroupCount}"   name="lokasi_pekerjaan[]"  required="required">
-                                    <option value="">Pilih Salah Satu</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-4">
-                                <label class="col-form-label">Nama Kota</label>
-                                <input type="text" class="form-control nama_kota-${formGroupCount}"  value="<?= @$data_akun[0]['nama_kota'] ?>" name="nama_kota[]" placeholder="Nama Kota">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-5">
-                                <label class="col-form-label">Nama Perusahaan</label>
-                                <input type="text" class="form-control nama_perusahaan-${formGroupCount}"  value="<?= @$data_akun[0]['nama_perusahaan'] ?>" name="nama_perusahaan[]" placeholder="Nama Perusahaan">
-                            </div>
-                            <div class="col-sm-5">
-                                <label class="col-form-label">Bidang Pekerjaan</label>
-                                <input type="text" class="form-control bidang_pekerjaan-${formGroupCount}" value="<?= @$data_akun[0]['bidang_pekerjaan']?>"  name="bidang_pekerjaan[]" placeholder="Bidang Pekerjaan"  required="required">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-5">
-                                <label class="col-form-label">Bulan Tahun Masuk</label>
-                                <div class="input-group">
-                                    <select class="form-control bulan_masuk-${formGroupCount}"  name="bulan_masuk[]"  required="required">
-                                        <option value="">Pilih Salah Satu</option>
-                                    </select>
-                                    <input type="number" class="form-control tahun_masuk-${formGroupCount}"  value="<?= @$data_akun[0]['tahun_masuk'] ?>"  name="tahun_masuk[]" placeholder="Tahun Masuk" required="required">
-                                </div>
-                            </div>
-                            <div class="col-sm-5">
-                                <label class="col-form-label">Bulan Tahun Keluar</label>
-                                <div class="input-group">
-                                    <select class="form-control bulan_keluar-${formGroupCount}"  name="bulan_keluar[]"  required="required">
-                                        <option value="">Pilih Salah Satu</option>
-                                    </select>
-                                    <input type="number" class="form-control tahun_keluar-${formGroupCount}" name="tahun_keluar[]"  value="<?=  @$data_akun[0]['tahun_keluar'] ?>" placeholder="Tahun Keluar" required="required">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group  row">
-                            <div class="col-sm-1">
-                                <label class="col-form-label"></label>
-                                <button class="btn btn-danger remove"><i class="far fa-minus-square pr-2"></i>Hapus</button>
-                            </div>
-                        </div>
-                        <hr class="bg-info" >
-                    </div>`;
-                    
-            $('#dynamic-form').append(newFormGroup);
-            
-            // updateFormLabels();
-        }
-
-        // Add initial form group on button click
-        $('.add-more').on('click', function() {
-            addFormGroup();
-            
-            createOption('.tipe_pekerjaan-'+formGroupCount, '31', 'id_group' );
-            createOption('.lokasi_pekerjaan-'+formGroupCount, '32', 'id_group' );
-            createOption('.bulan_masuk-'+formGroupCount, '30', 'id_group');
-            createOption('.bulan_keluar-'+formGroupCount, '30', 'id_group' );
-        });
-
-
-        // Remove form group on button click
-        $('#dynamic-form').on('click', '.remove', function() {
-            $(this).closest('.form-group-pekerjaan').remove();
-            // updateFormLabels();
-        });
 
 
 });

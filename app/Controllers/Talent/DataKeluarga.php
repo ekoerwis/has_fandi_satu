@@ -70,7 +70,12 @@ class DataKeluarga extends \App\Controllers\BaseController
 			
 			// $data['data_akun'] =  $this->model->getMainSql($this->user['id_user']);
 		}
-		$data['data_akun']=$this->model->getMainSql($this->user['id_user']);
+
+		$data['data_ayah']=$this->model->getDataSqlByTipeKeluarga($this->user['id_user'],'id_user','1');
+		$data['data_ibu']=$this->model->getDataSqlByTipeKeluarga($this->user['id_user'],'id_user','2');
+		$data['data_pasangan']=$this->model->getDataSqlByTipeKeluarga($this->user['id_user'],'id_user','3');
+		$data['data_anak']=$this->model->getDataSqlByTipeKeluarga($this->user['id_user'],'id_user','4');
+		$data['data_saudara']=$this->model->getDataSqlByTipeKeluarga($this->user['id_user'],'id_user','5');
 		
 		$this->view('../../Talent/DataKeluarga/DataKeluargaView', $data);
 	}
