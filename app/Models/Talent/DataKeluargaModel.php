@@ -30,7 +30,7 @@ class DataKeluargaModel extends \App\Models\BaseModel
     }
 
 	public function getDataSqlByTipeKeluarga($id='',$column='id_user', $tipe_keluarga = 0){
-        $mainSQL = "SELECT * FROM data_keluarga where $column = '$id' and tipe_keluarga = '$tipe_keluarga'";
+        $mainSQL = "SELECT *, CONCAT(YEAR(NOW())-YEAR(tanggal_lahir),' Tahun') AS 'usia' FROM data_keluarga  where $column = '$id' and tipe_keluarga = '$tipe_keluarga' order by tanggal_lahir";
 
         $result = $this->db->query($mainSQL)->getResultArray();
 
@@ -74,8 +74,14 @@ class DataKeluargaModel extends \App\Models\BaseModel
 
             if(empty($this->getRowMainSql($id,'id'))){
                 $save = $this->db->table('data_keluarga')->insert($data_db);
+                $result['status']='ok';
+                $result['message']='Data Berhasil Ditambah';
+                $result['dismiss']=false;
             } else {
                 $update = $this->db->table('data_keluarga')->update($data_db, ['id' => $id]);
+                $result['status']='ok';
+                $result['message']='Data Berhasil Diubah';
+                $result['dismiss']=false;
             }
 
             // ibu
@@ -161,7 +167,7 @@ class DataKeluargaModel extends \App\Models\BaseModel
                                 $result['dismiss']=false;
                             } 
                         } else {
-                            $update = $this->db->table('riwayat_pekerjaan')->update($data_db, ['id' => $id]);
+                            $update = $this->db->table('data_keluarga')->update($data_db, ['id' => $id]);
                             if($update){
                                 $result['status']='ok';
                                 $result['message']='Data Berhasil Diubah';
@@ -211,7 +217,7 @@ class DataKeluargaModel extends \App\Models\BaseModel
                                 $result['dismiss']=false;
                             } 
                         } else {
-                            $update = $this->db->table('riwayat_pekerjaan')->update($data_db, ['id' => $id]);
+                            $update = $this->db->table('data_keluarga')->update($data_db, ['id' => $id]);
                             if($update){
                                 $result['status']='ok';
                                 $result['message']='Data Berhasil Diubah';
