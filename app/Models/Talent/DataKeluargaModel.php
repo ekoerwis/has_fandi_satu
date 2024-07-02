@@ -152,7 +152,7 @@ class DataKeluargaModel extends \App\Models\BaseModel
                             $save = $this->db->table('data_keluarga')->insert($data_db);
                             if($save){
 
-                                $sqlSearchSave = "select * from data_keluarga where tipe_keluarga = '".$data_db['tipe_keluarga']."'
+                                $sqlSearchSave = "select * from data_keluarga where id_user = '$id_user' and tipe_keluarga = '".$data_db['tipe_keluarga']."'
                                 and jenis_kelamin = '".$data_db['jenis_kelamin']."'
                                 and pendidikan = '".$data_db['pendidikan']."'
                                 and profesi = '".$data_db['profesi']."'
@@ -202,7 +202,7 @@ class DataKeluargaModel extends \App\Models\BaseModel
                             $save = $this->db->table('data_keluarga')->insert($data_db);
                             if($save){
 
-                                $sqlSearchSave = "select * from data_keluarga where tipe_keluarga = '".$data_db['tipe_keluarga']."'
+                                $sqlSearchSave = "select * from data_keluarga where id_user = '$id_user' and tipe_keluarga = '".$data_db['tipe_keluarga']."'
                                 and jenis_kelamin = '".$data_db['jenis_kelamin']."'
                                 and pendidikan = '".$data_db['pendidikan']."'
                                 and profesi = '".$data_db['profesi']."'
