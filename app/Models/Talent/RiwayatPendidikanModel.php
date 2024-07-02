@@ -59,7 +59,7 @@ class RiwayatPendidikanModel extends \App\Models\BaseModel
                     $save = $this->db->table('riwayat_pendidikan')->insert($data_db);
                     if($save){
 
-                        $sqlSearchSave = "select * from riwayat_pendidikan where jenjang = '".$data_db['jenjang']."'
+                        $sqlSearchSave = "select * from riwayat_pendidikan where id_user = '$id_user' and jenjang = '".$data_db['jenjang']."'
                         and tahun_masuk = '".$data_db['tahun_masuk']."'
                         and nama_instansi = '".$data_db['nama_instansi']."'
                         and jurusan = '".$data_db['jurusan']."'

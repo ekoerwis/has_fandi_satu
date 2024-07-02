@@ -61,7 +61,7 @@ class RiwayatPekerjaanModel extends \App\Models\BaseModel
                     $save = $this->db->table('riwayat_pekerjaan')->insert($data_db);
                     if($save){
 
-                        $sqlSearchSave = "select * from riwayat_pekerjaan where tipe_pekerjaan = '".$data_db['tipe_pekerjaan']."'
+                        $sqlSearchSave = "select * from riwayat_pekerjaan where id_user = '$id_user' and tipe_pekerjaan = '".$data_db['tipe_pekerjaan']."'
                         and lokasi_pekerjaan = '".$data_db['lokasi_pekerjaan']."'
                         and nama_perusahaan = '".$data_db['nama_perusahaan']."'
                         and nama_kota = '".$data_db['nama_kota']."'
