@@ -73,7 +73,7 @@ class SkillBahasa extends \App\Controllers\BaseController
 
 		$data['data_jepang']=$this->model->getDataSqlByKodeBahasa($this->user['id_user'],'id_user','1');
 		$data['data_inggris']=$this->model->getDataSqlByKodeBahasa($this->user['id_user'],'id_user','2');
-		$data['data_lain']=$this->model->getDataSqlByKodeBahasa($this->user['id_user'],'id_user','3');
+		$data['data_lain']=$this->model->getDataSqlByKodeBahasa($this->user['id_user'],'id_user','99');
 		
 		$this->view('../../Talent/SkillBahasa/SkillBahasaView', $data);
 	}

@@ -30,7 +30,7 @@ class SkillBahasaModel extends \App\Models\BaseModel
     }
 
 	public function getDataSqlByKodeBahasa($id='',$column='id_user', $kode_bahasa = 0){
-        $mainSQL = "SELECT * FROM skill_bahasa  where $column = '$id' and kode_bahasa = '$kode_bahasa' order by id";
+        $mainSQL = "SELECT * FROM skill_bahasa where $column = '$id' and kode_bahasa = '$kode_bahasa' order by id";
 
         $result = $this->db->query($mainSQL)->getResultArray();
 
@@ -41,11 +41,8 @@ class SkillBahasaModel extends \App\Models\BaseModel
 	{
         $result = [];
 
-        $listDetailForm_anak=array();
-		$implodeListDetailForm_anak = "";
-
-        $listDetailForm_saudara=array();
-		$implodeListDetailForm_saudara = "";
+        $listDetailForm_lain=array();
+		$implodeListDetailForm_lain = "";
 
 		$data_db['id_user'] = $id_user;
         
@@ -53,184 +50,113 @@ class SkillBahasaModel extends \App\Models\BaseModel
         $result['message']='Proses gagal mohon ulangi kembali !';
         $result['dismiss']=true;
 
-        if(isset($_POST['tanggal_lahir_ayah']) and isset($_POST['tanggal_lahir_ibu'])){
-            
-            // $data_db['tipe_keluarga']=[];
-            // $data_db['jenis_kelamin']=[];
-            // $data_db['pendidikan']=[];
-            // $data_db['profesi']=[];
-            // $data_db['tanggal_lahir']=[];
+        if(!empty($id_user)){
 
-            // ayah
-            $id=isset($_POST['id_ayah'])?intval($_POST['id_ayah']):0;
-            $data_db['tipe_keluarga']=1;
-            $data_db['jenis_kelamin']='';
-            $data_db['pendidikan']='';
-            $data_db['profesi']=isset($_POST['profesi_ayah'])?strval($_POST['profesi_ayah']):'';
-            
-            $exp = explode('-', $_POST['tanggal_lahir_ayah']);
-            $tgl_lahir = $exp[2].'-'.$exp[1].'-'.$exp[0];
-            $data_db['tanggal_lahir'] = isset($_POST['tanggal_lahir_ayah'])? $tgl_lahir :'';
+            // jepang
+            $id=isset($_POST['id_jepang'])?intval($_POST['id_jepang']):0;
+            $data_db['kode_bahasa']=1;
+            $data_db['ket_bahasa']='';
+            $data_db['level']='';
+            $data_db['jenis_sertifikat']=isset($_POST['jenis_sertifikat_jepang'])?strval($_POST['jenis_sertifikat_jepang']):'';
+            $data_db['no_sertifikat']='';
+            $data_db['bulan_terbit']=isset($_POST['bulan_terbit_jepang'])?strval($_POST['bulan_terbit_jepang']):'';
+            $data_db['tahun_terbit']=isset($_POST['tahun_terbit_jepang'])?strval($_POST['tahun_terbit_jepang']):'';
+            $data_db['penerbit']='';
+            $data_db['keterangan']='';
 
             if(empty($this->getRowMainSql($id,'id'))){
-                $save = $this->db->table('data_keluarga')->insert($data_db);
+                $save = $this->db->table('skill_bahasa')->insert($data_db);
                 $result['status']='ok';
                 $result['message']='Data Berhasil Ditambah';
                 $result['dismiss']=false;
             } else {
-                $update = $this->db->table('data_keluarga')->update($data_db, ['id' => $id]);
+                $update = $this->db->table('skill_bahasa')->update($data_db, ['id' => $id]);
                 $result['status']='ok';
                 $result['message']='Data Berhasil Diubah';
                 $result['dismiss']=false;
             }
 
-            // ibu
-            $id=isset($_POST['id_ibu'])?intval($_POST['id_ibu']):0;
-            $data_db['tipe_keluarga']=2;
-            $data_db['jenis_kelamin']='';
-            $data_db['pendidikan']='';
-            $data_db['profesi']=isset($_POST['profesi_ibu'])?strval($_POST['profesi_ibu']):'';
-            
-            $exp = explode('-', $_POST['tanggal_lahir_ibu']);
-            $tgl_lahir = $exp[2].'-'.$exp[1].'-'.$exp[0];
-            $data_db['tanggal_lahir'] = isset($_POST['tanggal_lahir_ibu'])? $tgl_lahir :'';
+            // inggris
+            $id=isset($_POST['id_inggris'])?intval($_POST['id_inggris']):0;
+            $data_db['kode_bahasa']=2;
+            $data_db['ket_bahasa']='';
+            $data_db['level']=isset($_POST['level_inggris'])?strval($_POST['level_inggris']):'';
+            $data_db['jenis_sertifikat']=isset($_POST['jenis_sertifikat_inggris'])?strval($_POST['jenis_sertifikat_inggris']):'';
+            $data_db['no_sertifikat']='';
+            $data_db['bulan_terbit']=isset($_POST['bulan_terbit_inggris'])?strval($_POST['bulan_terbit_inggris']):'';
+            $data_db['tahun_terbit']=isset($_POST['tahun_terbit_inggris'])?strval($_POST['tahun_terbit_inggris']):'';
+            $data_db['penerbit']='';
+            $data_db['keterangan']='';
 
             if(empty($this->getRowMainSql($id,'id'))){
-                $save = $this->db->table('data_keluarga')->insert($data_db);
+                $save = $this->db->table('skill_bahasa')->insert($data_db);
 
                 $result['status']='ok';
                 $result['message']='Data Berhasil Ditambah';
                 $result['dismiss']=false;
                 
             } else {
-                $update = $this->db->table('data_keluarga')->update($data_db, ['id' => $id]);
+                $update = $this->db->table('skill_bahasa')->update($data_db, ['id' => $id]);
                 $result['status']='ok';
                 $result['message']='Data Berhasil Diubah';
                 $result['dismiss']=false; 
             }
 
-            // pasangan
-            $id=isset($_POST['id_pasangan'])?intval($_POST['id_pasangan']):0;
-            $data_db['tipe_keluarga']=3;
-            $data_db['jenis_kelamin']='';
-            $data_db['pendidikan']='';
-            $data_db['profesi']=isset($_POST['profesi_pasangan'])?strval($_POST['profesi_pasangan']):'';
-            
-            $exp = explode('-', $_POST['tanggal_lahir_pasangan']);
-            $tgl_lahir = $exp[2].'-'.$exp[1].'-'.$exp[0];
-            $data_db['tanggal_lahir'] = isset($_POST['tanggal_lahir_pasangan'])? $tgl_lahir :'';
-
-            if(empty($this->getRowMainSql($id,'id'))){
-                $save = $this->db->table('data_keluarga')->insert($data_db);
-
-                $result['status']='ok';
-                $result['message']='Data Berhasil Ditambah';
-                $result['dismiss']=false;
-            } else {
-                $update = $this->db->table('data_keluarga')->update($data_db, ['id' => $id]);
-                $result['status']='ok';
-                $result['message']='Data Berhasil Diubah';
-                $result['dismiss']=false;
-            }
-
 
             // anak
-            if(isset($_POST['tanggal_lahir_anak']) )
-                if($_POST['tanggal_lahir_anak'] != '')
-                    for($i=0 ; $i < count($this->request->getPost('tanggal_lahir_anak')) ; $i++ ){
-                        $id=isset($_POST['id_anak'][$i])?intval($_POST['id_anak'][$i]):0;
-                        $data_db['tipe_keluarga']=4;
-                        $data_db['jenis_kelamin']=isset($_POST['jenis_kelamin_anak'][$i])?strval($_POST['jenis_kelamin_anak'][$i]):'';
-                        $data_db['profesi']='';
-                        $data_db['pendidikan']=isset($_POST['pendidikan_anak'][$i])?strval($_POST['pendidikan_anak'][$i]):'';
-                        
-                        $exp = explode('-', $_POST['tanggal_lahir_anak'][$i]);
-                        $tgl_lahir = $exp[2].'-'.$exp[1].'-'.$exp[0];
-                        $data_db['tanggal_lahir'] = isset($_POST['tanggal_lahir_anak'][$i])? $tgl_lahir :'';
+            if(count($_POST['ket_bahasa_lain']) > 0 )
+                if($_POST['ket_bahasa_lain'][0] != '')
+                    for($i=0 ; $i < count($this->request->getPost('ket_bahasa_lain')) ; $i++ ){
+
+                        $id=isset($_POST['id_lain'][$i])?intval($_POST['id_lain'][$i]):0;
+                        $data_db['kode_bahasa']=99;
+                        $data_db['ket_bahasa']=isset($_POST['ket_bahasa_lain'][$i])?strval($_POST['ket_bahasa_lain'][$i]):'';
+                        $data_db['level']=isset($_POST['level_lain'][$i])?strval($_POST['level_lain'][$i]):'';
+                        $data_db['jenis_sertifikat']='';
+                        $data_db['no_sertifikat']=isset($_POST['no_sertifikat_lain'][$i])?strval($_POST['no_sertifikat_lain'][$i]):'';
+                        $data_db['bulan_terbit']=isset($_POST['bulan_terbit_lain'][$i])?strval($_POST['bulan_terbit_lain'][$i]):'';
+                        $data_db['tahun_terbit']=isset($_POST['tahun_terbit_lain'][$i])?strval($_POST['tahun_terbit_lain'][$i]):'';
+                        $data_db['penerbit']='';
+                        $data_db['keterangan']=isset($_POST['keterangan_lain'][$i])?strval($_POST['keterangan_lain'][$i]):'';
 
                         if(empty($this->getRowMainSql($id,'id'))){
-                            $save = $this->db->table('data_keluarga')->insert($data_db);
+                            $save = $this->db->table('skill_bahasa')->insert($data_db);
                             if($save){
 
-                                $sqlSearchSave = "select * from data_keluarga where tipe_keluarga = '".$data_db['tipe_keluarga']."'
-                                and jenis_kelamin = '".$data_db['jenis_kelamin']."'
-                                and pendidikan = '".$data_db['pendidikan']."'
-                                and profesi = '".$data_db['profesi']."'
-                                and tanggal_lahir = '".$data_db['tanggal_lahir']."'";
+                                $sqlSearchSave = "select * from skill_bahasa where id_user = '$id_user' 
+                                and kode_bahasa = '".$data_db['kode_bahasa']."'
+                                and ket_bahasa = '".$data_db['ket_bahasa']."'
+                                and level = '".$data_db['level']."'
+                                and jenis_sertifikat = '".$data_db['jenis_sertifikat']."'
+                                and no_sertifikat = '".$data_db['no_sertifikat']."'
+                                and bulan_terbit = '".$data_db['bulan_terbit']."'
+                                and tahun_terbit = '".$data_db['tahun_terbit']."'
+                                and penerbit = '".$data_db['penerbit']."'
+                                and keterangan = '".$data_db['keterangan']."'";
 
                                 $dataHasSave = $this->db->query($sqlSearchSave)->getRowArray();
 
-                                array_push($listDetailForm_anak,"'".$dataHasSave['id']."'");
+                                array_push($listDetailForm_lain,"'".$dataHasSave['id']."'");
 
                                 $result['status']='ok';
                                 $result['message']='Data Berhasil Ditambah';
                                 $result['dismiss']=false;
                             } 
                         } else {
-                            $update = $this->db->table('data_keluarga')->update($data_db, ['id' => $id]);
+                            $update = $this->db->table('skill_bahasa')->update($data_db, ['id' => $id]);
                             if($update){
                                 $result['status']='ok';
                                 $result['message']='Data Berhasil Diubah';
                                 $result['dismiss']=false;
                             } 
-                            array_push($listDetailForm_anak,"'".$id."'");
+                            array_push($listDetailForm_lain,"'".$id."'");
                         }
                         
                     }
                         
-                    if(count($listDetailForm_anak) > 0){
-                        $implodeListDetailForm_anak = implode(" , ",$listDetailForm_anak);
-                        $sqlDelete = "DELETE FROM data_keluarga WHERE id_user = '$id_user'  AND tipe_keluarga='4'  AND id NOT IN ($implodeListDetailForm_anak)";
-                        $delete = $this->db->query($sqlDelete);
-                    }
-
-            // anak
-            if(isset($_POST['tanggal_lahir_saudara']) )
-                if($_POST['tanggal_lahir_saudara'] != '')
-                    for($i=0 ; $i < count($this->request->getPost('tanggal_lahir_saudara')) ; $i++ ){
-                        $id=isset($_POST['id_saudara'][$i])?intval($_POST['id_saudara'][$i]):0;
-                        $data_db['tipe_keluarga']=5;
-                        $data_db['jenis_kelamin']=isset($_POST['jenis_kelamin_saudara'][$i])?strval($_POST['jenis_kelamin_saudara'][$i]):'';
-                        $data_db['profesi']=isset($_POST['profesi_saudara'][$i])?strval($_POST['profesi_saudara'][$i]):'';
-                        $data_db['pendidikan']='';
-                        
-                        $exp = explode('-', $_POST['tanggal_lahir_saudara'][$i]);
-                        $tgl_lahir = $exp[2].'-'.$exp[1].'-'.$exp[0];
-                        $data_db['tanggal_lahir'] = isset($_POST['tanggal_lahir_saudara'])? $tgl_lahir :'';
-
-                        if(empty($this->getRowMainSql($id,'id'))){
-                            $save = $this->db->table('data_keluarga')->insert($data_db);
-                            if($save){
-
-                                $sqlSearchSave = "select * from data_keluarga where tipe_keluarga = '".$data_db['tipe_keluarga']."'
-                                and jenis_kelamin = '".$data_db['jenis_kelamin']."'
-                                and pendidikan = '".$data_db['pendidikan']."'
-                                and profesi = '".$data_db['profesi']."'
-                                and tanggal_lahir = '".$data_db['tanggal_lahir']."'";
-
-                                $dataHasSave = $this->db->query($sqlSearchSave)->getRowArray();
-
-                                array_push($listDetailForm_saudara,"'".$dataHasSave['id']."'");
-
-                                $result['status']='ok';
-                                $result['message']='Data Berhasil Ditambah';
-                                $result['dismiss']=false;
-                            } 
-                        } else {
-                            $update = $this->db->table('data_keluarga')->update($data_db, ['id' => $id]);
-                            if($update){
-                                $result['status']='ok';
-                                $result['message']='Data Berhasil Diubah';
-                                $result['dismiss']=false;
-                            } 
-                            array_push($listDetailForm_saudara,"'".$id."'");
-                        }
-                        
-                    }
-                        
-                    if(count($listDetailForm_saudara) > 0){
-                        $implodeListDetailForm_saudara = implode(" , ",$listDetailForm_saudara);
-                        $sqlDelete = "DELETE FROM data_keluarga WHERE id_user = '$id_user'  AND tipe_keluarga='5' AND id NOT IN ($implodeListDetailForm_saudara)";
+                    if(count($listDetailForm_lain) > 0){
+                        $implodelistDetailForm_lain = implode(" , ",$listDetailForm_lain);
+                        $sqlDelete = "DELETE FROM skill_bahasa WHERE id_user = '$id_user'  AND kode_bahasa='99'  AND id NOT IN ($implodelistDetailForm_lain)";
                         $delete = $this->db->query($sqlDelete);
                     }
 

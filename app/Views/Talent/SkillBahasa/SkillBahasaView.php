@@ -32,7 +32,7 @@
                         <select class="form-control bulan_terbit_jepang"  name="bulan_terbit_jepang">
                             <option value="">Pilih Salah Satu</option>
                         </select>
-                        <input type="number" class="form-control tahun_terbit_jepang"  value="<?= @$data_jepang['tahun_terbit'] ?>"  name="tahun_terbit_jepang" placeholder="Tahun Terbit">
+                        <input type="number" class="form-control tahun_terbit_jepang"  value="<?= @$data_jepang[0]['tahun_terbit'] ?>"  name="tahun_terbit_jepang" placeholder="Tahun Terbit">
                     </div>
 				</div>
                 
@@ -41,13 +41,13 @@
                     <h5 class="">Bahasa Inggris</h5>
                 </div>
 				<div class="form-group col-sm-6">
-					<input class="form-control" type="text" name="id_inggris" value="<?= @$data_inggris[0]['id'] ?>" placeholder="id Inggris" readonly hidden/>
+					<input class="form-control" type="text" name="id_inggris" value="<?= @$data_inggris[0]['id'] ?>" placeholder="id Inggris" readonly hidden />
                     <label class="col-form-label">Jenis Sertifikasi</label>
                     <div class="input-group">
                         <select class="form-control jenis_sertifikat_inggris" name="jenis_sertifikat_inggris"  required="required">
                             <option value="">Pilih Salah Satu</option>
                         </select>
-                        <input type="text" class="form-control level_inggris"  value="<?= @$data_inggris['level'] ?>"  name="level_inggris" placeholder="Nilai / Level">
+                        <input type="text" class="form-control level_inggris"  value="<?= @$data_inggris[0]['level'] ?>"  name="level_inggris" placeholder="Nilai / Level">
                     </div>
 				</div>
 				<div class="form-group  col-sm-6">
@@ -56,7 +56,7 @@
                         <select class="form-control bulan_terbit_inggris"  name="bulan_terbit_inggris">
                             <option value="">Pilih Salah Satu</option>
                         </select>
-                        <input type="number" class="form-control tahun_terbit_inggris"  value="<?= @$data_inggris['tahun_terbit'] ?>"  name="tahun_terbit_inggris" placeholder="Tahun Terbit">
+                        <input type="number" class="form-control tahun_terbit_inggris"  value="<?= @$data_inggris[0]['tahun_terbit'] ?>"  name="tahun_terbit_inggris" placeholder="Tahun Terbit">
                     </div>
 				</div>
 
@@ -89,12 +89,11 @@
 <script>
     $(document).ready(function(){
 
-
         createOption('.jenis_sertifikat_jepang', '35', 'id_group',<?= @$data_jepang[0]['jenis_sertifikat'] ?>);
         createOption('.bulan_terbit_jepang', '30', 'id_group',<?= @$data_jepang[0]['bulan_terbit'] ?>);
 
-        createOption('.jenis_sertifikat_inggris', '36', 'id_group');
-        createOption('.bulan_terbit_inggris', '30', 'id_group');
+        createOption('.jenis_sertifikat_inggris', '36', 'id_group',<?= @$data_inggris[0]['jenis_sertifikat'] ?>);
+        createOption('.bulan_terbit_inggris', '30', 'id_group',<?= @$data_inggris[0]['bulan_terbit'] ?>);
 
 
         // Lain
@@ -113,7 +112,7 @@
                 lainIndex++;
                 
                 addLainSection(lainIndex);
-                $('.id_saudara-'+lainIndex).val(data_lain_Parse[i]['id']) ;
+                $('.id_lain-'+lainIndex).val(data_lain_Parse[i]['id']) ;
                 $('.ket_bahasa_lain-'+lainIndex).val(data_lain_Parse[i]['ket_bahasa']) ;
                 $('.level_lain-'+lainIndex).val(data_lain_Parse[i]['level']) ;
                 $('.no_sertifikat_lain-'+lainIndex).val(data_lain_Parse[i]['no_sertifikat']) ;
@@ -137,8 +136,8 @@
 
                 <div class="input-group">
                     <div class="form-group col-sm-6 ">
-					    <input class="form-control id_lain-${index_lain}" type="text" name="id_lain[]"  placeholder="id Lain" readonly hidden/>
-                        <label class="col-form-label">Bahasa</label>
+                    <input class="form-control id_lain-${index_lain}" type="text" name="id_lain[]" placeholder="id Lain"  style="width:100%" readonly hidden/>
+                    <label class="col-form-label">Bahasa</label>
                         <input class="form-control ket_bahasa_lain-${index_lain}" type="text" name="ket_bahasa_lain[]" style="width:100%;" placeholder="Bahasa" />
                     </div>
 
@@ -173,8 +172,6 @@
 
                 </div>
 
-                
-                    
                     <div class="col-sm-3 col-md-2 col-lg-3 col-xl-6 mt-3">
                         <button type="button" class="btn btn-danger remove-lain">Hapus Bahasa</button>
                     </div>
