@@ -104,8 +104,9 @@ class SkillBahasaModel extends \App\Models\BaseModel
 
 
             // anak
-            if(count($_POST['ket_bahasa_lain']) > 0 )
-                if($_POST['ket_bahasa_lain'][0] != '')
+            if(isset($_POST['ket_bahasa_lain'])  )
+            {
+                if($_POST['ket_bahasa_lain'][0] != ''){
                     for($i=0 ; $i < count($this->request->getPost('ket_bahasa_lain')) ; $i++ ){
 
                         $id=isset($_POST['id_lain'][$i])?intval($_POST['id_lain'][$i]):0;
@@ -159,6 +160,17 @@ class SkillBahasaModel extends \App\Models\BaseModel
                         $sqlDelete = "DELETE FROM skill_bahasa WHERE id_user = '$id_user'  AND kode_bahasa='99'  AND id NOT IN ($implodelistDetailForm_lain)";
                         $delete = $this->db->query($sqlDelete);
                     }
+
+                }
+
+            } else {
+                $sqlDelete = "DELETE FROM skill_bahasa WHERE id_user = '$id_user'  AND kode_bahasa='99'";
+                $delete = $this->db->query($sqlDelete);
+
+                $result['status']='ok';
+                $result['message']='Data Berhasil Diubah';
+                $result['dismiss']=false;
+            }
 
 
         } else {
