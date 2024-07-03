@@ -222,7 +222,7 @@
                     <label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Tanggal Lahir</label>
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <input class="form-control tanggal_lahir_anak-${index_anak} date-picker " type="text" value="${tanggal_lahir_anak}" name="tanggal_lahir_anak[]" placeholder="dd-mm-yyyy" required="required" data-date-end-date="0d"/>
+                            <input class="form-control tanggal_lahir_anak-${index_anak} date-picker " type="text" value="${tanggal_lahir_anak}" name="tanggal_lahir_anak[]" placeholder="dd-mm-yyyy"  data-date-end-date="0d"/>
                             <input class="form-control usia-class" id= "usia_anak-${index_anak}"  type="text" name="usia[]" placeholder="usia" readonly/>
                         </div>
                     </div>
@@ -232,7 +232,7 @@
                     <div class="form-group col-sm-6 ">
                         <label class="col-form-label">Jenis Kelamin</label>
                         <div class="">
-                            <select class="form-control jenis_kelamin_anak-${index_anak}" id="jenis_kelamin_anak-${index_anak}" name="jenis_kelamin_anak[]" required="required">
+                            <select class="form-control jenis_kelamin_anak-${index_anak}" id="jenis_kelamin_anak-${index_anak}" name="jenis_kelamin_anak[]" >
                                 <option value="">Pilih Salah Satu</option>
                             </select>
                         </div>
@@ -241,7 +241,7 @@
                     <div class="form-group col-sm-6">
                         <label class=" col-form-label">Pendidikan</label>
                         <div class="">
-                            <select class="form-control pendidikan_anak-${index_anak}" name="pendidikan_anak[]" required="required">
+                            <select class="form-control pendidikan_anak-${index_anak}" name="pendidikan_anak[]">
                                 <option value="">Pilih Salah Satu</option>
                             </select>
                         </div>
@@ -332,7 +332,7 @@
                     <label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Tanggal Lahir</label>
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <input class="form-control date-picker tanggal_lahir_saudara-${index_saudara}" type="text" value="${tanggal_lahir_saudara}" name="tanggal_lahir_saudara[]" placeholder="dd-mm-yyyy" required="required" data-date-end-date="0d"/>
+                            <input class="form-control date-picker tanggal_lahir_saudara-${index_saudara}" type="text" value="${tanggal_lahir_saudara}" name="tanggal_lahir_saudara[]" placeholder="dd-mm-yyyy"  data-date-end-date="0d"/>
                             <input class="form-control usia-class" id= "usia_saudara-${index_saudara}" type="text" name="usia[]" placeholder="usia" readonly/>
                         </div>
                     </div>
@@ -341,7 +341,7 @@
                 <div class="input-group">
                     <div class="form-group col-sm-6 ">
                         <label class="col-form-label">Jenis Kelamin</label>
-                        <select class="form-control jenis_kelamin_saudara-${index_saudara}" name="jenis_kelamin_saudara[]" required="required">
+                        <select class="form-control jenis_kelamin_saudara-${index_saudara}" name="jenis_kelamin_saudara[]" >
                             <option value="">Pilih Salah Satu</option>
                         </select>
                     </div>

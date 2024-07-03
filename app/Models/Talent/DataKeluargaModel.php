@@ -110,33 +110,42 @@ class DataKeluargaModel extends \App\Models\BaseModel
             }
 
             // pasangan
-            $id=isset($_POST['id_pasangan'])?intval($_POST['id_pasangan']):0;
-            $data_db['tipe_keluarga']=3;
-            $data_db['jenis_kelamin']='';
-            $data_db['pendidikan']='';
-            $data_db['profesi']=isset($_POST['profesi_pasangan'])?strval($_POST['profesi_pasangan']):'';
-            
-            $exp = explode('-', $_POST['tanggal_lahir_pasangan']);
-            $tgl_lahir = $exp[2].'-'.$exp[1].'-'.$exp[0];
-            $data_db['tanggal_lahir'] = isset($_POST['tanggal_lahir_pasangan'])? $tgl_lahir :'';
+            if($_POST['tanggal_lahir_pasangan'] != ''){
 
-            if(empty($this->getRowMainSql($id,'id'))){
-                $save = $this->db->table('data_keluarga')->insert($data_db);
-
-                $result['status']='ok';
-                $result['message']='Data Berhasil Ditambah';
-                $result['dismiss']=false;
+                $id=isset($_POST['id_pasangan'])?intval($_POST['id_pasangan']):0;
+                $data_db['tipe_keluarga']=3;
+                $data_db['jenis_kelamin']='';
+                $data_db['pendidikan']='';
+                $data_db['profesi']=isset($_POST['profesi_pasangan'])?strval($_POST['profesi_pasangan']):'';
+                
+                $exp = explode('-', $_POST['tanggal_lahir_pasangan']);
+                $tgl_lahir = $exp[2].'-'.$exp[1].'-'.$exp[0];
+                $data_db['tanggal_lahir'] = isset($_POST['tanggal_lahir_pasangan'])? $tgl_lahir :'';
+    
+                if(empty($this->getRowMainSql($id,'id'))){
+                    $save = $this->db->table('data_keluarga')->insert($data_db);
+    
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil Ditambah';
+                    $result['dismiss']=false;
+                } else {
+                    $update = $this->db->table('data_keluarga')->update($data_db, ['id' => $id]);
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil Diubah';
+                    $result['dismiss']=false;
+                }
             } else {
-                $update = $this->db->table('data_keluarga')->update($data_db, ['id' => $id]);
+                $sqlDelete = "DELETE FROM data_keluarga WHERE id_user = '$id_user'  AND tipe_keluarga='3'  ";
+                $delete = $this->db->query($sqlDelete);
                 $result['status']='ok';
                 $result['message']='Data Berhasil Diubah';
-                $result['dismiss']=false;
+                $result['dismiss']=false; 
             }
 
 
             // anak
-            if(isset($_POST['tanggal_lahir_anak']) )
-                if($_POST['tanggal_lahir_anak'] != '')
+            if(isset($_POST['tanggal_lahir_anak']) ){
+                if($_POST['tanggal_lahir_anak'][0] != ''){
                     for($i=0 ; $i < count($this->request->getPost('tanggal_lahir_anak')) ; $i++ ){
                         $id=isset($_POST['id_anak'][$i])?intval($_POST['id_anak'][$i]):0;
                         $data_db['tipe_keluarga']=4;
@@ -184,9 +193,29 @@ class DataKeluargaModel extends \App\Models\BaseModel
                         $delete = $this->db->query($sqlDelete);
                     }
 
-            // anak
-            if(isset($_POST['tanggal_lahir_saudara']) )
-                if($_POST['tanggal_lahir_saudara'] != '')
+                }else {
+                
+                    $sqlDelete = "DELETE FROM data_keluarga WHERE id_user = '$id_user'  AND tipe_keluarga='4' ";
+                    $delete = $this->db->query($sqlDelete);
+                    
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil Diubah';
+                    $result['dismiss']=false;
+                }
+
+            }else {
+                
+                $sqlDelete = "DELETE FROM data_keluarga WHERE id_user = '$id_user'  AND tipe_keluarga='4' ";
+                $delete = $this->db->query($sqlDelete);
+                
+                $result['status']='ok';
+                $result['message']='Data Berhasil Diubah';
+                $result['dismiss']=false;
+            }
+
+            // saudara
+            if(isset($_POST['tanggal_lahir_saudara']) ){
+                if($_POST['tanggal_lahir_saudara'][0] != ''){
                     for($i=0 ; $i < count($this->request->getPost('tanggal_lahir_saudara')) ; $i++ ){
                         $id=isset($_POST['id_saudara'][$i])?intval($_POST['id_saudara'][$i]):0;
                         $data_db['tipe_keluarga']=5;
@@ -233,6 +262,26 @@ class DataKeluargaModel extends \App\Models\BaseModel
                         $sqlDelete = "DELETE FROM data_keluarga WHERE id_user = '$id_user'  AND tipe_keluarga='5' AND id NOT IN ($implodeListDetailForm_saudara)";
                         $delete = $this->db->query($sqlDelete);
                     }
+
+                } else {
+                
+                    $sqlDelete = "DELETE FROM data_keluarga WHERE id_user = '$id_user'  AND tipe_keluarga='5' ";
+                    $delete = $this->db->query($sqlDelete);
+                    
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil Diubah';
+                    $result['dismiss']=false;
+                }
+
+            } else {
+                
+                $sqlDelete = "DELETE FROM data_keluarga WHERE id_user = '$id_user'  AND tipe_keluarga='5' ";
+                $delete = $this->db->query($sqlDelete);
+                
+                $result['status']='ok';
+                $result['message']='Data Berhasil Diubah';
+                $result['dismiss']=false;
+            }
 
 
         } else {
