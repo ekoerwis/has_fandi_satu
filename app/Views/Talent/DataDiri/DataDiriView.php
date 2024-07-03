@@ -159,19 +159,19 @@
 				<div class="form-group ">
 					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Kelebihan</label>
 					<div class="col-sm-6">
-                            <textarea maxlength="500" class="form-control" rows="5" name="kelebihan" placeholder="Kelebihan (Maks : 500 Karakter)"><?= $data_akun['kelebihan'] ?></textarea>
+                            <textarea maxlength="500" class="form-control" rows="5" name="kelebihan" placeholder="Kelebihan (Maks : 500 Karakter)"><?= @$data_akun['kelebihan'] ?></textarea>
 					</div>
 				</div>
 				<div class="form-group ">
 					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Kekurangan</label>
 					<div class="col-sm-6">
-                            <textarea maxlength="500" class="form-control" rows="5" name="kekurangan" placeholder="Kekurangan (Maks : 500 Karakter)"><?= $data_akun['kekurangan'] ?></textarea>
+                            <textarea maxlength="500" class="form-control" rows="5" name="kekurangan" placeholder="Kekurangan (Maks : 500 Karakter)"><?= @$data_akun['kekurangan'] ?></textarea>
 					</div>
 				</div>
 				<div class="form-group ">
 					<label class="col-sm-3 col-md-2 col-lg-3 col-xl-6 col-form-label">Hobi</label>
 					<div class="col-sm-6">
-                            <textarea maxlength="500" class="form-control" rows="5" name="hobi" placeholder="Hobi (Maks : 500 Karakter)"><?= $data_akun['hobi'] ?></textarea>
+                            <textarea maxlength="500" class="form-control" rows="5" name="hobi" placeholder="Hobi (Maks : 500 Karakter)"><?= @$data_akun['hobi'] ?></textarea>
 					</div>
 				</div>
 
