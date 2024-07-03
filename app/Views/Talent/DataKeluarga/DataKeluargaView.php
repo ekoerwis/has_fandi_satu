@@ -111,7 +111,7 @@
                     <!-- Dynamic children input will be added here -->
                 </div>
                 <div class="col-sm-3 col-md-2 col-lg-3 col-xl-6 mt-3">
-                    <button type="button" class="btn btn-success" id="add-child">Tambah Anak</button>
+                    <button type="button" class="btn btn-success" id="add-child"><i class="far fa-plus-square pr-2"></i>Tambah Anak</button>
                 </div>
 
                 <!-- bagian saudara kandung -->
@@ -122,7 +122,7 @@
                     <!-- Dynamic saudara kandung input will be added here -->
                 </div>
                 <div class="col-sm-3 col-md-2 col-lg-3 col-xl-6 mt-3">
-                    <button type="button" class="btn btn-success" id="add-sibling">Tambah Saudara</button>
+                    <button type="button" class="btn btn-success" id="add-sibling"><i class="far fa-plus-square pr-2"></i>Tambah Saudara</button>
                 </div>
 
 
@@ -249,7 +249,7 @@
                 </div>
                     
                     <div class="col-sm-3 col-md-2 col-lg-3 col-xl-6 mt-3">
-                        <button type="button" class="btn btn-danger remove-child">Hapus Anak</button>
+                        <button type="button" class="btn btn-danger remove-child"><i class="far fa-minus-square pr-2"></i> Hapus Anak</button>
                     </div>
                 <hr class="bg-info" >
                 </div>
@@ -353,7 +353,7 @@
                 </div>
                     
                     <div class="col-sm-3 col-md-2 col-lg-3 col-xl-6 mt-3">
-                        <button type="button" class="btn btn-danger remove-sibling">Hapus Saudara</button>
+                        <button type="button" class="btn btn-danger remove-sibling"><i class="far fa-minus-square pr-2"></i> Hapus Saudara</button>
                     </div>
                 <hr class="bg-info" >
                 </div>

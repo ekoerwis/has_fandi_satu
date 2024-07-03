@@ -68,7 +68,7 @@
                     <!-- Dynamic Lainnya input will be added here -->
                 </div>
                 <div class="col-sm-3 col-md-2 col-lg-3 col-xl-6 mt-3">
-                    <button type="button" class="btn btn-success" id="add-lain">Tambah Bahasa</button>
+                    <button type="button" class="btn btn-success" id="add-lain"><i class="far fa-plus-square pr-2"></i>Tambah Bahasa</button>
                 </div>
 
 
@@ -173,7 +173,7 @@
                 </div>
 
                     <div class="col-sm-3 col-md-2 col-lg-3 col-xl-6 mt-3">
-                        <button type="button" class="btn btn-danger remove-lain">Hapus Bahasa</button>
+                        <button type="button" class="btn btn-danger remove-lain"><i class="far fa-minus-square pr-2"></i>Hapus Bahasa</button>
                     </div>
                 <hr class="bg-info" >
                 </div>

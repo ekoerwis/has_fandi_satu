@@ -68,7 +68,7 @@
                 
                 <div class="form-group row mb-0 mt-3">
                     <div class="col-sm-5">
-                        <button type="button" name="add" id="add" class="btn btn-success add-more">Tambah Riwayat</button>
+                        <button type="button" name="add" id="add" class="btn btn-success add-more"><i class="far fa-plus-square pr-2"></i>Tambah Riwayat</button>
 
 						<button type="submit" name="submit" value="submit" class="btn btn-primary"><i class="far fa-save pr-2"></i>Save</button>
 					</div>
