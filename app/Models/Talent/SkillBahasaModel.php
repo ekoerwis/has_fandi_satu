@@ -64,16 +64,26 @@ class SkillBahasaModel extends \App\Models\BaseModel
             $data_db['penerbit']='';
             $data_db['keterangan']='';
 
-            if(empty($this->getRowMainSql($id,'id'))){
-                $save = $this->db->table('skill_bahasa')->insert($data_db);
-                $result['status']='ok';
-                $result['message']='Data Berhasil Ditambah';
-                $result['dismiss']=false;
-            } else {
-                $update = $this->db->table('skill_bahasa')->update($data_db, ['id' => $id]);
+            if($data_db['jenis_sertifikat'] ==''){
+                $sqlDelete = "DELETE FROM skill_bahasa WHERE id_user = '$id_user'  AND kode_bahasa='1'  ";
+                $delete = $this->db->query($sqlDelete);
+                
                 $result['status']='ok';
                 $result['message']='Data Berhasil Diubah';
                 $result['dismiss']=false;
+            } else{
+                if(empty($this->getRowMainSql($id,'id'))){
+                    $save = $this->db->table('skill_bahasa')->insert($data_db);
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil Ditambah';
+                    $result['dismiss']=false;
+                } else {
+                    $update = $this->db->table('skill_bahasa')->update($data_db, ['id' => $id]);
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil Diubah';
+                    $result['dismiss']=false;
+                }
+
             }
 
             // inggris
@@ -88,18 +98,27 @@ class SkillBahasaModel extends \App\Models\BaseModel
             $data_db['penerbit']='';
             $data_db['keterangan']='';
 
-            if(empty($this->getRowMainSql($id,'id'))){
-                $save = $this->db->table('skill_bahasa')->insert($data_db);
-
-                $result['status']='ok';
-                $result['message']='Data Berhasil Ditambah';
-                $result['dismiss']=false;
+            if($data_db['jenis_sertifikat'] ==''){
+                $sqlDelete = "DELETE FROM skill_bahasa WHERE id_user = '$id_user'  AND kode_bahasa='2'  ";
+                $delete = $this->db->query($sqlDelete);
                 
-            } else {
-                $update = $this->db->table('skill_bahasa')->update($data_db, ['id' => $id]);
                 $result['status']='ok';
                 $result['message']='Data Berhasil Diubah';
-                $result['dismiss']=false; 
+                $result['dismiss']=false;
+            } else{
+                if(empty($this->getRowMainSql($id,'id'))){
+                    $save = $this->db->table('skill_bahasa')->insert($data_db);
+
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil Ditambah';
+                    $result['dismiss']=false;
+                    
+                } else {
+                    $update = $this->db->table('skill_bahasa')->update($data_db, ['id' => $id]);
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil Diubah';
+                    $result['dismiss']=false; 
+                }
             }
 
 

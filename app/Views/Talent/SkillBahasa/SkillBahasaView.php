@@ -22,7 +22,7 @@
 				<div class="form-group col-sm-6">
 					<input class="form-control" type="text" name="id_jepang" value="<?= @$data_jepang[0]['id'] ?>" placeholder="id Jepang" readonly hidden/>
 					<label class="col-form-label">Jenis Sertifikasi</label>
-                    <select class="form-control jenis_sertifikat_jepang" name="jenis_sertifikat_jepang"  required="required">
+                    <select class="form-control jenis_sertifikat_jepang" name="jenis_sertifikat_jepang"  >
                         <option value="">Pilih Salah Satu</option>
                     </select>
 				</div>
@@ -44,7 +44,7 @@
 					<input class="form-control" type="text" name="id_inggris" value="<?= @$data_inggris[0]['id'] ?>" placeholder="id Inggris" readonly hidden />
                     <label class="col-form-label">Jenis Sertifikasi</label>
                     <div class="input-group">
-                        <select class="form-control jenis_sertifikat_inggris" name="jenis_sertifikat_inggris"  required="required">
+                        <select class="form-control jenis_sertifikat_inggris" name="jenis_sertifikat_inggris"  >
                             <option value="">Pilih Salah Satu</option>
                         </select>
                         <input type="text" class="form-control level_inggris"  value="<?= @$data_inggris[0]['level'] ?>"  name="level_inggris" placeholder="Nilai / Level">
