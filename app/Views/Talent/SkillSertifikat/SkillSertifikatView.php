@@ -92,7 +92,7 @@
                     <div class="form-group col-sm-6 ">
                         <input class="form-control id-${index}" type="text" name="id[]" placeholder="id Lain"  style="width:100%" readonly hidden/>
                         <label class="col-form-label">Bidang</label>
-                        <select class="form-control kategori-${index}"  name="kategori[]">
+                        <select class="form-control kategori-${index}"  name="kategori[]" required>
                             <option value="">Pilih Salah Satu</option>
                         </select>
                     </div>

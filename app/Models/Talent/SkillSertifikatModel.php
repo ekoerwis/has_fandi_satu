@@ -53,8 +53,9 @@ class SkillSertifikatModel extends \App\Models\BaseModel
         if(!empty($id_user)){
 
             // anak
-            if(count($_POST['kategori']) > 0 )
-                if($_POST['no_sertifikat'][0] != '')
+            if(isset($_POST['kategori']) )
+            {
+                if($_POST['no_sertifikat'][0] != ''){
                     for($i=0 ; $i < count($this->request->getPost('no_sertifikat')) ; $i++ ){
 
                         $id=isset($_POST['id'][$i])?intval($_POST['id'][$i]):0;
@@ -100,6 +101,21 @@ class SkillSertifikatModel extends \App\Models\BaseModel
                         $sqlDelete = "DELETE FROM skill_sertifikat WHERE id_user = '$id_user'  AND id NOT IN ($implodelistDetailForm)";
                         $delete = $this->db->query($sqlDelete);
                     }
+
+                } else {
+                    $result['status']='warning';
+                    $result['message']='No sertifikat Tidak Boleh Kosong';
+                    $result['dismiss']=true;
+                }
+                    
+            } else {
+                $sqlDelete = "DELETE FROM skill_sertifikat WHERE id_user = '$id_user'";
+                $delete = $this->db->query($sqlDelete);
+                
+                $result['status']='ok';
+                $result['message']='Data Berhasil Dihapus';
+                $result['dismiss']=true;
+            }
 
 
         } else {
