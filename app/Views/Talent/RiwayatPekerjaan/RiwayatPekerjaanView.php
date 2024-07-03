@@ -22,13 +22,13 @@
                             <div class="col-sm-2">
                                 <input type="text" class="form-control id-1"  name="id[]" value="<?= @$data_akun[0]['id'] ?>" placeholder="id" readonly hidden>
                                 <label class="col-form-label">Tipe Pekerjaan</label>
-                                <select class="form-control tipe_pekerjaan-1"   name="tipe_pekerjaan[]"  required="required">
+                                <select class="form-control tipe_pekerjaan-1"   name="tipe_pekerjaan[]" >
                                     <option value="">Pilih Salah Satu</option>
                                 </select>
                             </div>
                             <div class="col-sm-4">
                                 <label class="col-form-label">Lokasi Pekerjaan</label>
-                                <select class="form-control lokasi_pekerjaan-1"   name="lokasi_pekerjaan[]"  required="required">
+                                <select class="form-control lokasi_pekerjaan-1"   name="lokasi_pekerjaan[]" >
                                     <option value="">Pilih Salah Satu</option>
                                 </select>
                             </div>
@@ -44,26 +44,26 @@
                             </div>
                             <div class="col-sm-5">
                                 <label class="col-form-label">Bidang Pekerjaan</label>
-                                <input type="text" class="form-control bidang_pekerjaan-1" value="<?= @$data_akun[0]['bidang_pekerjaan']?>"  name="bidang_pekerjaan[]" placeholder="Bidang Pekerjaan"  required="required">
+                                <input type="text" class="form-control bidang_pekerjaan-1" value="<?= @$data_akun[0]['bidang_pekerjaan']?>"  name="bidang_pekerjaan[]" placeholder="Bidang Pekerjaan" >
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-5">
                                 <label class="col-form-label">Bulan Tahun Masuk</label>
                                 <div class="input-group">
-                                    <select class="form-control bulan_masuk-1"  name="bulan_masuk[]"  required="required">
+                                    <select class="form-control bulan_masuk-1"  name="bulan_masuk[]" >
                                         <option value="">Pilih Salah Satu</option>
                                     </select>
-                                    <input type="number" class="form-control tahun_masuk-1"  value="<?= @$data_akun[0]['tahun_masuk'] ?>"  name="tahun_masuk[]" placeholder="Tahun Masuk" required="required">
+                                    <input type="number" class="form-control tahun_masuk-1"  value="<?= @$data_akun[0]['tahun_masuk'] ?>"  name="tahun_masuk[]" placeholder="Tahun Masuk">
                                 </div>
                             </div>
                             <div class="col-sm-5">
                                 <label class="col-form-label">Bulan Tahun Keluar</label>
                                 <div class="input-group">
-                                    <select class="form-control bulan_keluar-1"  name="bulan_keluar[]"  required="required">
+                                    <select class="form-control bulan_keluar-1"  name="bulan_keluar[]" >
                                         <option value="">Pilih Salah Satu</option>
                                     </select>
-                                    <input type="number" class="form-control tahun_keluar-1" name="tahun_keluar[]"  value="<?=  @$data_akun[0]['tahun_keluar'] ?>" placeholder="Tahun Keluar" required="required">
+                                    <input type="number" class="form-control tahun_keluar-1" name="tahun_keluar[]"  value="<?=  @$data_akun[0]['tahun_keluar'] ?>" placeholder="Tahun Keluar">
                                 </div>
                             </div>
                         </div>
