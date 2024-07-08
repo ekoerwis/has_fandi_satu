@@ -61,7 +61,15 @@
                 addLainSection(lainIndex);
                 $('.id-'+lainIndex).val(data_Parse[i]['id']) ;
                 $('.keterangan-'+lainIndex).val(data_Parse[i]['keterangan']) ;
+                $('.label-customFile-'+lainIndex).html(data_Parse[i]['nama_file_ori']) ;
                 createOption('.jenis_dokumen-'+lainIndex, '39', 'id_group',data_Parse[i]['jenis_dokumen']);
+                
+                if(data_Parse[i]['nama_file_new'].length > 0){
+                    $('.download-file-'+lainIndex).val(data_Parse[i]['id']) ;
+                    $('.div-download-'+lainIndex).removeAttr('hidden');
+                }
+                // $('.div-download-'+lainIndex).attr(data_Parse[i]['nama_file_new']) ;
+
 
                 updateLainNumbering();
             }
@@ -105,10 +113,16 @@
                     <div class="form-group col-sm-4 ">
                         <label class="col-form-label label-file-${index}" id="label-file-${index}">File</label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input customFile-${index}" name="fileupload[]" id="customFile-${index}" required>
-                            <label class="custom-file-label" for="customFile-${index}">maks size : 10MB , File Format : .jpg .png .pdf</label>
+                            <input type="file" class="custom-file-input customFile-${index}" name="fileupload[]" id="customFile-${index}" multiple >
+                            <label class="custom-file-label label-customFile-${index}" for="customFile-${index}">Maks Size : 10MB, Format : .jpg .png .pdf</label>
                         </div>
                     </div>
+
+                    <div class="col-sm-1 text-center div-download-${index}" hidden>
+                        <label class="col-form-label">Action</label>
+                        <button type="button" class="btn btn-warning rounded download-file-${index}" onclick="downloadFile(this.value)"><i class="fas fa-file-download pr-2" value=""></i>Download</button>
+                    </div>
+
                 </div>
                 ${button_hapus}
                 <hr class="bg-info" >
@@ -151,6 +165,13 @@
         // batas lain
 
 });
+
+
+function downloadFile(value=''){
+    console.log(value);
+    url = "<?php echo current_url().'/downloadFile?id='; ?>" + value;
+    window.open(url, "_self");
+}
 
 function createOption(id_input='', id_parametergroup='',column_parameter='id_parameter', defaultSelected =''){
         $.ajax({

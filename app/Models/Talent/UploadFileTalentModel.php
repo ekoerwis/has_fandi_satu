@@ -13,7 +13,7 @@ class UploadFileTalentModel extends \App\Models\BaseModel
 	}
 
 	public function getMainSql($id='',$column='id_user'){
-        $mainSQL = "SELECT * FROM pengalaman_praktis where $column = '$id'";
+        $mainSQL = "SELECT * FROM file_upload where $column = '$id'";
 
         $result = $this->db->query($mainSQL)->getResultArray();
 
@@ -22,108 +22,88 @@ class UploadFileTalentModel extends \App\Models\BaseModel
 
     public function getRowMainSql($id='',$column='id_user'){
 
-        $sql = "select * from pengalaman_praktis where $column = '$id'";
+        $sql = "select * from file_upload where $column = '$id'";
 
         $result = $this->db->query($sql)->getRowArray();
 
         return $result;
     }
 
-    public function saveData($id_user='') 
+    public function saveData($id='', $id_user='', $jenis_dokumen='' ,$keterangan='') 
 	{
         $result = [];
-
-        $listDetailForm=array();
-		$implodeListDetailForm = "";
-
-		$data_db['id_user'] = $id_user;
         
         $result['status']='error';
         $result['message']='Proses gagal mohon ulangi kembali !';
         $result['dismiss']=true;
 
         if(!empty($id_user)){
+            $data_db['jenis_dokumen']=isset($jenis_dokumen)?strval($jenis_dokumen):'';
+            $data_db['keterangan']=isset($keterangan)?strval($keterangan):'';
 
-            if(isset($_POST['jenis_pengalaman']) )
-            {
-                if($_POST['jenis_pengalaman'][0] != ''){
-                    for($i=0 ; $i < count($this->request->getPost('jenis_pengalaman')) ; $i++ ){
+            if($id=='' or $id==0){
+                $data_db['id_user']=isset($id_user)?strval($id_user):'';
 
-                        $id=isset($_POST['id'][$i])?intval($_POST['id'][$i]):0;
-                        $data_db['jenis_pengalaman']=isset($_POST['jenis_pengalaman'][$i])?strval($_POST['jenis_pengalaman'][$i]):'';
-                        $data_db['nama_pengalaman']=isset($_POST['nama_pengalaman'][$i])?strval($_POST['nama_pengalaman'][$i]):'';
-                        $data_db['bulan_awal']=isset($_POST['bulan_awal'][$i])?strval($_POST['bulan_awal'][$i]):'';
-                        $data_db['tahun_awal']=isset($_POST['tahun_awal'][$i])?strval($_POST['tahun_awal'][$i]):'';
-                        $data_db['bulan_akhir']=isset($_POST['bulan_akhir'][$i])?strval($_POST['bulan_akhir'][$i]):'';
-                        $data_db['tahun_akhir']=isset($_POST['tahun_akhir'][$i])?strval($_POST['tahun_akhir'][$i]):'';
-                        $data_db['detail_pengalaman']=isset($_POST['detail_pengalaman'][$i])?strval($_POST['detail_pengalaman'][$i]):'';
-                        $data_db['keterangan']=isset($_POST['keterangan'][$i])?strval($_POST['keterangan'][$i]):'';
+                $save = $this->db->table('file_upload')->insert($data_db);
+                if($save){
 
-                        if(empty($this->getRowMainSql($id,'id'))){
-                            $save = $this->db->table('pengalaman_praktis')->insert($data_db);
-                            if($save){
+                    $sqlSearchSave = "select * from file_upload where id_user = '$id_user' 
+                    and jenis_dokumen = '".$data_db['jenis_dokumen']."'
+                    and keterangan = '".$data_db['keterangan']."'
+                    and nama_file_ori is null
+                    and nama_file_new is null ";
 
-                                $sqlSearchSave = "select * from pengalaman_praktis where id_user = '$id_user' 
-                                and jenis_pengalaman = '".$data_db['jenis_pengalaman']."'
-                                and nama_pengalaman = '".$data_db['nama_pengalaman']."'
-                                and bulan_awal = '".$data_db['bulan_awal']."'
-                                and tahun_awal = '".$data_db['tahun_awal']."'
-                                and bulan_akhir = '".$data_db['bulan_akhir']."'
-                                and tahun_akhir = '".$data_db['tahun_akhir']."'
-                                and detail_pengalaman = '".$data_db['detail_pengalaman']."'
-                                and keterangan = '".$data_db['keterangan']."'";
+                    $dataHasSave = $this->db->query($sqlSearchSave)->getRowArray();
 
-                                $dataHasSave = $this->db->query($sqlSearchSave)->getRowArray();
+                    // array_push($listDetailForm,"'".$dataHasSave['id']."'");
 
-                                array_push($listDetailForm,"'".$dataHasSave['id']."'");
-
-                                $result['status']='ok';
-                                $result['message']='Data Berhasil Ditambah';
-                                $result['dismiss']=false;
-                            } 
-                        } else {
-                            $update = $this->db->table('pengalaman_praktis')->update($data_db, ['id' => $id]);
-                            if($update){
-                                $result['status']='ok';
-                                $result['message']='Data Berhasil Diubah';
-                                $result['dismiss']=false;
-                            } 
-                            array_push($listDetailForm,"'".$id."'");
-                        }
-                        
-                    }
-                        
-                    if(count($listDetailForm) > 0){
-                        $implodelistDetailForm = implode(" , ",$listDetailForm);
-                        $sqlDelete = "DELETE FROM pengalaman_praktis WHERE id_user = '$id_user'  AND id NOT IN ($implodelistDetailForm)";
-                        $delete = $this->db->query($sqlDelete);
-                    }
-
-                } else {
-                    $result['status']='warning';
-                    $result['message']='No sertifikat Tidak Boleh Kosong';
-                    $result['dismiss']=true;
-                }
-                    
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil Ditambah';
+                    $result['dismiss']=false;
+                    $result['id_data']=$dataHasSave['id'];
+                } 
             } else {
-                $sqlDelete = "DELETE FROM pengalaman_praktis WHERE id_user = '$id_user'";
-                $delete = $this->db->query($sqlDelete);
-                
-                $result['status']='ok';
-                $result['message']='Data Berhasil Dihapus';
-                $result['dismiss']=true;
+                $update = $this->db->table('file_upload')->update($data_db, ['id' => $id]);
+
+                if($update){
+                    $result['status']='ok';
+                    $result['message']='Data Berhasil Diubah';
+                    $result['dismiss']=false;
+                    $result['id_data']=$id;
+                } 
             }
-
-
-        } else {
-            $result['status']='error';
-            $result['message']='Proses gagal, Tidak Ada Data yang disimpan !';
-            $result['dismiss']=true;
         }
+
+        return $result;
+
+
+	}
+
+    
+
+    public function updateFileUpload($id='',$oldName='',$newName='') 
+	{
+		$data_db['nama_file_ori'] =$oldName;
+		$data_db['nama_file_new'] =$newName;
+        $result = $this->db->table('file_upload')->update($data_db, ['id' => $id]);;
 
 		return $result;
 
 	}
+    
+    public function clearDataByUser($id_user='',$implodelistDetailForm=''){
+
+        if($id_user != '' and $implodelistDetailForm != ''){
+
+            $sqlDelete = "DELETE FROM file_upload WHERE id_user = '$id_user'  AND id NOT IN ($implodelistDetailForm)";
+            $delete = $this->db->query($sqlDelete);
+
+        }
+
+        return true;
+    }
+
+        
     
     public function getParameter($id='',$column='id_parameter'){
 
