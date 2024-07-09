@@ -7,6 +7,7 @@ use App\Libraries\Tablesigniter;
 
 use App\Models\Talent\ProfileModel;
 use App\Models\Talent\DataDiriModel;
+use App\Models\Talent\DataBajuPreferenceModel;
 
 class TalentList extends \App\Controllers\BaseController
 {
@@ -19,6 +20,7 @@ class TalentList extends \App\Controllers\BaseController
 		$this->model = new TalentListModel;	
 		$this->profile_model = new ProfileModel;	
 		$this->datadiri_model = new DataDiriModel;	
+		$this->databaju_model = new DataBajuPreferenceModel;	
 		$this->data['site_title'] = 'Talent List';
 		
 		// $this->addJs ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js' );
@@ -131,6 +133,7 @@ class TalentList extends \App\Controllers\BaseController
 		
 		$data['data_profile'] = $this->profile_model->getRowMainSql($_GET['id']);
 		$data['data_datadiri'] = $this->datadiri_model->getRowFullLabel($_GET['id']);
+		$data['data_databaju'] = $this->databaju_model->getRowFullLabel($_GET['id']);
 
         return view('Admin/TalentList/'.$page , $data);
     }

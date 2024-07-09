@@ -28,6 +28,46 @@ class DataBajuPreferenceModel extends \App\Models\BaseModel
         return $result;
     }
 
+    public function getRowFullLabel($id='',$column='id_user'){
+
+        $sql = "SELECT A.* FROM (SELECT a.id, a.id_user, 
+        a.ukuran_baju, ukuran_baju.label_parameter ukuran_baju_label,
+        a.ukuran_celana, ukuran_celana.label_parameter ukuran_celana_label,
+        a.ukuran_pinggang,
+        a.ukuran_sepatu, 
+        a.vaksin, vaksin.label_parameter vaksin_label,
+        a.status_merokok, status_merokok.label_parameter status_merokok_label,
+        a.status_alkohol, status_alkohol.label_parameter status_alkohol_label,
+        a.intensitas_alkohol, intensitas_alkohol.label_parameter intensitas_alkohol_label,
+        a.status_tato, status_tato.label_parameter status_tato_label,
+        a.kesehatan_badan, kesehatan_badan.label_parameter kesehatan_badan_label,
+        a.status_penyakit, status_penyakit.label_parameter status_penyakit_label
+        FROM databaju_tambahan a
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=21) ukuran_baju
+        ON a.ukuran_baju = ukuran_baju.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=22) ukuran_celana
+        ON a.ukuran_celana = ukuran_celana.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=23) vaksin
+        ON a.vaksin = vaksin.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=24) status_merokok
+        ON a.status_merokok = status_merokok.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=25) status_alkohol
+        ON a.status_alkohol = status_alkohol.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=26) intensitas_alkohol
+        ON a.intensitas_alkohol = intensitas_alkohol.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=27) status_tato
+        ON a.status_tato = status_tato.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=28) kesehatan_badan
+        ON a.kesehatan_badan = kesehatan_badan.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=29) status_penyakit
+        ON a.status_penyakit = status_penyakit.value_parameter
+        ) A where $column = '$id'";
+
+        $result = $this->db->query($sql)->getRowArray();
+
+        return $result;
+    }
+
     public function saveData($id='') 
 	{
         $result = [];
