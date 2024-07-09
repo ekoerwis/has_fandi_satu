@@ -48,6 +48,9 @@
                 <li class="nav-item">
                     <a class="nav-link" id="riwayat_pekerjaan-tab" data-toggle="tab" href="#riwayat_pekerjaan" role="tab" aria-controls="riwayat_pekerjaan" aria-selected="false">Riwayat Pekerjaan</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="data_keluarga-tab" data-toggle="tab" href="#data_keluarga" role="tab" aria-controls="data_keluarga" aria-selected="false">Keluarga</a>
+                </li>
             </ul>
 
             <!-- Tab panes -->
@@ -65,6 +68,9 @@
                      <!-- Konten akan dimuat di sini -->
                 </div>
                 <div class="tab-pane fade" id="riwayat_pekerjaan" role="tabpanel" aria-labelledby="riwayat_pekerjaan-tab">
+                     <!-- Konten akan dimuat di sini -->
+                </div>
+                <div class="tab-pane fade" id="data_keluarga" role="tabpanel" aria-labelledby="data_keluarga-tab">
                      <!-- Konten akan dimuat di sini -->
                 </div>
             </div>
@@ -110,6 +116,8 @@
             url = 'getTab?page=riwayat_pendidikanTalent&id=<?php echo @$dataUser['id_user']; ?>';
         }else if (target == '#riwayat_pekerjaan') {
             url = 'getTab?page=riwayat_pekerjaanTalent&id=<?php echo @$dataUser['id_user']; ?>';
+        }else if (target == '#data_keluarga') {
+            url = 'getTab?page=data_keluargaTalent&id=<?php echo @$dataUser['id_user']; ?>';
         }
 
         // Muat konten dari file eksternal

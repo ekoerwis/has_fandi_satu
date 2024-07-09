@@ -29,6 +29,26 @@ class DataKeluargaModel extends \App\Models\BaseModel
         return $result;
     }
 
+    public function getResultFullLabel($id='',$column='id_user'){
+
+        // $sql = "select * from data_keluarga where $column = '$id'";
+        $sql = "SELECT a.id, a.id_user, a.tipe_keluarga,tipe_keluarga.label_parameter tipe_keluarga_label, tipe_keluarga.sequence tipe_keluarga_seq,
+        a.tanggal_lahir, YEAR(NOW())-YEAR(a.tanggal_lahir) umur, a.jenis_kelamin, jenis_kelamin.label_parameter jenis_kelamin_label,
+        a.pendidikan, pendidikan.label_parameter pendidikan_label,a.profesi
+       FROM (select * from data_keluarga where $column = '$id') a
+       LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=33) tipe_keluarga
+       ON a.tipe_keluarga = tipe_keluarga.value_parameter
+       LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=7) jenis_kelamin
+       ON a.jenis_kelamin = jenis_kelamin.value_parameter
+       LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=8) pendidikan
+       ON a.pendidikan = pendidikan.value_parameter
+       ORDER BY tipe_keluarga.sequence ,  a.tanggal_lahir, a.id";
+
+        $result = $this->db->query($sql)->getResultArray();
+
+        return $result;
+    }
+
 	public function getDataSqlByTipeKeluarga($id='',$column='id_user', $tipe_keluarga = 0){
         $mainSQL = "SELECT *, CONCAT(YEAR(NOW())-YEAR(tanggal_lahir),' Tahun') AS 'usia' FROM data_keluarga  where $column = '$id' and tipe_keluarga = '$tipe_keluarga' order by tanggal_lahir";
 
