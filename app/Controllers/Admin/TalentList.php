@@ -9,6 +9,7 @@ use App\Models\Talent\ProfileModel;
 use App\Models\Talent\DataDiriModel;
 use App\Models\Talent\DataBajuPreferenceModel;
 use App\Models\Talent\RiwayatPendidikanModel;
+use App\Models\Talent\RiwayatPekerjaanModel;
 
 class TalentList extends \App\Controllers\BaseController
 {
@@ -17,6 +18,7 @@ class TalentList extends \App\Controllers\BaseController
 	protected $datadiri_model;
 	protected $databaju_model;
 	protected $datapendidikan_model;
+	protected $datapekerjaan_model;
 	public function __construct() {
 		
 		parent::__construct();
@@ -27,6 +29,7 @@ class TalentList extends \App\Controllers\BaseController
 		$this->datadiri_model = new DataDiriModel;	
 		$this->databaju_model = new DataBajuPreferenceModel;	
 		$this->datapendidikan_model = new RiwayatPendidikanModel;	
+		$this->datapekerjaan_model = new RiwayatPekerjaanModel;	
 		$this->data['site_title'] = 'Talent List';
 		
 		// $this->addJs ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js' );
@@ -141,6 +144,7 @@ class TalentList extends \App\Controllers\BaseController
 		$data['data_datadiri'] = $this->datadiri_model->getRowFullLabel($_GET['id']);
 		$data['data_databaju'] = $this->databaju_model->getRowFullLabel($_GET['id']);
 		$data['data_riwayatpendidikan'] = $this->datapendidikan_model->getResultFullLabel($_GET['id']);
+		$data['data_riwayatpekerjaan'] = $this->datapekerjaan_model->getResultFullLabel($_GET['id']);
 
         return view('Admin/TalentList/'.$page , $data);
     }

@@ -30,6 +30,31 @@ class RiwayatPekerjaanModel extends \App\Models\BaseModel
         return $result;
     }
 
+    public function getResultFullLabel($id='',$column='id_user'){
+
+        // $sql = "select * from riwayat_pekerjaan where $column = '$id'";
+        $sql = "SELECT a.id, a.id_user, 
+        a.tipe_pekerjaan, tipe_pekerjaan.label_parameter tipe_pekerjaan_label,
+        a.lokasi_pekerjaan, lokasi_pekerjaan.label_parameter lokasi_pekerjaan_label,
+        a.nama_perusahaan, a.nama_kota, a.bidang_pekerjaan, 
+        a.bulan_masuk,bulan_masuk.label_parameter bulan_masuk_label, a.tahun_masuk,
+        a.bulan_keluar, bulan_keluar.label_parameter bulan_keluar_label, a.tahun_keluar 
+        FROM (select * from riwayat_pekerjaan where $column = '$id') a
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=31) tipe_pekerjaan
+        ON a.tipe_pekerjaan = tipe_pekerjaan.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=32) lokasi_pekerjaan
+        ON a.lokasi_pekerjaan = lokasi_pekerjaan.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=30) bulan_masuk
+        ON a.bulan_masuk = bulan_masuk.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=30) bulan_keluar
+        ON a.bulan_keluar = bulan_keluar.value_parameter
+        ORDER BY a.tipe_pekerjaan ASC ,tahun_keluar DESC ,bulan_keluar DESC , tahun_masuk DESC, bulan_masuk DESC, id ASC ";
+
+        $result = $this->db->query($sql)->getResultArray();
+
+        return $result;
+    }
+
     public function saveData($id_user='') 
 	{
         $result = [];
