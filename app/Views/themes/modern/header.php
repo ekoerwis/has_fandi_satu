@@ -10,8 +10,6 @@
 <link rel="shortcut icon" href="<?=$config->baseURL . '/public/images/favicon.png?r='.time()?>" />
 <link rel="stylesheet" type="text/css" href="<?=$config->baseURL . '/public/vendors/font-awesome/css/all.css'?>"/>
 <link rel="stylesheet" type="text/css" href="<?=$config->baseURL . '/public/vendors/bootstrap/css/bootstrap.min.css?r='.time()?>"/>
-<link rel="stylesheet" type="text/css" href="<?=$config->baseURL . '/public/vendors/datatables/datatables.min.css?r='.time()?>"/>
-<link rel="stylesheet" type="text/css" href="<?=$config->baseURL . '/public/vendors/datatables/dist/css/dataTables.bootstrap4.min.css?r='.time()?>"/>
 <link rel="stylesheet" type="text/css" href="<?=$config->baseURL . '/public/vendors/iconpicker/css/bulma-iconpicker.min.css?r='.time()?>"/>
 <link rel="stylesheet" type="text/css" href="<?=$config->baseURL . '/public/themes/modern/builtin/css/bootstrap-custom.css?r=' . time()?>"/>
 <link rel="stylesheet" type="text/css" href="<?=$config->baseURL . '/public/vendors/sweetalert2/sweetalert2.min.css?r='.time()?>"/>
@@ -23,6 +21,15 @@
 <link rel="stylesheet" id="font-switch" type="text/css" href="<?=$config->baseURL . 'public/themes/modern/builtin/css/fonts/'.$app_layout['font_family'].'.css?r='.time()?>"/>
 <link rel="stylesheet" id="font-size-switch" type="text/css" href="<?=$config->baseURL . 'public/themes/modern/builtin/css/fonts/font-size-'.$app_layout['font_size'].'.css?r='.time()?>"/>
 <link rel="stylesheet" id="logo-background-color-switch" type="text/css" href="<?=$config->baseURL . 'public/themes/modern/builtin/css/color-schemes/'.$app_layout['logo_background_color'].'-logo-background.css?r='.time()?>"/>
+
+
+<!-- dimatikan tanggal 9 Juli 2024 karena ada kebutuhan menaikan versi datatables ke versi 2.0.8 -->
+<!-- <link rel="stylesheet" type="text/css" href="<?=$config->baseURL . '/public/vendors/datatables/datatables.min.css?r='.time()?>"/> -->
+<!-- <link rel="stylesheet" type="text/css" href="<?=$config->baseURL . '/public/vendors/datatables/dist/css/dataTables.bootstrap4.min.css?r='.time()?>"/> -->
+
+<!-- ditambahkan tanggal 9 Juli 2024 karena ada kebutuhan menaikan versi datatables ke versi 2.0.8 -->
+<link rel="stylesheet" type="text/css" href="<?=$config->baseURL . '/public/vendors/datatables_20240617/datatables.min.css?r='.time()?>"/> 
+
 <?php
 if (@$styles) {
 	foreach($styles as $file) {
@@ -43,9 +50,15 @@ if (@$styles) {
 <script type="text/javascript" src="<?=$config->baseURL . '/public/vendors/iconpicker/js/bulma-iconpicker.min.js'?>"></script>
 <script type="text/javascript" src="<?=$config->baseURL . '/public/vendors/sweetalert2/sweetalert2.min.js'?>"></script>
 <script type="text/javascript" src="<?=$config->baseURL . '/public/vendors/overlayscrollbars/jquery.overlayScrollbars.min.js'?>"></script>
-<script type="text/javascript" src="<?=$config->baseURL . '/public/vendors/datatables/datatables.min.js'?>"></script>
 <script type="text/javascript" src="<?=$config->baseURL . '/public/themes/modern/builtin/js/functions.js?r='.time()?>"></script>
 <script type="text/javascript" src="<?=$config->baseURL . '/public/themes/modern/builtin/js/site.js?r='.time()?>"></script>
+
+<!-- dimatikan tanggal 9 Juli 2024 karena ada kebutuhan menaikan versi datatables ke versi 2.0.8 -->
+<!-- <script type="text/javascript" src="<?=$config->baseURL . '/public/vendors/datatables/datatables.min.js'?>"></script> -->
+
+
+<!-- ditambahkan tanggal 9 Juli 2024 karena ada kebutuhan menaikan versi datatables ke versi 2.0.8 -->
+<script type="text/javascript" src="<?=$config->baseURL . '/public/vendors/datatables_20240617/datatables.min.js'?>"></script>
 
 <?php
 if (@$scripts) {
