@@ -30,6 +30,29 @@ class RiwayatPendidikanModel extends \App\Models\BaseModel
         return $result;
     }
 
+    public function getResultFullLabel($id='',$column='id_user'){
+
+        // $sql = "select * from riwayat_pendidikan where $column = '$id'";
+        $sql = "SELECT a.id, a.id_user, a.jenjang, jenjang.label_parameter jenjang_label,jenjang.sequence jenjang_sequence, a.nama_instansi, 
+        a.jurusan, 
+        a.bulan_masuk, bulan_masuk.label_parameter bulan_masuk_label,
+        a.tahun_masuk, 
+        a.bulan_lulus, bulan_lulus.label_parameter bulan_lulus_label,
+        a.tahun_lulus
+        FROM (select * from riwayat_pendidikan where $column = '$id') a
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=8) jenjang
+        ON a.jenjang = jenjang.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=30) bulan_masuk
+        ON a.bulan_masuk = bulan_masuk.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=30) bulan_lulus
+        ON a.bulan_lulus = bulan_lulus.value_parameter
+        ORDER BY jenjang.sequence, a.tahun_masuk, a.bulan_masuk, a.id";
+
+        $result = $this->db->query($sql)->getResultArray();
+
+        return $result;
+    }
+
     public function saveData($id_user='') 
 	{
         $result = [];

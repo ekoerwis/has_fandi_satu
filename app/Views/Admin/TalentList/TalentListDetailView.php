@@ -42,6 +42,9 @@
                 <li class="nav-item">
                     <a class="nav-link" id="databaju_tambahan-tab" data-toggle="tab" href="#databaju_tambahan" role="tab" aria-controls="databaju_tambahan" aria-selected="false">Data Baju & Tambahan</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="riwayat_pendidikan-tab" data-toggle="tab" href="#riwayat_pendidikan" role="tab" aria-controls="riwayat_pendidikan" aria-selected="false">Pendidikan</a>
+                </li>
             </ul>
 
             <!-- Tab panes -->
@@ -53,6 +56,9 @@
                      <!-- Konten akan dimuat di sini -->
                 </div>
                 <div class="tab-pane fade" id="databaju_tambahan" role="tabpanel" aria-labelledby="databaju_tambahan-tab">
+                     <!-- Konten akan dimuat di sini -->
+                </div>
+                <div class="tab-pane fade" id="riwayat_pendidikan" role="tabpanel" aria-labelledby="riwayat_pendidikan-tab">
                      <!-- Konten akan dimuat di sini -->
                 </div>
             </div>
@@ -94,6 +100,8 @@
             url = 'getTab?page=datadiriTalent&id=<?php echo @$dataUser['id_user']; ?>';
         } else if (target == '#databaju_tambahan') {
             url = 'getTab?page=databaju_tambahanTalent&id=<?php echo @$dataUser['id_user']; ?>';
+        }else if (target == '#riwayat_pendidikan') {
+            url = 'getTab?page=riwayat_pendidikanTalent&id=<?php echo @$dataUser['id_user']; ?>';
         }
 
         // Muat konten dari file eksternal

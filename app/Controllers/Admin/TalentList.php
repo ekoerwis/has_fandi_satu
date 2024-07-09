@@ -8,10 +8,15 @@ use App\Libraries\Tablesigniter;
 use App\Models\Talent\ProfileModel;
 use App\Models\Talent\DataDiriModel;
 use App\Models\Talent\DataBajuPreferenceModel;
+use App\Models\Talent\RiwayatPendidikanModel;
 
 class TalentList extends \App\Controllers\BaseController
 {
 	protected $model;
+	protected $profile_model;
+	protected $datadiri_model;
+	protected $databaju_model;
+	protected $datapendidikan_model;
 	public function __construct() {
 		
 		parent::__construct();
@@ -21,6 +26,7 @@ class TalentList extends \App\Controllers\BaseController
 		$this->profile_model = new ProfileModel;	
 		$this->datadiri_model = new DataDiriModel;	
 		$this->databaju_model = new DataBajuPreferenceModel;	
+		$this->datapendidikan_model = new RiwayatPendidikanModel;	
 		$this->data['site_title'] = 'Talent List';
 		
 		// $this->addJs ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js' );
@@ -134,6 +140,7 @@ class TalentList extends \App\Controllers\BaseController
 		$data['data_profile'] = $this->profile_model->getRowMainSql($_GET['id']);
 		$data['data_datadiri'] = $this->datadiri_model->getRowFullLabel($_GET['id']);
 		$data['data_databaju'] = $this->databaju_model->getRowFullLabel($_GET['id']);
+		$data['data_riwayatpendidikan'] = $this->datapendidikan_model->getResultFullLabel($_GET['id']);
 
         return view('Admin/TalentList/'.$page , $data);
     }
