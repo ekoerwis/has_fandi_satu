@@ -14,17 +14,17 @@ class TalentList extends \App\Controllers\BaseController
 		$this->mustLoggedIn();
 		
 		$this->model = new TalentListModel;	
-		$this->data['site_title'] = 'Parameter Apps';
+		$this->data['site_title'] = 'Talent List';
 		
-		$this->addJs ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js' );
-		$this->addJs ( $this->config->baseURL . 'public/themes/modern/js/date-picker.js');
-		$this->addJs ( $this->config->baseURL . 'public/themes/modern/js/image-upload.js');
+		// $this->addJs ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js' );
+		// $this->addJs ( $this->config->baseURL . 'public/themes/modern/js/date-picker.js');
+		// $this->addJs ( $this->config->baseURL . 'public/themes/modern/js/image-upload.js');
 		
 		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables/datatables.min.js');
 		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables/datatables.min.css');
 		
-		$this->addJs ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.js');
-		$this->addStyle ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.css');
+		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.js');
+		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.css');
 
 		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables_20240617_2/datatables.min.js');
 		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables_20240617_2/datatables.min.css');

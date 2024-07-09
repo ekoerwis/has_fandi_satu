@@ -1,3 +1,10 @@
+<style>
+    /* css untuk memberikan jeda antara table dan page dan search */
+    #table1_wrapper .justify-content-md-center {
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+</style>
 <div class="card">
 	<div class="card-header bg-info text-light rounded">
 		<h5 class="card-title rounded"><?=$current_module['judul_module']?></h5>
@@ -80,9 +87,9 @@
             processing: true,
             serverSide: true,
             scrollX: true, // Enable horizontal scrolling
-            // fixedColumns: {
-            //     leftColumns: 5 // Freeze the first column
-            // },
+            fixedColumns: {
+                leftColumns: 5 // Freeze the first column
+            },
             columns: [
 				{
 					data: null, 
@@ -112,7 +119,7 @@
                     width: "70px"},
                 { 
                     data: 'username',
-                    width: "150px",
+                    width: "100px",
                 },
                 { 
                     data: 'nama',
@@ -127,9 +134,11 @@
                     width: "80px",
                     orderable: false, 
                 },
-                { data: 'phone',
+                { 
+                    data: 'phone',
                     orderable: false, 
-                    searchable: false},
+                    searchable: false
+                },
                 { 
                     data: 'created',
                     orderable: false, 
@@ -148,31 +157,42 @@
                     searchable: false,
                     width: "70px",
                 },
-                { data: 'databaju_tambahan',
+                { 
+                    data: 'databaju_tambahan',
                     orderable: false, 
                     searchable: false,
                     width: "70px"},
-                { data: 'riwayat_pendidikan',
+                { 
+                    data: 'riwayat_pendidikan',
                     orderable: false, 
                     searchable: false},
-                { data: 'riwayat_pekerjaan',
+                { 
+                    data: 'riwayat_pekerjaan',
                     orderable: false, 
                     searchable: false},
-                { data: 'data_keluarga',
+                { 
+                    data: 'data_keluarga',
                     orderable: false, 
                     searchable: false},
-                { data: 'skill_bahasa',
+                { 
+                    data: 'skill_bahasa',
                     orderable: false, 
                     searchable: false},
-                { data: 'skill_sertifikat',
+                { 
+                    data: 'skill_sertifikat',
                     orderable: false, 
-                    searchable: false},
-                { data: 'pengalaman_praktis',
+                    searchable: false
+                },
+                { 
+                    data: 'pengalaman_praktis',
                     orderable: false, 
-                    searchable: false},
-                { data: 'file_upload',
+                    searchable: false
+                },
+                { 
+                    data: 'file_upload',
                     orderable: false, 
-                    searchable: false},
+                    searchable: false
+                },
             ],
             order: [[2, 'asc']],
         });
