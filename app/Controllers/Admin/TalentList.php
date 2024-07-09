@@ -5,6 +5,9 @@ use App\Models\Admin\TalentListModel;
 use \Config\App;
 use App\Libraries\Tablesigniter;
 
+use App\Models\Talent\ProfileModel;
+use App\Models\Talent\DataDiriModel;
+
 class TalentList extends \App\Controllers\BaseController
 {
 	protected $model;
@@ -14,26 +17,14 @@ class TalentList extends \App\Controllers\BaseController
 		$this->mustLoggedIn();
 		
 		$this->model = new TalentListModel;	
+		$this->profile_model = new ProfileModel;	
+		$this->datadiri_model = new DataDiriModel;	
 		$this->data['site_title'] = 'Talent List';
 		
 		// $this->addJs ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js' );
 		// $this->addJs ( $this->config->baseURL . 'public/themes/modern/js/date-picker.js');
 		// $this->addJs ( $this->config->baseURL . 'public/themes/modern/js/image-upload.js');
 		
-		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables/datatables.min.js');
-		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables/datatables.min.css');
-		
-		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.js');
-		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables_20240617/datatables.min.css');
-
-		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables_20240617_2/datatables.min.js');
-		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables_20240617_2/datatables.min.css');
-
-		// $this->addJs ( $this->config->baseURL . 'public/vendors/datatables/datatables-2.0.8/js/dataTables.js');
-		// $this->addStyle ( $this->config->baseURL . 'public/vendors/datatables/datatables-2.0.8/css/dataTables.dataTables.css');
-
-		// $this->addJs ( $this->config->baseURL . 'public/themes/modern/js/data-tables.js');
-
 		// $this->addStyle ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/css/bootstrap-datepicker3.css');
 	}
 	
@@ -93,6 +84,56 @@ class TalentList extends \App\Controllers\BaseController
         echo json_encode($data);
 
 	}
+	
+	public function details()
+	{
+		$this->cekHakAkses('read_data');
+		
+		$data = $this->data;
+
+		// tambahan by eko : berfungsi untuk nilai otorisasi berdasarkan role
+		$data['auth_tambah']=$this->actionUser['create_data'];
+		$data['auth_ubah']=$this->actionUser['update_data'];
+		$data['auth_hapus']=$this->actionUser['delete_data'];
+		// batas tambahan by eko : berfungsi untuk nilai otorisasi berdasarkan role
+
+
+		if(isset($_GET['id']) and  $_GET['id'] != '' ){
+			$data['dataUser'] = $this->model->getDataTalent($_GET['id']);
+
+			if(empty($data['dataUser'])){
+				$data['message'] =   [
+					'status' => 'error', 
+					'message' => 'ID Tidak Ada',
+					'dismiss' => 'true',
+				];
+			}
+		}
+		else{
+            $data['message'] =   [
+                'status' => 'error', 
+                'message' => 'Harus Ada ID',
+                'dismiss' => 'true',
+            ];
+        }
+        
+		$data['dataBaseUrl'] = $this->config->baseURL;
+
+		$this->view('../../Admin/TalentList/TalentListDetailView', $data);
+	}
+
+	public function getTab()
+    {
+		$page = isset($_GET['page'])?strval($_GET['page']):'';
+		$data=[];
+		$data = $this->data;
+
+		
+		$data['data_profile'] = $this->profile_model->getRowMainSql($_GET['id']);
+		$data['data_datadiri'] = $this->datadiri_model->getRowFullLabel($_GET['id']);
+
+        return view('Admin/TalentList/'.$page , $data);
+    }
 	
 	
 }

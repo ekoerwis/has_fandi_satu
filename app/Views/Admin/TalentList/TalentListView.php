@@ -60,6 +60,7 @@
 							<th style="text-align: center;">Skill Sertifikat</th>
 							<th style="text-align: center;">Pengalaman Praktis</th>
 							<th style="text-align: center;">File Upload</th>
+							<th style="text-align: center;">Go To</th>
 							<!-- <th>Aksi</th> -->
 						</tr>
 					</thead>
@@ -88,7 +89,8 @@
             serverSide: true,
             scrollX: true, // Enable horizontal scrolling
             fixedColumns: {
-                leftColumns: 5 // Freeze the first column
+                leftColumns: 4, // Freeze the first column
+                rightColumns: 1 // Freeze the first column
             },
             columns: [
 				{
@@ -116,7 +118,7 @@
                 },
                 { 
                     data: 'id_user',
-                    width: "70px"},
+                    width: "50px"},
                 { 
                     data: 'username',
                     width: "100px",
@@ -143,13 +145,42 @@
                     data: 'created',
                     orderable: false, 
                     searchable: false,
-                    width: "150px",
+                    width: "100px",
+                    render: function(data, type, row) {
+                        if(data !=null){
+                        // Mengubah format tanggal
+                        var date = new Date(data);
+                        var day = ("0" + date.getDate()).slice(-2);
+                        var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                        var year = date.getFullYear();
+                        return day + "-" + month + "-" + year;
+
+                        } else {
+                            return '';
+                        }
+                    },
                 },
                 { 
                     data: 'verified',
                     orderable: false, 
                     searchable: false,
-                    width: "150px",
+                    width: "120px",
+                    render: function(data, type, row) {
+                        if(data !=null){
+                            // Mengubah format tanggal
+                            var date = new Date(data);
+                            var day = ("0" + date.getDate()).slice(-2);
+                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                            var year = date.getFullYear();
+                            var hours = ("0" + date.getHours()).slice(-2);
+                            var minutes = ("0" + date.getMinutes()).slice(-2);
+                            var seconds = ("0" + date.getSeconds()).slice(-2);
+                            return day + "-" + month + "-" + year + " " + hours + ":" + minutes + ":" + seconds;
+                            
+                        } else {
+                            return '';
+                        }
+                    },
                 },
                 { 
                     data: 'datadiri',
@@ -161,23 +192,28 @@
                     data: 'databaju_tambahan',
                     orderable: false, 
                     searchable: false,
-                    width: "70px"},
+                    width: "70px"
+                },
                 { 
                     data: 'riwayat_pendidikan',
                     orderable: false, 
-                    searchable: false},
+                    searchable: false
+                },
                 { 
                     data: 'riwayat_pekerjaan',
                     orderable: false, 
-                    searchable: false},
+                    searchable: false
+                },
                 { 
                     data: 'data_keluarga',
                     orderable: false, 
-                    searchable: false},
+                    searchable: false
+                },
                 { 
                     data: 'skill_bahasa',
                     orderable: false, 
-                    searchable: false},
+                    searchable: false
+                },
                 { 
                     data: 'skill_sertifikat',
                     orderable: false, 
@@ -192,6 +228,16 @@
                     data: 'file_upload',
                     orderable: false, 
                     searchable: false
+                },
+                { 
+                    data: 'id_user',
+                    orderable: false, 
+                    searchable: false,
+                    width:"73px",
+                    render: function(data, type, row) {
+                        var buttonDetail = '<a href="<?php echo current_url().'/details?' ; ?>id='+data+'"  target="_blank" class="btn btn-info btn-xs"><i class="fas fa-info-circle pr-1"></i> Detail</a>';
+                        return buttonDetail;
+                    }
                 },
             ],
             order: [[2, 'asc']],

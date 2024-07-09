@@ -28,6 +28,63 @@ class DataDiriModel extends \App\Models\BaseModel
         return $result;
     }
 
+    public function getRowFullLabel($id='',$column='id_user'){
+
+        $sql = "SELECT A.* FROM (SELECT  a.id,  a.id_user,  a.nama_depan,  a.nama_tengah,  a.nama_belakang,  
+        a.nama_panggilan,  a.nama_katakana,  a.tempat_lahir,  a.tanggal_lahir,  a.sex,  
+        sex.label_parameter sex_label,
+        a.status, 
+        status.label_parameter status_label,
+         a.kerja_shift,  
+        shift.label_parameter kerja_shift_label,
+        a.kerja_overtime,  
+        overtime.label_parameter kerja_overtime_label,
+        a.kerja_offday, 
+        offday.label_parameter kerja_offday_label,
+        a.kacamata, 
+        kacamata.label_parameter kacamata_label,
+        a.mata_kiri,  
+        mata_kiri.label_parameter mata_kiri_label,
+        a.mata_kanan,  
+        mata_kanan.label_parameter mata_kanan_label,
+        a.tinggi_badan,  a.berat_badan,  
+        a.golongan_darah,  
+        golongan_darah.label_parameter golongan_darah_label,
+        a.tangan_dominan, 
+        tangan_dominan.label_parameter tangan_dominan_label, 
+        a.agama, 
+        agama.label_parameter agama_label, 
+        a.kelebihan, a.kekurangan, a.hobi 
+        from datadiri a
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=7) sex
+        ON a.sex = sex.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=19) status
+        ON a.status = status.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=12) shift
+        ON a.kerja_shift = shift.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=13) overtime
+        ON a.kerja_overtime = overtime.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=14) offday
+        ON a.kerja_offday = offday.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=15) kacamata
+        ON a.kacamata = kacamata.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=16) mata_kiri
+        ON a.mata_kiri = mata_kiri.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=16) mata_kanan
+        ON a.mata_kanan = mata_kanan.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=20) golongan_darah
+        ON a.golongan_darah = golongan_darah.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=17) tangan_dominan
+        ON a.tangan_dominan = tangan_dominan.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=18) agama
+        ON a.agama = agama.value_parameter
+        ) A  where $column = '$id'";
+
+        $result = $this->db->query($sql)->getRowArray();
+
+        return $result;
+    }
+
     public function saveData($id='') 
 	{
         $result = [];

@@ -69,6 +69,15 @@ class TalentListModel extends \App\Models\BaseModel
         return $subSQL;
     }
 
+    public function getDataTalent($id='',$column='id_user'){
+
+        $sql = "select * from user where id_role=12 and $column = '$id'";
+
+        $result = $this->db->query($sql)->getRowArray();
+
+        return $result;
+    }
+
 	public function getDataTable($limit, $start, $order, $dir, $search = null) 
 	{
 
