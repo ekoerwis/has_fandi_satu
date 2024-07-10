@@ -57,6 +57,9 @@
                 <li class="nav-item">
                     <a class="nav-link" id="skill_sertifikat-tab" data-toggle="tab" href="#skill_sertifikat" role="tab" aria-controls="skill_sertifikat" aria-selected="false">Sertifikat Skill</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pengalaman_praktis-tab" data-toggle="tab" href="#pengalaman_praktis" role="tab" aria-controls="pengalaman_praktis" aria-selected="false">Pengalaman Praktis</a>
+                </li>
             </ul>
 
             <!-- Tab panes -->
@@ -83,6 +86,9 @@
                      <!-- Konten akan dimuat di sini -->
                 </div>
                 <div class="tab-pane fade" id="skill_sertifikat" role="tabpanel" aria-labelledby="skill_sertifikat-tab">
+                     <!-- Konten akan dimuat di sini -->
+                </div>
+                <div class="tab-pane fade" id="pengalaman_praktis" role="tabpanel" aria-labelledby="pengalaman_praktis-tab">
                      <!-- Konten akan dimuat di sini -->
                 </div>
             </div>
@@ -134,6 +140,8 @@
             url = 'getTab?page=skill_bahasaTalent&id=<?php echo @$dataUser['id_user']; ?>';
         }else if (target == '#skill_sertifikat') {
             url = 'getTab?page=skill_sertifikatTalent&id=<?php echo @$dataUser['id_user']; ?>';
+        }else if (target == '#pengalaman_praktis') {
+            url = 'getTab?page=pengalaman_praktisTalent&id=<?php echo @$dataUser['id_user']; ?>';
         }
 
         // Muat konten dari file eksternal

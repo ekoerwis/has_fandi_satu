@@ -13,6 +13,7 @@ use App\Models\Talent\RiwayatPekerjaanModel;
 use App\Models\Talent\DataKeluargaModel;
 use App\Models\Talent\SkillBahasaModel;
 use App\Models\Talent\SkillSertifikatModel;
+use App\Models\Talent\PengalamanPraktisModel;
 
 class TalentList extends \App\Controllers\BaseController
 {
@@ -25,6 +26,7 @@ class TalentList extends \App\Controllers\BaseController
 	protected $datakeluarga_model;
 	protected $databahasa_model;
 	protected $datasertifikat_model;
+	protected $datapengalamanpraktis_model;
 	public function __construct() {
 		
 		parent::__construct();
@@ -39,6 +41,7 @@ class TalentList extends \App\Controllers\BaseController
 		$this->datakeluarga_model = new DataKeluargaModel;	
 		$this->databahasa_model = new SkillBahasaModel;	
 		$this->datasertifikat_model = new SkillSertifikatModel;	
+		$this->datapengalamanpraktis_model = new PengalamanPraktisModel;	
 		$this->data['site_title'] = 'Talent List';
 		
 		// $this->addJs ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js' );
@@ -157,6 +160,7 @@ class TalentList extends \App\Controllers\BaseController
 		$data['data_datakeluarga'] = $this->datakeluarga_model->getResultFullLabel($_GET['id']);
 		$data['data_skillbahasa'] = $this->databahasa_model->getResultFullLabel($_GET['id']);
 		$data['data_skillsertifikat'] = $this->datasertifikat_model->getResultFullLabel($_GET['id']);
+		$data['data_pengalamanpraktis'] = $this->datapengalamanpraktis_model->getResultFullLabel($_GET['id']);
 
         return view('Admin/TalentList/'.$page , $data);
     }

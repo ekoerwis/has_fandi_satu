@@ -29,6 +29,30 @@ class PengalamanPraktisModel extends \App\Models\BaseModel
         return $result;
     }
 
+    public function getResultFullLabel($id='',$column='id_user'){
+
+        // $sql = "select * from pengalaman_praktis where $column = '$id'";
+        $sql = "SELECT a.id, a.id_user, a.jenis_pengalaman, 
+        jenis_pengalaman.label_parameter jenis_pengalaman_label,jenis_pengalaman.sequence jenis_pengalaman_sequence,
+       a.nama_pengalaman, a.detail_pengalaman,
+       a.bulan_awal, bulan_awal.label_parameter bulan_awal_label,
+       a.tahun_awal, 
+       a.bulan_akhir, bulan_akhir.label_parameter bulan_akhir_label,
+       a.tahun_akhir, a.keterangan
+       FROM (select * from pengalaman_praktis where $column = '$id') a
+       LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=30) bulan_awal
+       ON a.bulan_awal = bulan_awal.value_parameter
+       LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=30) bulan_akhir
+       ON a.bulan_akhir = bulan_akhir.value_parameter
+       LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=38) jenis_pengalaman
+       ON a.jenis_pengalaman = jenis_pengalaman.value_parameter
+       ORDER BY jenis_pengalaman.sequence , a.tahun_awal, a.bulan_awal, a.id";
+
+        $result = $this->db->query($sql)->getResultArray();
+
+        return $result;
+    }
+
     public function saveData($id_user='') 
 	{
         $result = [];
