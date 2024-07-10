@@ -51,6 +51,9 @@
                 <li class="nav-item">
                     <a class="nav-link" id="data_keluarga-tab" data-toggle="tab" href="#data_keluarga" role="tab" aria-controls="data_keluarga" aria-selected="false">Keluarga</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="skill_bahasa-tab" data-toggle="tab" href="#skill_bahasa" role="tab" aria-controls="skill_bahasa" aria-selected="false">Skill Bahasa</a>
+                </li>
             </ul>
 
             <!-- Tab panes -->
@@ -71,6 +74,9 @@
                      <!-- Konten akan dimuat di sini -->
                 </div>
                 <div class="tab-pane fade" id="data_keluarga" role="tabpanel" aria-labelledby="data_keluarga-tab">
+                     <!-- Konten akan dimuat di sini -->
+                </div>
+                <div class="tab-pane fade" id="skill_bahasa" role="tabpanel" aria-labelledby="skill_bahasa-tab">
                      <!-- Konten akan dimuat di sini -->
                 </div>
             </div>
@@ -118,6 +124,8 @@
             url = 'getTab?page=riwayat_pekerjaanTalent&id=<?php echo @$dataUser['id_user']; ?>';
         }else if (target == '#data_keluarga') {
             url = 'getTab?page=data_keluargaTalent&id=<?php echo @$dataUser['id_user']; ?>';
+        }else if (target == '#skill_bahasa') {
+            url = 'getTab?page=skill_bahasaTalent&id=<?php echo @$dataUser['id_user']; ?>';
         }
 
         // Muat konten dari file eksternal

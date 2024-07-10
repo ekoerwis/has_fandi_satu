@@ -29,6 +29,33 @@ class SkillBahasaModel extends \App\Models\BaseModel
         return $result;
     }
 
+    public function getResultFullLabel($id='',$column='id_user'){
+
+        // $sql = "select * from skill_bahasa where $column = '$id'";
+        $sql = "SELECT a.id, a.id_user, a.kode_bahasa, kode_bahasa.label_parameter kode_bahasa_label,kode_bahasa.sequence kode_bahasa_sequence,
+        a.ket_bahasa, a.level, a.jenis_sertifikat,
+        case 
+        when a.kode_bahasa = 1 then jenis_sertifikat_35.label_parameter 
+        when a.kode_bahasa = 2 then jenis_sertifikat_36.label_parameter 
+        ELSE '' END jenis_sertifikat_label, 
+        a.no_sertifikat, 
+        a.bulan_terbit, bulan_terbit.label_parameter bulan_terbit_label, a.tahun_terbit, a.penerbit, a.keterangan 
+        FROM (select * from skill_bahasa where $column = '$id') a
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=34) kode_bahasa
+        ON a.kode_bahasa = kode_bahasa.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=30) bulan_terbit
+        ON a.bulan_terbit = bulan_terbit.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=35) jenis_sertifikat_35
+        ON a.jenis_sertifikat = jenis_sertifikat_35.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=36) jenis_sertifikat_36
+        ON a.jenis_sertifikat = jenis_sertifikat_36.value_parameter
+        ORDER BY kode_bahasa.sequence , a.tahun_terbit, a.bulan_terbit, a.id";
+
+        $result = $this->db->query($sql)->getResultArray();
+
+        return $result;
+    }
+
 	public function getDataSqlByKodeBahasa($id='',$column='id_user', $kode_bahasa = 0){
         $mainSQL = "SELECT * FROM skill_bahasa where $column = '$id' and kode_bahasa = '$kode_bahasa' order by id";
 
