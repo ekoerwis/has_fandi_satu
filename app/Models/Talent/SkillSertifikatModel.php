@@ -29,6 +29,24 @@ class SkillSertifikatModel extends \App\Models\BaseModel
         return $result;
     }
 
+    public function getResultFullLabel($id='',$column='id_user'){
+
+        // $sql = "select * from skill_sertifikat where $column = '$id'";
+        $sql = "SELECT a.id, a.id_user, a.kategori, kategori.label_parameter kategori_label,kategori.sequence kategori_sequence,a.no_sertifikat, 
+        a.bulan_terbit, bulan_terbit.label_parameter bulan_terbit_label,
+        a.tahun_terbit, a.penerbit, a.keterangan
+        FROM (select * from skill_sertifikat where $column = '$id') a
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=30) bulan_terbit
+        ON a.bulan_terbit = bulan_terbit.value_parameter
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=37) kategori
+        ON a.kategori = kategori.value_parameter
+        ORDER BY kategori.sequence , a.tahun_terbit, a.bulan_terbit, a.id";
+
+        $result = $this->db->query($sql)->getResultArray();
+
+        return $result;
+    }
+
 	public function getDataSqlByKodeBahasa($id='',$column='id_user', $kode_bahasa = 0){
         $mainSQL = "SELECT * FROM skill_sertifikat where $column = '$id' and kode_bahasa = '$kode_bahasa' order by id";
 
