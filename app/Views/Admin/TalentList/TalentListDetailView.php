@@ -60,6 +60,9 @@
                 <li class="nav-item">
                     <a class="nav-link" id="pengalaman_praktis-tab" data-toggle="tab" href="#pengalaman_praktis" role="tab" aria-controls="pengalaman_praktis" aria-selected="false">Pengalaman Praktis</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="file_upload-tab" data-toggle="tab" href="#file_upload" role="tab" aria-controls="file_upload" aria-selected="false">File Upload</a>
+                </li>
             </ul>
 
             <!-- Tab panes -->
@@ -91,6 +94,9 @@
                 <div class="tab-pane fade" id="pengalaman_praktis" role="tabpanel" aria-labelledby="pengalaman_praktis-tab">
                      <!-- Konten akan dimuat di sini -->
                 </div>
+                <div class="tab-pane fade" id="file_upload" role="tabpanel" aria-labelledby="file_upload-tab">
+                     <!-- Konten akan dimuat di sini -->
+                </div>
             </div>
 
 
@@ -116,6 +122,7 @@
     }
 
     // Muat konten untuk tab aktif pertama kali
+    
     loadTabContent('#profile', 'getTab?page=profileTalent&id=<?php echo @$dataUser['id_user']; ?>');
 
     // Tambahkan event listener untuk setiap tab
@@ -142,6 +149,8 @@
             url = 'getTab?page=skill_sertifikatTalent&id=<?php echo @$dataUser['id_user']; ?>';
         }else if (target == '#pengalaman_praktis') {
             url = 'getTab?page=pengalaman_praktisTalent&id=<?php echo @$dataUser['id_user']; ?>';
+        }else if (target == '#file_upload') {
+            url = 'getTab?page=file_uploadTalent&id=<?php echo @$dataUser['id_user']; ?>';
         }
 
         // Muat konten dari file eksternal

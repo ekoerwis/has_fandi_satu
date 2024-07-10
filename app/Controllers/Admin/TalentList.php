@@ -14,6 +14,7 @@ use App\Models\Talent\DataKeluargaModel;
 use App\Models\Talent\SkillBahasaModel;
 use App\Models\Talent\SkillSertifikatModel;
 use App\Models\Talent\PengalamanPraktisModel;
+use App\Models\Talent\UploadFileTalentModel;
 
 class TalentList extends \App\Controllers\BaseController
 {
@@ -27,6 +28,7 @@ class TalentList extends \App\Controllers\BaseController
 	protected $databahasa_model;
 	protected $datasertifikat_model;
 	protected $datapengalamanpraktis_model;
+	protected $datauploadfile_model;
 	public function __construct() {
 		
 		parent::__construct();
@@ -42,6 +44,7 @@ class TalentList extends \App\Controllers\BaseController
 		$this->databahasa_model = new SkillBahasaModel;	
 		$this->datasertifikat_model = new SkillSertifikatModel;	
 		$this->datapengalamanpraktis_model = new PengalamanPraktisModel;	
+		$this->datauploadfile_model = new UploadFileTalentModel;	
 		$this->data['site_title'] = 'Talent List';
 		
 		// $this->addJs ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js' );
@@ -161,9 +164,64 @@ class TalentList extends \App\Controllers\BaseController
 		$data['data_skillbahasa'] = $this->databahasa_model->getResultFullLabel($_GET['id']);
 		$data['data_skillsertifikat'] = $this->datasertifikat_model->getResultFullLabel($_GET['id']);
 		$data['data_pengalamanpraktis'] = $this->datapengalamanpraktis_model->getResultFullLabel($_GET['id']);
-
+		$data['data_fileupload'] = $this->datauploadfile_model->getResultFullLabel($_GET['id']);
         return view('Admin/TalentList/'.$page , $data);
     }
 	
+	
+    public function downloadFile(){
+		
+        $this->cekHakAkses('read_data');
+		$id= isset($_GET['id'])?strval($_GET['id']):'';
+		$id_file= isset($_GET['id_file'])?strval($_GET['id_file']):'';
+
+		
+		$filePath = 'public/files/talent/'.$id.'/'.$id_file;
+
+		$data = $this->data;
+
+
+		if(isset($_GET['id']) and  $_GET['id'] != '' ){
+			$data['dataUser'] = $this->model->getDataTalent($_GET['id']);
+
+				if(empty($data['dataUser'])){
+					$data['message'] =   [
+						'status' => 'error', 
+						'message' => 'ID Tidak Ada',
+						'dismiss' => 'true',
+					];
+				}
+		}
+		else{
+				$data['message'] =   [
+					'status' => 'error', 
+					'message' => 'Harus Ada ID',
+					'dismiss' => 'true',
+				];
+		}
+
+		
+		if($id =='' or $id_file ==''){			
+			$data['message'] =   [
+				'status' => 'warning', 
+				'message' => 'File Tidak Ada',
+				'dismiss' => 'true',
+			];
+			$data['loadTabs'] = 'file_upload';
+
+			// return view('Admin/TalentList/TalentListDetailView' , $data); 
+			$this->view('../../Admin/TalentList/TalentListDetailView', $data);
+		}
+			
+		$data['dataBaseUrl'] = $this->config->baseURL;
+			
+
+		if (file_exists($filePath)) {
+            return $this->response->download($filePath, null);
+        } else {
+            return redirect()->back()->with('message', 'File tidak ditemukan.');
+        }
+
+    }
 	
 }

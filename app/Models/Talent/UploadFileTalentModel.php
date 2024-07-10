@@ -29,6 +29,22 @@ class UploadFileTalentModel extends \App\Models\BaseModel
         return $result;
     }
 
+    public function getResultFullLabel($id='',$column='id_user'){
+
+        // $sql = "select * from file_upload where $column = '$id'";
+        $sql = "SELECT  a.id, a.id_user, a.jenis_dokumen,
+        jenis_dokumen.label_parameter jenis_dokumen_label,jenis_dokumen.sequence jenis_dokumen_sequence,
+        a.keterangan, a.nama_file_ori, a.nama_file_new
+        FROM (select * from file_upload where $column = '$id') a
+        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=39) jenis_dokumen
+        ON a.jenis_dokumen = jenis_dokumen.value_parameter
+        ORDER BY jenis_dokumen.sequence ,  a.id";
+
+        $result = $this->db->query($sql)->getResultArray();
+
+        return $result;
+    }
+
     public function saveData($id='', $id_user='', $jenis_dokumen='' ,$keterangan='') 
 	{
         $result = [];
