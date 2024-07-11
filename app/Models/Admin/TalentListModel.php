@@ -113,195 +113,57 @@ class TalentListModel extends \App\Models\BaseModel
 
 	}
 
-    // public function getDetail($id = '', $column='id_parameter')
-	// {
-	// 	$sql = "select * from parameter_detail where $column = '$id' order by sequence , value_parameter asc";
 
-	// 	$result = array();
+    public function getPublishTalent($id='',$column='id_user'){
 
-	// 	$result = $this->db->query($sql)->getResultArray();
+        $sql = "SELECT id, id_user, publish_by, publish_time, publish_expired FROM talent_publish
+        where $column = '$id'
+        ORDER BY publish_time DESC ";
 
-	// 	return $result;
-	// }
-
-    public function saveData() 
-	{
-        $result = [];
-
-		$data_db['kode_group'] = $this->request->getPost('kode_group');
-		$data_db['nama_group'] = $this->request->getPost('nama_group');
-        
-
-		if(!empty($this->getRowMainSql($data_db['kode_group'],'kode_group'))){
-			$result['status']='error';
-			$result['message']='Kode telah digunakan, mohon gunakan Kode lain !';
-			$result['dismiss']=true;
-		} else {
-
-			$save = $this->db->table('parameter_group')->insert($data_db);
-
-			if($save){
-
-                $idHeader = $this->getRowMainSql($data_db['kode_group'],'kode_group');
-
-                if(!empty($idHeader['id_group'])){
-                    
-                    $data_db_detail['id_group'] = $idHeader['id_group'];
-
-                    $jmlDetail = count($_POST['value_parameter']);
-
-                    for($i=0 ; $i < $jmlDetail ; $i++){
-                        $data_db_detail['value_parameter'] = $_POST['value_parameter'][$i];
-                        $data_db_detail['label_parameter'] = $_POST['label_parameter'][$i];
-                        $data_db_detail['sequence'] = $_POST['sequence'][$i];
-                        $this->db->table('parameter_detail')->insert($data_db_detail);
-                    }
-
-                    $result['status']='ok';
-                    $result['message']='Data Berhasil Disimpan';
-			        $result['dismiss']=false;
-            }
-			} else {
-				$result['status']='error';
-				$result['message']='Proses gagal mohon ulangi kembali !';
-			    $result['dismiss']=true;
-        }
-		}
-
-		return $result;
-
-	}
-
-    public function getRowMainSql($id='',$column='id_group'){
-
-        $sql = "select * from parameter_group where $column = '$id'";
-
-        $result = $this->db->query($sql)->getRowArray();
+        $result = $this->db->query($sql)->getResultArray();
 
         return $result;
     }
-
-	public function getEditData($search = null) 
-	{
-
-        // $result = [];
-        $sql = $this->getMainSql();
-
-        
-        if ($search) {
-            $sql .= " WHERE id_group = $search ";
-        }
-        
-        $dataSql = $this->db->query($sql)->getRowArray();
-        
-        $dataDetail['dataDetail'] = $this->getDetail($dataSql['id_group'],'id_group');
-
-        $data = array_merge($dataSql, $dataDetail);
-
-        $result=$data;
-
-        return $result;
-
-	}
-
     
-
-    public function editData() 
+    public function publishTalent($id='') 
 	{
         $result = [];
 
-		$id_group = $this->request->getPost('id_group');
-		$kode_group = $this->request->getPost('kode_group');
-		$data_db['nama_group'] = $this->request->getPost('nama_group');
+		$data_db['id_user'] = isset($_POST['id_talent'])?strval($_POST['id_talent']):'';
+		$data_db['publish_by'] = $id;
+		$data_db['publish_time'] = date('Y-m-d H:i:s');
+
         
-        $listDetailForm=array();
-		$implodeListDetailForm = "";
+        $exp = explode('-', $_POST['new_expired']);
+		$tgl_expired = $exp[2].'-'.$exp[1].'-'.$exp[0]. ' 23:59:59';
+		$data_db['publish_expired'] = isset($_POST['new_expired'])? $tgl_expired :'';
+        
+        $result['status']='error';
+        $result['message']='Proses gagal mohon ulangi kembali !';
+        $result['dismiss']=true;
+        
+        $cekData = $this->getPublishTalent($data_db['id_user']);
 
-		if(empty($this->getRowMainSql($id_group,'id_group'))){
-			$result['status']='error';
-			$result['message']='Kode Tidak Ditemukan, Mohon Periksa Kembali !';
-			$result['dismiss']=true;
-		} else {
-
-			$update = $this->db->table('parameter_group')->update($data_db, ['id_group' => $id_group]);
-
-			if($update){
-
-                $jmlDetail = count($_POST['value_parameter']);
-
-                for($i=0 ; $i < $jmlDetail ; $i++){
-                    $id_parameter = isset($_POST['id_parameter'][$i])? strval($_POST['id_parameter'][$i]):'';
-                    $data_db_detail['value_parameter'] = $_POST['value_parameter'][$i];
-                    $data_db_detail['label_parameter'] = $_POST['label_parameter'][$i];
-                    $data_db_detail['sequence'] = isset($_POST['sequence'][$i]) ? strval($_POST['sequence'][$i]):'';
-                    $data_db_detail['id_group'] = $id_group;
-
-                    if(empty($id_parameter)){
-                        $this->db->table('parameter_detail')->insert($data_db_detail);
-                    } else {
-                            $this->db->table('parameter_detail')->update($data_db_detail, ['id_parameter' => $id_parameter]);
-                    }
-                    array_push($listDetailForm,"'".$data_db_detail['value_parameter']."'");
-                }
-                
-                if(count($listDetailForm) > 0){
-                    $implodeListDetailForm = implode(" , ",$listDetailForm);
-                    $sqlDelete = "DELETE FROM parameter_detail WHERE id_group = '$id_group'  AND value_parameter NOT IN ($implodeListDetailForm)";
-                    $delete = $this->db->query($sqlDelete);
-                }
-
+        if($tgl_expired == $cekData[0]['publish_expired']){
+            $result['status']='error';
+            $result['message']='Tanggal Sudah Sesuai Dengan Data Terakhir !';
+            $result['dismiss']=true;
+        } else {
+            $save = $this->db->table('talent_publish')->insert($data_db);
+            if($save){
                 $result['status']='ok';
-                $result['message']='Data Berhasil Diubah';
-                $result['dismiss']=false;
-                // }
-			} else {
-				$result['status']='error';
-				$result['message']='Proses gagal mohon ulangi kembali !';
-			    $result['dismiss']=true;
+                $result['message']='User Berhasil Publish';
+                $result['dismiss']=true;
+            } 
+
         }
-		}
+
+		
 
 		return $result;
 
 	}
 
-    public function deleteData($id) 
-	{
-        $result = [];
-
-		if(empty($id)){
-			$result['status']='error';
-			$result['message']='Kode Tidak Ditemukan, Mohon Periksa Kembali !';
-			$result['dismiss']=true;
-		} else {
-
-			$sqlDeleteDetail = "delete from parameter_detail where id_group = $id";
-            $deleteDetail = $this->db->query($sqlDeleteDetail);
-
-			if($deleteDetail){
-
-                $sqlDeleteGroup = "delete from parameter_group where id_group = $id";
-                $deleteGroup = $this->db->query($sqlDeleteGroup);
-
-                if($deleteGroup){
-                    $result['status']='ok';
-                    $result['message']='Data Berhasil DiHapus';
-                    $result['dismiss']=true;
-                } else {
-                    $result['status']='error';
-                    $result['message']='Proses Hapus Group Gagal !';
-                    $result['dismiss']=true;
-                }
-			} else {
-				$result['status']='error';
-				$result['message']='Proses Hapus Detail Gagal !';
-			    $result['dismiss']=true;
-            }
-		}
-
-		return $result;
-
-	}
 
 }
 ?>

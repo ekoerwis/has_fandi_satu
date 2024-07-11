@@ -63,6 +63,9 @@
                 <li class="nav-item">
                     <a class="nav-link" id="file_upload-tab" data-toggle="tab" href="#file_upload" role="tab" aria-controls="file_upload" aria-selected="false">File Upload</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="publish_talent-tab" data-toggle="tab" href="#publish_talent" role="tab" aria-controls="publish_talent" aria-selected="false">Publish</a>
+                </li>
             </ul>
 
             <!-- Tab panes -->
@@ -95,6 +98,9 @@
                      <!-- Konten akan dimuat di sini -->
                 </div>
                 <div class="tab-pane fade" id="file_upload" role="tabpanel" aria-labelledby="file_upload-tab">
+                     <!-- Konten akan dimuat di sini -->
+                </div>
+                <div class="tab-pane fade" id="publish_talent" role="tabpanel" aria-labelledby="publish_talent-tab">
                      <!-- Konten akan dimuat di sini -->
                 </div>
             </div>
@@ -151,6 +157,8 @@
             url = 'getTab?page=pengalaman_praktisTalent&id=<?php echo @$dataUser['id_user']; ?>';
         }else if (target == '#file_upload') {
             url = 'getTab?page=file_uploadTalent&id=<?php echo @$dataUser['id_user']; ?>';
+        }else if (target == '#publish_talent') {
+            url = 'getTab?page=publishTalent&id=<?php echo @$dataUser['id_user']; ?>';
         }
 
         // Muat konten dari file eksternal

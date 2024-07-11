@@ -47,11 +47,11 @@ class TalentList extends \App\Controllers\BaseController
 		$this->datauploadfile_model = new UploadFileTalentModel;	
 		$this->data['site_title'] = 'Talent List';
 		
-		// $this->addJs ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js' );
-		// $this->addJs ( $this->config->baseURL . 'public/themes/modern/js/date-picker.js');
-		// $this->addJs ( $this->config->baseURL . 'public/themes/modern/js/image-upload.js');
+		$this->addJs ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js' );
+		$this->addJs ( $this->config->baseURL . 'public/themes/modern/js/image-upload.js');
+		$this->addJs ( $this->config->baseURL . 'public/themes/modern/js/date-picker.js');
 		
-		// $this->addStyle ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/css/bootstrap-datepicker3.css');
+		$this->addStyle ( $this->config->baseURL . 'public/vendors/bootstrap-datepicker/css/bootstrap-datepicker3.css');
 	}
 	
 	public function index()
@@ -75,6 +75,7 @@ class TalentList extends \App\Controllers\BaseController
                 'dismiss' => 'true',
             ];
         }
+
 
         
         
@@ -165,6 +166,7 @@ class TalentList extends \App\Controllers\BaseController
 		$data['data_skillsertifikat'] = $this->datasertifikat_model->getResultFullLabel($_GET['id']);
 		$data['data_pengalamanpraktis'] = $this->datapengalamanpraktis_model->getResultFullLabel($_GET['id']);
 		$data['data_fileupload'] = $this->datauploadfile_model->getResultFullLabel($_GET['id']);
+		$data['data_publishtalent'] = $this->model->getPublishTalent($_GET['id']);
         return view('Admin/TalentList/'.$page , $data);
     }
 	
@@ -221,6 +223,37 @@ class TalentList extends \App\Controllers\BaseController
         } else {
             return redirect()->back()->with('message', 'File tidak ditemukan.');
         }
+
+    }
+	
+	
+    public function publishTalent(){
+		
+        $this->cekHakAkses('read_data');
+		$id_talent= isset($_POST['id_talent'])?strval($_POST['id_talent']):'';
+		$new_expired= isset($_POST['new_expired'])?strval($_POST['new_expired']):'';
+
+		$data = $this->data;
+
+		if(isset($_POST['id_talent']) and  $_POST['id_talent'] != '' ){
+			$data['dataUser'] = $this->model->getDataTalent($_POST['id_talent']);
+
+			$action = $this->model->publishTalent($this->user['id_user']);
+			$data['message'] =  [
+				'status' => $action['status'], 
+				'message' => $action['message'],
+				'dismiss' => isset($action['dismiss']) ? $action['dismiss'] : 'false',
+			];
+		}
+		else{
+				$data['message'] =   [
+					'status' => 'error', 
+					'message' => 'Harus Ada ID',
+					'dismiss' => 'true',
+				];
+		}
+
+		$this->view('../../Admin/TalentList/TalentListDetailView', $data);
 
     }
 	
