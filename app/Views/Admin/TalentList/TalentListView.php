@@ -60,6 +60,7 @@
 							<th style="text-align: center;">Skill Sertifikat</th>
 							<th style="text-align: center;">Pengalaman Praktis</th>
 							<th style="text-align: center;">File Upload</th>
+							<th style="text-align: center;">Publish Status</th>
 							<th style="text-align: center;">Go To</th>
 							<!-- <th>Aksi</th> -->
 						</tr>
@@ -230,12 +231,28 @@
                     searchable: false
                 },
                 { 
+                    data: 'status_publish',
+                    orderable: false, 
+                    searchable: false,
+                    width:"120px",
+                    className: 'dt-body-center',
+                    render: function(data, type, row) {
+                        var buttonDetail = '<a class="btn btn-danger btn-xs rounded " ><i class="far fa-eye-slash pr-2" ></i>Unpublished</a>';
+
+                        if(data==1){
+                            buttonDetail = '<a class="btn btn-success btn-xs rounded" ><i class="far fa-eye pr-2" ></i>published</a>';
+                        }
+
+                        return buttonDetail;
+                    }
+                },
+                { 
                     data: 'id_user',
                     orderable: false, 
                     searchable: false,
                     width:"73px",
                     render: function(data, type, row) {
-                        var buttonDetail = '<a href="<?php echo current_url().'/details?' ; ?>id='+data+'"  target="_blank" class="btn btn-info btn-xs"><i class="fas fa-info-circle pr-1"></i> Detail</a>';
+                        var buttonDetail = '<a href="<?php echo current_url().'/details?' ; ?>id='+data+'"  target="_blank" class="btn btn-info btn-xs rounded"><i class="fas fa-info-circle pr-1"></i> Detail</a>';
                         return buttonDetail;
                     }
                 },

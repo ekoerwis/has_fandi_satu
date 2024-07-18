@@ -21,7 +21,10 @@ class TalentListModel extends \App\Models\BaseModel
         , i.jumlah_data pengalaman_praktis
         , j.jumlah_data file_upload
         , k.nama_file_new fotopribadi 
-        , l.sex sex , l.label_parameter sex_label FROM (
+        , l.sex sex , l.label_parameter sex_label
+		  , m.publish_time
+		  , m.publish_expired
+		  , m.status_publish FROM (
         SELECT a.id_user, a.email, a.username, a.nama, a.created, a.verified, a.phone FROM user a WHERE a.id_role=12) a
         LEFT JOIN
         (SELECT id_user, COUNT(*) jumlah_data FROM databaju_tambahan GROUP BY id_user ) b
@@ -57,6 +60,13 @@ class TalentListModel extends \App\Models\BaseModel
         (SELECT datadiri.id_user , datadiri.sex, sexdata.label_parameter 
 		  FROM datadiri LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=7) sexdata ON  datadiri.sex = sexdata.value_parameter ) l
         ON a.id_user = l.id_user
+        LEFT JOIN
+        (SELECT a.*, 
+case 
+when a.publish_expired > NOW() then 1
+ELSE 0 END status_publish FROM talent_publish a , (SELECT a.id_user,  max(a.publish_time) publish_time FROM talent_publish a) b
+WHERE a.id_user = b.id_user AND a.publish_time = b.publish_time) m
+ON a.id_user = m.id_user
         ) x
         ";
 
