@@ -46,6 +46,7 @@ class SkillBahasa extends \App\Controllers\BaseController
 		$breadcrumb['Add'] = '';
 		$data = $this->data;
 		$data['title'] = 'Skill Bahasa';
+		$data['subtitle'] = '*URUTKAN MULAI DARI YANG PALING TINGGI';
 		$data['msg'] = [];
 		
         

@@ -1,6 +1,6 @@
 <div class="card">
 	<div class="card-header bg-info text-light">
-		<h2 class="card-title"><?=$title?></h2>
+		<h2 class="card-title"><?=$title?></h2> <i><?=$subtitle?></i>
 	</div>
 	
 	<div class="card-body">

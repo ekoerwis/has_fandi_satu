@@ -52,6 +52,7 @@ class DataDiri extends \App\Controllers\BaseController
 		// batas tambahan by eko : berfungsi untuk nilai otorisasi berdasarkan role
 
 		$data['title'] = 'Data Diri';
+		$data['subtitle'] = '*Isi sesuai dengan kepribadian anda';
         $data['data_akun']=$this->model->getRowMainSql($this->user['id_user']);
         // $this->user;
 

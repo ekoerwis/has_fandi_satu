@@ -46,7 +46,7 @@ class PengalamanPraktis extends \App\Controllers\BaseController
 		$breadcrumb['Add'] = '';
 		$data = $this->data;
 		$data['title'] = 'Pengalaman Praktis';
-		$data['subtitle'] = 'Pengalaman dalam menggunakan Mesin / Software / Lainnya yang dapat meningkatkan skill';
+		$data['subtitle'] = 'Pengalaman dalam menggunakan Mesin / Software / Lainnya *URUTKAN MULAI DARI YANG PALING ANDA KUASAI';
 		$data['msg'] = [];
 		
         

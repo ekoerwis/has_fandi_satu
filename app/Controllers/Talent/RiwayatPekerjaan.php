@@ -46,6 +46,7 @@ class RiwayatPekerjaan extends \App\Controllers\BaseController
 		$breadcrumb['Add'] = '';
 		$data = $this->data;
 		$data['title'] = 'Riwayat Pekerjaan';
+		$data['subtitle'] = '*URUTKAN MULAI DARI YANG PALING AKHIR';
 		$data['msg'] = [];
 		
         

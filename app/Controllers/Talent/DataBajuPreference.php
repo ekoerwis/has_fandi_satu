@@ -52,6 +52,7 @@ class DataBajuPreference extends \App\Controllers\BaseController
 		// batas tambahan by eko : berfungsi untuk nilai otorisasi berdasarkan role
 
 		$data['title'] = 'Data Baju & Tambahan';
+		$data['subtitle'] = 'Data tentang diri anda dan kepribadian anda';
         $data['data_akun']=$this->model->getRowMainSql($this->user['id_user']);
         // $this->user;
 

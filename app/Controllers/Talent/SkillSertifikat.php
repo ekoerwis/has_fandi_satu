@@ -46,6 +46,7 @@ class SkillSertifikat extends \App\Controllers\BaseController
 		$breadcrumb['Add'] = '';
 		$data = $this->data;
 		$data['title'] = 'Sertifikasi Keahlian';
+		$data['subtitle'] = '*URUTKAN MULAI DARI YANG PALING ANDA MINATI DALAM PEKERJAAN';
 		$data['msg'] = [];
 		
         

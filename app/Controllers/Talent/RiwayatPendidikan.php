@@ -46,6 +46,7 @@ class RiwayatPendidikan extends \App\Controllers\BaseController
 		$breadcrumb['Add'] = '';
 		$data = $this->data;
 		$data['title'] = 'Riwayat Pendidikan';
+		$data['subtitle'] = 'Pendidikan yang telah anda selesaikan';
 		$data['msg'] = [];
 		
         

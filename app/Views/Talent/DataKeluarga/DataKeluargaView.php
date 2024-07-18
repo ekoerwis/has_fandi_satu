@@ -2,7 +2,7 @@
 
 <div class="card">
 	<div class="card-header bg-info text-light">
-		<h5 class="card-title"><?=$title?></h5>
+		<h5 class="card-title"><?=$title?></h5> <i><?=$subtitle?></i>
 	</div>
 	<div class="card-body">
 		

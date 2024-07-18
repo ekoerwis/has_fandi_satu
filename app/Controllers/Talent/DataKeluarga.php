@@ -46,6 +46,7 @@ class DataKeluarga extends \App\Controllers\BaseController
 		$breadcrumb['Add'] = '';
 		$data = $this->data;
 		$data['title'] = 'Data Keluarga';
+		$data['subtitle'] = 'Data keluarga dalam hidup anda';
 		$data['msg'] = [];
 		
         
