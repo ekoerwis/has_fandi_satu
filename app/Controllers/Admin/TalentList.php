@@ -96,8 +96,11 @@ class TalentList extends \App\Controllers\BaseController
         $order = $columns[$orders];
         $dir =  isset($_POST['order'][0]['dir']) ? strval($_POST['order'][0]['dir']) : ' asc ';
         $search =  isset($_POST['search']['value']) ? strval($_POST['search']['value']) : '';
+        $publish_filter =isset($_POST['publish_filter']) ? strval($_POST['publish_filter']) : "";
 
-        $result = $this->model->getDataTable($limit, $start, $order, $dir, $search);
+		// $this->consoleLogs($publish_filter);
+
+        $result = $this->model->getDataTable($limit, $start, $order, $dir, $search, $publish_filter);
 
 		$data = [];
 		
@@ -110,6 +113,11 @@ class TalentList extends \App\Controllers\BaseController
 
         echo json_encode($data);
 
+	}
+
+	public function consoleLogs($data=""){
+		
+        // echo '<script>alert(data = "'.$data.'")</script>';
 	}
 	
 	public function details()

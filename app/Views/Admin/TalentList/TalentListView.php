@@ -33,6 +33,17 @@
 			}
 		?>
 
+            <form id="filterForm" class="form-inline">
+				<div class="form-inline pr-2">
+					<label  for="publish_filter" class=" col-form-label pr-2">Status :</label>
+                    <select class="form-control" id="publish_filter" name="publish_filter" style="width: 150px;">
+                        <option value="">Pilih Semua</option>
+                        <option value="1">Published</option>
+                        <option value="0">UnPublished</option>
+                    </select>
+				</div>
+                <button type="button" class="btn btn-primary rounded btn-md" id="searchButton">Search</button>
+            </form>
 			<hr/>
 			<div class="table-responsive">
 				<!-- table-striped table-bordered table-hover  -->
@@ -84,7 +95,10 @@
        var contentTable = $('#table1').DataTable({
             ajax:{ 
                 url : "<?php echo current_url().'/fetchAll' ; ?>",
-                method : 'post' 
+                method : 'post' ,
+                data: function (d) {
+                    d.publish_filter = $('#publish_filter').val();
+                },
             },
             processing: true,
             serverSide: true,
@@ -260,6 +274,10 @@
             order: [[2, 'asc']],
         });
 
+
+        $('#searchButton').on('click', function() {
+            contentTable.draw();
+        });
 
 	});
 

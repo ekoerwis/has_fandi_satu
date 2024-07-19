@@ -13,8 +13,19 @@ class TalentListModel extends \App\Models\BaseModel
 	}
 
 
-	public function getMainSql(){
-        $mainSQL = "SELECT x.* FROM (  SELECT a.*, c.jumlah_data datadiri, b.jumlah_data databaju_tambahan, d.jumlah_data riwayat_pendidikan , e.jumlah_data riwayat_pekerjaan
+	public function getMainSql($publish_filter=""){
+
+        $param_publish ="  ";
+
+        if($publish_filter =="1"){
+            $param_publish ="  WHERE status_publish = '1' ";
+        }
+
+        if($publish_filter =="0"){
+            $param_publish ="  WHERE status_publish is null or  status_publish != 1 ";
+        }
+
+        $mainSQL = "SELECT y.* from ( SELECT x.* FROM (  SELECT a.*, c.jumlah_data datadiri, b.jumlah_data databaju_tambahan, d.jumlah_data riwayat_pendidikan , e.jumlah_data riwayat_pekerjaan
         , f.jumlah_data data_keluarga
         , g.jumlah_data skill_bahasa 
         , h.jumlah_data skill_sertifikat
@@ -67,7 +78,7 @@ when a.publish_expired > NOW() then 1
 ELSE 0 END status_publish FROM talent_publish a , (SELECT a.id_user,  max(a.publish_time) publish_time FROM talent_publish a) b
 WHERE a.id_user = b.id_user AND a.publish_time = b.publish_time) m
 ON a.id_user = m.id_user
-        ) x
+        ) x $param_publish ) y
         ";
 
         return $mainSQL;
@@ -88,14 +99,18 @@ ON a.id_user = m.id_user
         return $result;
     }
 
-	public function getDataTable($limit, $start, $order, $dir, $search = null) 
+	public function getDataTable($limit, $start, $order, $dir, $search = null, $publish_filter="") 
 	{
 
         $result = [];
-        $sql = $this->getMainSql();
+        $sql = $this->getMainSql($publish_filter);
+
+        // echo '<script>console.log("$publish_filter")</script>';
 
         $countMainSQL = count($this->db->query($sql)->getResultArray());
-        
+
+        $filterPublishScript = "";
+
         if ($search) {
             $sql .= " WHERE username LIKE '%$search%' OR email LIKE '%$search%' OR id_user LIKE '%$search%' OR nama LIKE '%$search%'";
         }
