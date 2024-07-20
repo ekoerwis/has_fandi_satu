@@ -75,7 +75,7 @@ class TalentListModel extends \App\Models\BaseModel
         (SELECT a.*, 
 case 
 when a.publish_expired > NOW() then 1
-ELSE 0 END status_publish FROM talent_publish a , (SELECT a.id_user,  max(a.publish_time) publish_time FROM talent_publish a) b
+ELSE 0 END status_publish FROM talent_publish a , (SELECT a.id_user,  max(a.publish_time) publish_time FROM talent_publish a group by a.id_user) b
 WHERE a.id_user = b.id_user AND a.publish_time = b.publish_time) m
 ON a.id_user = m.id_user
         ) x $param_publish ) y
@@ -169,7 +169,7 @@ ON a.id_user = m.id_user
         
         $cekData = $this->getPublishTalent($data_db['id_user']);
 
-        if($tgl_expired == $cekData[0]['publish_expired']){
+        if(!empty($cekData[0]['publish_expired']) and $tgl_expired == $cekData[0]['publish_expired']){
             $result['status']='error';
             $result['message']='Tanggal Sudah Sesuai Dengan Data Terakhir !';
             $result['dismiss']=true;
