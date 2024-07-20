@@ -46,7 +46,7 @@ class PengalamanPraktisModel extends \App\Models\BaseModel
        ON a.bulan_akhir = bulan_akhir.value_parameter
        LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=38) jenis_pengalaman
        ON a.jenis_pengalaman = jenis_pengalaman.value_parameter
-       ORDER BY jenis_pengalaman.sequence , a.tahun_awal, a.bulan_awal, a.id";
+       ORDER BY a.id, jenis_pengalaman.sequence , a.tahun_awal, a.bulan_awal";
 
         $result = $this->db->query($sql)->getResultArray();
 

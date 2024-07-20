@@ -49,7 +49,7 @@ class SkillBahasaModel extends \App\Models\BaseModel
         ON a.jenis_sertifikat = jenis_sertifikat_35.value_parameter
         LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=36) jenis_sertifikat_36
         ON a.jenis_sertifikat = jenis_sertifikat_36.value_parameter
-        ORDER BY kode_bahasa.sequence , a.tahun_terbit, a.bulan_terbit, a.id";
+        ORDER BY kode_bahasa.sequence , a.id, a.tahun_terbit, a.bulan_terbit";
 
         $result = $this->db->query($sql)->getResultArray();
 

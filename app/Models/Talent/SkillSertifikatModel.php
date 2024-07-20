@@ -40,7 +40,7 @@ class SkillSertifikatModel extends \App\Models\BaseModel
         ON a.bulan_terbit = bulan_terbit.value_parameter
         LEFT JOIN (SELECT * FROM parameter_detail WHERE id_group=37) kategori
         ON a.kategori = kategori.value_parameter
-        ORDER BY kategori.sequence , a.tahun_terbit, a.bulan_terbit, a.id";
+        ORDER BY  a.id,kategori.sequence , a.tahun_terbit, a.bulan_terbit";
 
         $result = $this->db->query($sql)->getResultArray();
 
