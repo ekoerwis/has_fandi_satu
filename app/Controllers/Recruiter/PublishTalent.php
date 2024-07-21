@@ -45,8 +45,6 @@ class PublishTalent extends \App\Controllers\BaseController
             ];
         }
 
-
-        
         
 		$data['dataBaseUrl'] = $this->config->baseURL;
 
@@ -57,30 +55,23 @@ class PublishTalent extends \App\Controllers\BaseController
 		$this->cekHakAkses('read_data');
 
 		$result = [];
-        $columns = ['fotopribadi','id_user', 'username','nama','sex_label'];
-        $limit = isset($_POST['length']) ? intval($_POST['length']) : 0;
-        $start =isset($_POST['start']) ? intval($_POST['start']) : 0;
-        // $order = $columns[$_POST['order'][0]['column']];
-        $orders = isset($_POST['order'][1]['column']) ? strval($_POST['order'][1]['column']) : '1';
-        $order = $columns[$orders];
-        $dir =  isset($_POST['order'][0]['dir']) ? strval($_POST['order'][0]['dir']) : ' asc ';
-        $search =  isset($_POST['search']['value']) ? strval($_POST['search']['value']) : '';
-        $publish_filter =isset($_POST['publish_filter']) ? strval($_POST['publish_filter']) : "";
+        $publish_filter =isset($_GET['publish_filter']) ? strval($_GET['publish_filter']) : "";
 
-		// $this->consoleLogs($publish_filter);
 
-        $result = $this->model->getDataTable($limit, $start, $order, $dir, $search, $publish_filter);
+		$page = $this->request->getGet('page') ? $this->request->getGet('page') : 1;
+		$perPage = 6; // Jumlah item per halaman
 
-		$data = [];
-		
-        $data = [
-            "draw" => intval($_POST['draw']),
-            "recordsTotal" => $result['recordsTotal'],
-            "recordsFiltered" =>$result['recordsFiltered'],
-            "data" => $result['data']
-        ];
+        $data = $this->model->getDataTalent($publish_filter);
 
-        echo json_encode($data);
+		$totalPages = ceil($data['recordsTotal'] / $perPage);
+
+		$result = [
+			'items' => $data['data'],
+			'total_pages' => $totalPages,
+			'current_page' => $page
+		];
+
+		echo json_encode($result);
 
 	}
 
