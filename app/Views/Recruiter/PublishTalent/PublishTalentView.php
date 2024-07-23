@@ -6,7 +6,7 @@
     }
 </style>
 <div class="card">
-	<div class="card-header bg-info text-light rounded">
+	<div class="card-header bg-danger text-light rounded">
 		<h5 class="card-title rounded"><?=$current_module['judul_module']?></h5>
 	</div>
 
@@ -19,25 +19,27 @@
 	<div class="card-body">
 
             <form id="filterForm" class="form-inline">
-				<div class="form-inline pr-2">
+				<div class="form-inline pr-2 pb-2">
 					<label  for="jenis_sertifikat_jepang" class=" col-form-label pr-2">Bahasa Jepang :</label>
                     <select class="form-control jenis_sertifikat_jepang rounded" id="jenis_sertifikat_jepang" name="jenis_sertifikat_jepang"  >
                         <option value="">Pilih Sertifikat Bahasa</option>
                     </select>
 				</div>
-				<div class="form-inline pr-2">
+				<div class="form-inline pr-2 pb-2">
 					<label  for="sertifikasi" class=" col-form-label pr-2">Sertifikasi :</label>
                     <select class="form-control sertifikasi rounded" id="sertifikasi" name="sertifikasi"  >
                         <option value="">Pilih Sertifikat</option>
                     </select>
 				</div>
-				<div class="form-inline pr-2">
+				<div class="form-inline pr-2 pb-2">
 					<label  for="pengalaman_praktis" class=" col-form-label pr-2">Keahlian :</label>
                     <select class="form-control pengalaman_praktis rounded" id="pengalaman_praktis" name="pengalaman_praktis" >
                         <option value="">Pilih Keahlian</option>
                     </select>
 				</div>
-                <button type="button" class="btn btn-primary rounded btn-md" id="searchButton">Search</button>
+				<div class="form-inline pr-2 pb-2">
+                <button type="button" class="btn btn-primary rounded" id="searchButton">Search</button>
+                </div>  
             </form>
 			<hr/>
 
@@ -89,20 +91,20 @@
                             foto = `../public/files/talent/${item.id_user}/${item.foto}`;
                         }
                         itemsHtml += `
-                        <div class="card border border-info rounded m-3" style="width: 20rem;">
+                        <div class="card border border-danger rounded m-3" style="width: 20rem;">
                             <img class="card-img-top" src="${foto}" alt="Card image cap">
                             <div class="card-body text-center">
                                 <a class="card-text text-center font-weight-bold text-uppercase">${item.nama_lengkap}</a>
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Umur : ${item.umur} Tahun</li>
-                                <li class="list-group-item">Bahasa Jepang : ${item.sertifikat_jepang}</li>
-                                <li class="list-group-item">Sertifikasi : ${item.sertifikat_keahlian}</li>
-                                <li class="list-group-item">Keahlian : ${item.pengalaman_praktis}</li>
+                                <li class="list-group-item"><b>Umur</b> : ${item.umur} Tahun</li>
+                                <li class="list-group-item"><b>Bahasa Jepang</b> : ${item.sertifikat_jepang}</li>
+                                <li class="list-group-item"><b>Sertifikasi</b> : ${item.sertifikat_keahlian}</li>
+                                <li class="list-group-item"><b>Keahlian</b> : ${item.pengalaman_praktis}</li>
                             </ul>
-                            <div class="card-body">
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
+                            <div class="card-body text-center">
+                                <button class="btn btn-warning">Detail</button>
+                                <button class="btn btn-success">Proses Talent</button>
                             </div>
                         </div>
                         `;
