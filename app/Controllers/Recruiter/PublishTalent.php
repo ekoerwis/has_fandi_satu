@@ -58,10 +58,11 @@ class PublishTalent extends \App\Controllers\BaseController
         $publish_filter =isset($_GET['publish_filter']) ? strval($_GET['publish_filter']) : "";
 
 
-		$page = $this->request->getGet('page') ? $this->request->getGet('page') : 1;
-		$perPage = 6; // Jumlah item per halaman
+		$page = isset($_GET['page']) ? strval($_GET['page']) : 1;
+		$perPage = 10; // Jumlah item per halaman
+		$DataNum = ($page - 1) * $perPage;
 
-        $data = $this->model->getDataTalent($publish_filter);
+        $data = $this->model->getDataTalent($perPage, $DataNum, $publish_filter);
 
 		$totalPages = ceil($data['recordsTotal'] / $perPage);
 

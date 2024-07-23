@@ -70,9 +70,9 @@
     function fetchItems(query = '', page = 1) {
             $.ajax({
                 url: "<?php echo current_url().'/fetchAll' ; ?>",
-                method: 'POST',
+                method: 'get',
                 data: { 
-                    query: query, 
+                    publish_filter: query, 
                     page: page 
                 },
                 dataType: 'json',
@@ -87,7 +87,7 @@
                             foto = `../public/files/talent/${item.id_user}/${item.foto}`;
                         }
                         itemsHtml += `
-                        <div class="card border border-info rounded m-1" style="width: 20rem;">
+                        <div class="card border border-info rounded m-3" style="width: 20rem;">
                             <img class="card-img-top" src="${foto}" alt="Card image cap">
                             <div class="card-body text-center">
                                 <a class="card-text text-center font-weight-bold text-uppercase">${item.nama_lengkap}</a>
@@ -109,10 +109,32 @@
                     $('#item-container').html(itemsHtml);
 
                     let paginationHtml = '';
+                    // for (let i = 1; i <= data.total_pages; i++) {
+                    //     paginationHtml += `<li class="page-item ${i == data.current_page ? 'active' : ''}">
+                    //                         <a class="page-link" href="javascript:void(0);" data-page="${i}">${i}</a></li>`;
+                    // }
+                     // First and Previous buttons
+                     if (data.current_page > 1) {
+                        paginationHtml += `<li class="page-item">
+                                            <a class="page-link" href="javascript:void(0);" data-page="1">First</a></li>`;
+                        paginationHtml += `<li class="page-item">
+                                            <a class="page-link" href="javascript:void(0);" data-page="${data.current_page - 1}">&lt;</a></li>`;
+                    }
+
+                    // Page numbers
                     for (let i = 1; i <= data.total_pages; i++) {
-                        paginationHtml += `<li class="page-item ${i === data.current_page ? 'active' : ''}">
+                        paginationHtml += `<li class="page-item ${i == data.current_page ? 'active' : ''}">
                                             <a class="page-link" href="javascript:void(0);" data-page="${i}">${i}</a></li>`;
                     }
+
+                    // Next and Last buttons
+                    if (data.current_page < data.total_pages) {
+                        paginationHtml += `<li class="page-item">
+                                            <a class="page-link" href="javascript:void(0);" data-page="${parseInt(data.current_page) + 1}">&gt;</a></li>`;
+                        paginationHtml += `<li class="page-item">
+                                            <a class="page-link" href="javascript:void(0);" data-page="${data.total_pages}">Last</a></li>`;
+                    }
+                    
                     $('#pagination').html(paginationHtml);
                 }
             });
@@ -133,6 +155,8 @@
             $(document).on('click', '.page-link', function() {
                 const page = $(this).data('page');
                 const query = $('#publish_filter').val();
+
+                console.log(page);
                 fetchItems(query, page);
             });
 
