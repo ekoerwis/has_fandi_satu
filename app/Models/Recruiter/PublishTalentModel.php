@@ -120,7 +120,7 @@ class PublishTalentModel extends \App\Models\BaseModel
         return $mainSQL;
     }
 
-	public function getDataTalent( $perPage, $DataNum, $publish_filter="") 
+	public function getDataTalent( $perPage=0, $DataNum=0, $publish_filter="") 
 	{
 
         $result = [];
