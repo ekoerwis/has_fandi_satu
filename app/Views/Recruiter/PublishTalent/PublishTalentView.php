@@ -103,7 +103,7 @@
                                 <li class="list-group-item"><b>Keahlian</b> : ${item.pengalaman_praktis}</li>
                             </ul>
                             <div class="card-body text-center">
-                                <button class="btn btn-warning">Detail</button>
+                                <button class="btn btn-warning" onclick="detailTalent(${item.id_user})">Detail</button>
                                 <button class="btn btn-success">Proses Talent</button>
                             </div>
                         </div>
@@ -188,6 +188,17 @@
                     });
                 }
             });
+        }
+
+            
+        //JS Update MR
+        function detailTalent(id=""){
+            if (id != ""){
+                    url = "<?= current_url().'/detailTalent?id=' ?>"+id;
+                    window.open(url,"_blank");
+            } else {
+                alert('ID Talent Tidak Ditemukan');
+            }
         }
 
 </script>

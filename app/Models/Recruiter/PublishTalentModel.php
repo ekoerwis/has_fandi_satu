@@ -170,6 +170,15 @@ class PublishTalentModel extends \App\Models\BaseModel
         return $result;
     }
 
+    public function getDataPickTalent($id='',$column='id_user'){
+
+        $sql = "select * from user where id_role=12 and $column = '$id'";
+
+        $result = $this->db->query($sql)->getRowArray();
+
+        return $result;
+    }
+
 
 }
 ?>
