@@ -20,26 +20,26 @@
 
             <form id="filterForm" class="form-inline">
 				<div class="form-inline pr-2">
-					<label  for="publish_filter" class=" col-form-label pr-2">Status :</label>
-                    <select class="form-control" id="publish_filter" name="publish_filter" style="width: 150px;">
-                        <option value="">Pilih Semua</option>
-                        <option value="1">Published</option>
-                        <option value="0">UnPublished</option>
+					<label  for="jenis_sertifikat_jepang" class=" col-form-label pr-2">Bahasa Jepang :</label>
+                    <select class="form-control jenis_sertifikat_jepang rounded" id="jenis_sertifikat_jepang" name="jenis_sertifikat_jepang"  >
+                        <option value="">Pilih Sertifikat Bahasa</option>
+                    </select>
+				</div>
+				<div class="form-inline pr-2">
+					<label  for="sertifikasi" class=" col-form-label pr-2">Sertifikasi :</label>
+                    <select class="form-control sertifikasi rounded" id="sertifikasi" name="sertifikasi"  >
+                        <option value="">Pilih Sertifikat</option>
+                    </select>
+				</div>
+				<div class="form-inline pr-2">
+					<label  for="pengalaman_praktis" class=" col-form-label pr-2">Keahlian :</label>
+                    <select class="form-control pengalaman_praktis rounded" id="pengalaman_praktis" name="pengalaman_praktis" >
+                        <option value="">Pilih Keahlian</option>
                     </select>
 				</div>
                 <button type="button" class="btn btn-primary rounded btn-md" id="searchButton">Search</button>
             </form>
 			<hr/>
-
-
-        <!-- <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination" id="pagination">
-                    </ul>
-                </nav>
-            </div>
-        </div> -->
 
         <div class="col-12 row" id="item-container">
 
@@ -67,12 +67,14 @@
 
 <script type="text/javascript">
 
-    function fetchItems(query = '', page = 1) {
+    function fetchItems(p_jenis_sertifikat_jepang='',p_sertifikasi='',p_pengalaman_praktis='', page = 1) {
             $.ajax({
                 url: "<?php echo current_url().'/fetchAll' ; ?>",
                 method: 'get',
                 data: { 
-                    publish_filter: query, 
+                    p_jenis_sertifikat_jepang: p_jenis_sertifikat_jepang, 
+                    p_sertifikasi: p_sertifikasi, 
+                    p_pengalaman_praktis: p_pengalaman_praktis, 
                     page: page 
                 },
                 dataType: 'json',
@@ -95,8 +97,8 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Umur : ${item.umur} Tahun</li>
                                 <li class="list-group-item">Bahasa Jepang : ${item.sertifikat_jepang}</li>
-                                <li class="list-group-item">Keahlian : ${item.sertifikat_keahlian}</li>
-                                <li class="list-group-item">Pengalaman : ${item.pengalaman_praktis}</li>
+                                <li class="list-group-item">Sertifikasi : ${item.sertifikat_keahlian}</li>
+                                <li class="list-group-item">Keahlian : ${item.pengalaman_praktis}</li>
                             </ul>
                             <div class="card-body">
                                 <a href="#" class="card-link">Card link</a>
@@ -109,10 +111,6 @@
                     $('#item-container').html(itemsHtml);
 
                     let paginationHtml = '';
-                    // for (let i = 1; i <= data.total_pages; i++) {
-                    //     paginationHtml += `<li class="page-item ${i == data.current_page ? 'active' : ''}">
-                    //                         <a class="page-link" href="javascript:void(0);" data-page="${i}">${i}</a></li>`;
-                    // }
                      // First and Previous buttons
                      if (data.current_page > 1) {
                         paginationHtml += `<li class="page-item">
@@ -142,11 +140,18 @@
 
 
         $(document).ready( function(){
+
+            createOption('.jenis_sertifikat_jepang', '35', 'id_group');
+            createOption('.sertifikasi', '37', 'id_group');
+            createOption('.pengalaman_praktis', '38', 'id_group');
+
             fetchItems();
 
             $('#searchButton').click(function() {
-                const query = $('#publish_filter').val();
-                fetchItems(query);
+                const p_jenis_sertifikat_jepang = $('#jenis_sertifikat_jepang').val();
+                const p_sertifikasi = $('#sertifikasi').val();
+                const p_pengalaman_praktis = $('#pengalaman_praktis').val();
+                fetchItems(p_jenis_sertifikat_jepang,p_sertifikasi,p_pengalaman_praktis);
                 // console.log(query);
 
                 // fetchItems();
@@ -154,12 +159,33 @@
 
             $(document).on('click', '.page-link', function() {
                 const page = $(this).data('page');
-                const query = $('#publish_filter').val();
+                const p_jenis_sertifikat_jepang = $('#jenis_sertifikat_jepang').val();
+                const p_sertifikasi = $('#sertifikasi').val();
+                const p_pengalaman_praktis = $('#pengalaman_praktis').val();
 
-                console.log(page);
-                fetchItems(query, page);
+                fetchItems(p_jenis_sertifikat_jepang,p_sertifikasi,p_pengalaman_praktis, page);
             });
 
         });
+
+            
+    function createOption(id_input='', id_parametergroup='',column_parameter='id_parameter', defaultSelected =''){
+            $.ajax({
+                url: "<?= current_url().'/getParameter' ?>",
+                method: 'POST',
+                data:{
+                    id : id_parametergroup ,
+                    column : column_parameter
+                },
+                dataType: 'json',
+                success: function(response) {
+                    var listOption = $(id_input);
+                    response.forEach(function(responseData) {
+                        var selected = responseData.value_parameter == defaultSelected ? 'selected' : '';
+                        listOption.append('<option value="' + responseData.value_parameter + '" ' + selected + '>' + responseData.label_parameter + '</option>');
+                    });
+                }
+            });
+        }
 
 </script>

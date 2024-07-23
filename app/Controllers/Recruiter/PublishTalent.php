@@ -55,14 +55,16 @@ class PublishTalent extends \App\Controllers\BaseController
 		$this->cekHakAkses('read_data');
 
 		$result = [];
-        $publish_filter =isset($_GET['publish_filter']) ? strval($_GET['publish_filter']) : "";
+        $p_jenis_sertifikat_jepang =isset($_GET['p_jenis_sertifikat_jepang']) ? strval($_GET['p_jenis_sertifikat_jepang']) : "";
+        $p_sertifikasi =isset($_GET['p_sertifikasi']) ? strval($_GET['p_sertifikasi']) : "";
+        $p_pengalaman_praktis =isset($_GET['p_pengalaman_praktis']) ? strval($_GET['p_pengalaman_praktis']) : "";
 
 
 		$page = isset($_GET['page']) ? strval($_GET['page']) : 1;
 		$perPage = 10; // Jumlah item per halaman
 		$DataNum = ($page - 1) * $perPage;
 
-        $data = $this->model->getDataTalent($perPage, $DataNum, $publish_filter);
+        $data = $this->model->getDataTalent($perPage, $DataNum, $p_jenis_sertifikat_jepang,$p_sertifikasi,$p_pengalaman_praktis);
 
 		$totalPages = ceil($data['recordsTotal'] / $perPage);
 
@@ -113,6 +115,16 @@ class PublishTalent extends \App\Controllers\BaseController
 
 		$this->view('../../Recruiter/PublishTalent/PublishTalentDetailView', $data);
 	}
+
+    public function getParameter(){
+		
+        $this->cekHakAkses('read_data');
+        
+        $result = $this->model->getParameter();
+
+        echo json_encode($result);
+
+    }
 
 	
 }
