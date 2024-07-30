@@ -65,7 +65,8 @@ class TalentListModel extends \App\Models\BaseModel
         (SELECT id_user, COUNT(*) jumlah_data FROM file_upload GROUP BY id_user ) j
         ON a.id_user = j.id_user
         LEFT JOIN
-        (SELECT * FROM file_upload WHERE jenis_dokumen=1 ) K
+        (SELECT fu.* FROM file_upload fu , (SELECT a.id_user,  min(a.id) id FROM file_upload a WHERE a.jenis_dokumen=1 group by a.id_user) fumax
+		   WHERE fu.jenis_dokumen=1 AND fu.id=fumax.id ) K
         ON a.id_user = k.id_user
         LEFT JOIN
         (SELECT datadiri.id_user , datadiri.sex, sexdata.label_parameter 
