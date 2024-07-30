@@ -63,8 +63,8 @@
 		
 
 	<?php
-	// helper('deleteModal');
-	// echo deleteModal();
+	helper('emailModal');
+	echo emailModal();
 	?>
 
 <script type="text/javascript">
@@ -104,7 +104,7 @@
                             </ul>
                             <div class="card-body text-center">
                                 <button class="btn btn-warning" onclick="detailTalent(${item.id_user})">Detail</button>
-                                <button class="btn btn-success">Proses Talent</button>
+                                <button class="btn btn-success" onclick="prosesTalent(${item.id_user},'${item.nama_lengkap}','${foto}')">Proses Talent</button>
                             </div>
                         </div>
                         `;
@@ -200,5 +200,33 @@
                 alert('ID Talent Tidak Ditemukan');
             }
         }
+
+        
+        //JS Update MR
+        function prosesTalent(id_user="",nama_user="",foto = ""){
+            if (id_user != ""){
+                    $('#fotoConfirmation').html(
+                        '<img class="card-img-top" src="'+foto+'" alt="Card image cap" width=216 height=216>'
+                    );
+                    $('#nama_konfirmasi').html(
+                        '<br>'+nama_user
+                    );
+                    
+                    $('#text_komunikasi').html(
+                        '<h6>Klik Tombol Proccess Untuk Mendapatkan Email Petunjuk Selanjutnya</h6>'
+                    );
+
+                    $('#confirmInterest').attr('onClick',"confirmationInterest('"+id_user+"')");
+
+                    $('#emailModal').modal('show');
+            } else {
+                alert('ID Talent Tidak Ditemukan');
+            }
+        }
+
+         function confirmationInterest(idConfirmation=""){
+            alert (idConfirmation);
+        }
+		
 
 </script>
