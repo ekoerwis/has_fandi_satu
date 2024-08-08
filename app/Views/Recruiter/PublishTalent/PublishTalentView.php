@@ -107,11 +107,20 @@
                                 <li class="list-group-item"><b>Keahlian</b> : ${item.pengalaman_praktis}</li>
                             </ul>
                             <div class="card-body text-center">
-                                <button class="btn btn-warning" onclick="detailTalent(${item.id_user})">Detail</button>
+                                <button class="btn btn-warning" onclick="detailTalent(${item.id_user})">Detail</button>`;
+                                
+                        if(item.status_interest ==1 ){
+                            itemsHtml += `
+                            </div>
+                        `;
+                        } else {
+                            itemsHtml += `
                                 <button class="btn btn-success" onclick="prosesTalent(${item.id_user},'${item.nama_lengkap}','${foto}')">Proses Talent</button>
                             </div>
-                        </div>
-                        `;
+                        `;  
+                        }
+
+                        itemsHtml += '</div>';
                         // }
                     });
                     $('#item-container').html(itemsHtml);
