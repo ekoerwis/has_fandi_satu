@@ -179,6 +179,29 @@ class PublishTalentModel extends \App\Models\BaseModel
         return $result;
     }
 
+    public function actionRecruiterForTalent($recruiter=0, $talent=0) 
+	{
+        $result = [];
+
+		$data_db['id_recruiter'] = $recruiter;
+		$data_db['id_talent'] = $talent;
+        $data_db['action_time']=date('Y-m-d H:i:s');
+
+        $result['status']='error';
+        $result['message']='Proses gagal mohon ulangi kembali !';
+        $result['dismiss']=true;
+        
+		$save = $this->db->table('recruiter_talent_interest')->insert($data_db);
+        if($save){
+            $result['status']='ok';
+            $result['message']='Data Berhasil Ditambah';
+            $result['dismiss']=false;
+        } 
+
+		return $result;
+
+	}
+
 
 }
 ?>

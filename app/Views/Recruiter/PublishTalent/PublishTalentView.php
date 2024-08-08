@@ -65,6 +65,10 @@
 	<?php
 	helper('emailModal');
 	echo emailModal();
+
+
+    helper('confirmationModal');
+	echo confirmationModal();
 	?>
 
 <script type="text/javascript">
@@ -216,7 +220,7 @@
                         '<h6>Klik Tombol Proccess Untuk Mendapatkan Email Petunjuk Selanjutnya</h6>'
                     );
 
-                    $('#confirmInterest').attr('onClick',"confirmationInterest('"+id_user+"')");
+                    $('#confirmInterest').attr('onClick',"confirmationInterest('"+id_user+"','"+nama_user+"')");
 
                     $('#emailModal').modal('show');
             } else {
@@ -224,8 +228,52 @@
             }
         }
 
-         function confirmationInterest(idConfirmation=""){
-            alert (idConfirmation);
+         function confirmationInterest(idConfirmation="",nama=""){
+             
+            // console.log(idConfirmation,nama);
+            
+            $('#emailModal').modal('hide');
+
+            $.ajax({
+                url: "<?= current_url().'/actionRecruiterForTalent' ?>",
+                method: 'POST',
+                data:{
+                    id : idConfirmation,
+                    nama_talent : nama
+                },
+                dataType: 'json',
+                success: function(response) {
+
+                    if(response.status == 'ok'){
+                        $('#status_confirmation').html(
+                            'Berhasil'
+                        );
+
+                        $('#text_confirmation').html(
+                            '<h6>Mohon Kirim Email Ke ------------- ?</h6>'
+                        );
+                    $('#confirmationModal').modal('show');
+
+                    } else {
+                        $('#status_confirmation').html(
+                            'Proses Gagal Mohon Ulangi Beberapa Saat Lagi'
+                        );
+
+                        $('#text_confirmation').html(
+                            '<h6>Mohon Kirim Email Ke ------------- ?</h6>'
+                        );
+                    $('#confirmationModal').modal('show');
+                    }
+
+                    // var listOption = $(id_input);
+                    // response.forEach(function(responseData) {
+                    //     var selected = responseData.value_parameter == defaultSelected ? 'selected' : '';
+                    //     listOption.append('<option value="' + responseData.value_parameter + '" ' + selected + '>' + responseData.label_parameter + '</option>');
+                    // });
+                // console.log(response);
+
+                }
+            });
         }
 		
 

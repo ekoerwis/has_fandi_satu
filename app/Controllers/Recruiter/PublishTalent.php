@@ -14,6 +14,8 @@ use App\Models\Talent\SkillSertifikatModel;
 use App\Models\Talent\PengalamanPraktisModel;
 use App\Models\Talent\UploadFileTalentModel;
 
+use App\Models\Recruiter\ProfileModel;
+
 class PublishTalent extends \App\Controllers\BaseController
 {
 	protected $model;
@@ -25,6 +27,7 @@ class PublishTalent extends \App\Controllers\BaseController
 	protected $datasertifikat_model;
 	protected $datapengalamanpraktis_model;
 	protected $datauploadfile_model;
+	protected $recruiter_model;
 	public function __construct() {
 		
 		parent::__construct();
@@ -39,6 +42,7 @@ class PublishTalent extends \App\Controllers\BaseController
 		$this->datasertifikat_model = new SkillSertifikatModel;	
 		$this->datapengalamanpraktis_model = new PengalamanPraktisModel;	
 		$this->datauploadfile_model = new UploadFileTalentModel;	
+		$this->recruiter_model = new ProfileModel;	
 
 		$this->data['site_title'] = 'Talent List';
 		
@@ -151,6 +155,60 @@ class PublishTalent extends \App\Controllers\BaseController
         echo json_encode($result);
 
     }
+    public function actionRecruiterForTalent(){
+		
+        $this->cekHakAkses('read_data');
+        
+		
+		$id = isset($_POST['id'])?strval($_POST['id']):'';
+		$nama_talent = isset($_POST['nama_talent'])?strval($_POST['nama_talent']):'';
+
+        $result = $this->model->actionRecruiterForTalent($this->user['id_user'], $id);
+
+		
+		$recruiter=$this->recruiter_model->getRowMainSql($this->user['id_user']);
+
+		$this->sendEmailToRecruter($recruiter['nama'],$recruiter['email'],$id,$nama_talent);
+
+        echo json_encode($result);
+
+    }
+
+	public function sendEmailToRecruter($namaTarget='', $emailTarget='', $kode_talent='', $nama_talent=''){
+
+		$datax = [];
+		$datax['nama'] = $namaTarget;
+		$datax['email'] = $emailTarget;
+		$datax['kode_talent'] = $kode_talent;
+		$datax['nama_talent'] = $nama_talent;
+
+
+		$email = \Config\Services::email();
+
+			$email->initialize([
+				'SMTPHost' => 'a001.dapurhosting.com',
+				'SMTPPort' => 465,
+				'SMTPUser' => 'adminepms@mitraandalan.com',
+				'SMTPPass' => 'Mitra123$',
+				'SMTPCrypto' => 'ssl',
+				'protocol' => 'smtp',
+				'mailType' => 'html',
+				'mailPath' => '/usr/sbin/sendmail',
+				'SMTPAuth' => true,
+				'fromEmail' => 'adminepms@mitraandalan.com',
+				'fromName' => 'Hashira',
+				'subject' => 'Verifikasi Pendaftaran',
+			]);
+
+			$email->setTo($emailTarget);
+			$email->setMessage(view('MailTemplate/recruiterGetTalentMail.php', $datax));
+
+			$response = $email->send();
+
+			$response ? log_message("error", "Email has been sent") : log_message("error", $email->printDebugger());
+			// echo $response;
+			return $response;
+	}
 	
 
 	public function getTab()
